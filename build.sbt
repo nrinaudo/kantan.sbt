@@ -14,6 +14,7 @@ pomExtra := <developers>
     <url>http://nrinaudo.github.io</url>
   </developer>
 </developers>
+homepage := Some(url(s"https://nrinaudo.github.io/kantan.sbt"))
 
 scmInfo := Some(ScmInfo(
   url(s"https://github.com/nrinaudo/kantan.build"),
