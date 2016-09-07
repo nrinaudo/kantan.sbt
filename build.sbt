@@ -39,3 +39,5 @@ addSbtPlugin("com.typesafe.sbt"  %  "sbt-ghpages"           % "0.5.4")
 addSbtPlugin("de.heikoseeberger" %  "sbt-header"            % "1.6.0")
 addSbtPlugin("org.scalastyle"    %% "scalastyle-sbt-plugin" % "0.8.0")
 addSbtPlugin("org.scoverage"     %% "sbt-scoverage"         % "1.2.0")
+
+addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;compile")
