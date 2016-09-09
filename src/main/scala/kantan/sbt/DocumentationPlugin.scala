@@ -37,18 +37,20 @@ object DocumentationPlugin extends AutoPlugin {
   // - Public settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
-    val tutSiteDir: SettingKey[String] = settingKey[String]("Website tutorial directory")
-    val apiSiteDir: SettingKey[String] = settingKey[String]("Unidoc API directory")
+    val tutSiteDir: SettingKey[String]           = settingKey("Website tutorial directory")
+    val apiSiteDir: SettingKey[String]           = settingKey("Unidoc API directory")
+    val docSourceUrl: SettingKey[Option[String]] = settingKey("scalac -doc-source-url parameter")
   }
   import autoImport._
 
   override def projectSettings = ghpages.settings ++ unidocSettings ++ tutSettings ++ Seq(
-    tutSiteDir := "_tut",
-    apiSiteDir := "api",
-    scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
-      "-doc-source-url", scmInfo.value.get.browseUrl + "/tree/master€{FILE_PATH}.scala",
-      "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath
-    ),
+    tutSiteDir   := "_tut",
+    apiSiteDir   := "api",
+    docSourceUrl := scmInfo.value.map(_.browseUrl + "/tree/master€{FILE_PATH}.scala"),
+    scalacOptions in (ScalaUnidoc, unidoc) ++= {
+      Seq("-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath) ++
+      docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty)
+    },
     tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import"))),
     ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=
