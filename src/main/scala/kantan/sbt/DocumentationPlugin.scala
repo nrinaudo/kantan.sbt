@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kantan.build
+package kantan.sbt
 
 import com.typesafe.sbt.SbtGhPages.GhPagesKeys._
 import com.typesafe.sbt.SbtGhPages.ghpages

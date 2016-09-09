@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package kantan.build
+package kantan.sbt
 
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
