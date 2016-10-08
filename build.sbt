@@ -5,6 +5,7 @@ import de.heikoseeberger.sbtheader.license.Apache2_0
 sbtPlugin    := true
 organization := "com.nrinaudo"
 name         := "kantan.sbt"
+moduleName   := "kantan.sbt"
 
 licenses := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 pomExtra := <developers>
