@@ -4,7 +4,7 @@ import de.heikoseeberger.sbtheader.license.Apache2_0
 
 sbtPlugin    := true
 organization := "com.nrinaudo"
-name         := "kantan-sbt"
+name         := "kantan.sbt"
 
 licenses := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html"))
 pomExtra := <developers>
@@ -39,6 +39,6 @@ addSbtPlugin("com.eed3si9n"      %  "sbt-unidoc"            % "0.3.3")
 addSbtPlugin("com.typesafe.sbt"  %  "sbt-ghpages"           % "0.5.4")
 addSbtPlugin("de.heikoseeberger" %  "sbt-header"            % "1.6.0")
 addSbtPlugin("org.scalastyle"    %% "scalastyle-sbt-plugin" % "0.8.0")
-addSbtPlugin("org.scoverage"     %% "sbt-scoverage"         % "1.2.0")
+addSbtPlugin("org.scoverage"     %% "sbt-scoverage"         % "1.4.0")
 
 addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;compile")
