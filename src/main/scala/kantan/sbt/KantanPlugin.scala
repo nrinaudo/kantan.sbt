@@ -17,6 +17,9 @@
 package kantan.sbt
 
 import com.typesafe.sbt.SbtGit.git
+import com.typesafe.sbt.SbtSite
+import com.typesafe.sbt.SbtSite.SiteKeys
+import com.typesafe.sbt.site.SitePlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.headers
 import de.heikoseeberger.sbtheader.license.Apache2_0
@@ -47,7 +50,7 @@ object KantanPlugin extends AutoPlugin {
   // - Public settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
-    val kantanProject: SettingKey[String] = settingKey[String]("Name of the kantan project")
+    val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
   }
   import autoImport._
 
@@ -60,9 +63,11 @@ object KantanPlugin extends AutoPlugin {
 
   override lazy val projectSettings =
     generalSettings ++ scalacSettings ++ commonDependencies ++ remoteSettings ++
-    ScalastylePlugin.projectSettings ++
-    addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;coverage;test;coverageReport" +
-                                ";coverageAggregate;docs/makeSite")
+    ScalastylePlugin.projectSettings
+
+  override def globalSettings =
+    addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;coverage;test;coverageReport;coverageAggregate;doc")
+
 
 
   // - Custom settings -------------------------------------------------------------------------------------------------
@@ -78,6 +83,10 @@ object KantanPlugin extends AutoPlugin {
     ))
   )
 
+  private lazy val groupByProject: Def.Initialize[Task[ProjectRef]] =
+    Def.task { thisProjectRef.value }
+  lazy val filter = ScopeFilter(inAnyProject, inAnyConfiguration)
+
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     val license = Apache2_0("2016", "Nicolas Rinaudo")
@@ -90,7 +99,7 @@ object KantanPlugin extends AutoPlugin {
       incOptions         := incOptions.value.withNameHashing(true),
       headers            := Map(
         "scala" → license,
-        "java" → license
+        "java"  → license
       ),
       resolvers          := Seq(
         Resolver.sonatypeRepo("releases"),

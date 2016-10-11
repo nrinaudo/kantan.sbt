@@ -57,7 +57,9 @@ object DocumentationPlugin extends AutoPlugin {
     "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
     "*.woff" | "*.woff2" | "*.otf",
     addMappingsToSiteDir(tut, tutSiteDir),
-    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), apiSiteDir)
+    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), apiSiteDir),
+    // The doc task will also generate the documentation site.
+    doc <<= (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite)
   )
 
   override def requires = PreprocessPlugin && UnpublishedPlugin
