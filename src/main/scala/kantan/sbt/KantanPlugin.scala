@@ -42,7 +42,7 @@ import scala.xml.transform.{RewriteRule, RuleTransformer}
 object KantanPlugin extends AutoPlugin {
   // - Common dependency versions --------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  val kindProjectorVersion = "0.9.0"
+  val kindProjectorVersion = "0.9.2"
   val macroParadiseVersion = "2.1.0"
 
 
