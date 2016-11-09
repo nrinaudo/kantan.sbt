@@ -42,7 +42,7 @@ import scala.xml.transform.{RewriteRule, RuleTransformer}
 object KantanPlugin extends AutoPlugin {
   // - Common dependency versions --------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  val kindProjectorVersion = "0.9.2"
+  val kindProjectorVersion = "0.9.3"
   val macroParadiseVersion = "2.1.0"
 
 
@@ -93,8 +93,8 @@ object KantanPlugin extends AutoPlugin {
 
     Seq(
       organization       := "com.nrinaudo",
-      scalaVersion       := "2.11.8",
-      crossScalaVersions := Seq("2.10.6", "2.11.8"),
+      scalaVersion       := "2.12.0",
+      crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0"),
       autoAPIMappings    := true,
       incOptions         := incOptions.value.withNameHashing(true),
       headers            := Map(
@@ -109,10 +109,9 @@ object KantanPlugin extends AutoPlugin {
   }
 
   /** Sane, version dependent scalac settings. */
-  lazy val scalacSettings: Seq[Setting[_]] = Seq(
+  def scalacSettings: Seq[Setting[_]] = Seq(
     scalacOptions := Seq(
       "-deprecation",
-      "-target:jvm-1.7",
       "-encoding", "UTF-8",
       "-feature",
       "-language:existentials",
@@ -128,8 +127,9 @@ object KantanPlugin extends AutoPlugin {
       "-Ywarn-value-discard",
       "-Xfuture"
     ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, 11)) ⇒ Seq("-Ywarn-unused-import")
-      case Some((2, 10)) ⇒ Seq("-Xdivergence211")
+      case Some((_, x)) if x > 10 ⇒
+        "-Ywarn-unused-import" :: (if(x >= 12) List("-Ypartial-unification") else List.empty)
+      case Some((_, 10)) ⇒ Seq("-Xdivergence211")
       case _             ⇒ Nil
     }),
 
