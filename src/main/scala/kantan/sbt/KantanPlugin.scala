@@ -51,8 +51,22 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
     val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
+
+    def ifJava8(projects: Seq[ProjectReference]): Seq[ProjectReference] =
+      if(supportsJava8) projects else Nil
+
+    def ifNotJava8(projects: Seq[ProjectReference]): Seq[ProjectReference] =
+      if(!supportsJava8) projects else Nil
+
   }
   import autoImport._
+
+
+  // - Helper functions ------------------------------------------------------------------------------------------------
+  // -------------------------------------------------------------------------------------------------------------------
+  lazy val javaSpecificationVersion: Double = System.getProperty("java.specification.version").toDouble
+  lazy val supportsJava8: Boolean = javaSpecificationVersion >= 1.8D
+
 
 
   // - AutoPlugin implementation ---------------------------------------------------------------------------------------

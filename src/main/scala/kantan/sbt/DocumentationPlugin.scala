@@ -59,7 +59,7 @@ object DocumentationPlugin extends AutoPlugin {
     addMappingsToSiteDir(tut, tutSiteDir),
     addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), apiSiteDir),
     // The doc task will also generate the documentation site.
-    doc <<= (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite)
+    doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
   )
 
   override def requires = PreprocessPlugin && UnpublishedPlugin
