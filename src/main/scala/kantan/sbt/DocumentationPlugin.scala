@@ -51,6 +51,7 @@ object DocumentationPlugin extends AutoPlugin {
       Seq("-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath) ++
       docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty)
     },
+    tutNameFilter := ((if(!KantanPlugin.supportsJava8) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
     tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import"))),
     ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=

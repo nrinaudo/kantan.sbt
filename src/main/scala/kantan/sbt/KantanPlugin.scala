@@ -52,10 +52,10 @@ object KantanPlugin extends AutoPlugin {
   object autoImport {
     val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
 
-    def ifJava8(projects: Seq[ProjectReference]): Seq[ProjectReference] =
+    def ifJava8[A](projects: A*): Seq[A] =
       if(supportsJava8) projects else Nil
 
-    def ifNotJava8(projects: Seq[ProjectReference]): Seq[ProjectReference] =
+    def ifNotJava8[A](projects: A*): Seq[A] =
       if(!supportsJava8) projects else Nil
 
   }
