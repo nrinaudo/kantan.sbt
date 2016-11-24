@@ -97,8 +97,6 @@ object KantanPlugin extends AutoPlugin {
     ))
   )
 
-  private lazy val groupByProject: Def.Initialize[Task[ProjectRef]] =
-    Def.task { thisProjectRef.value }
   lazy val filter = ScopeFilter(inAnyProject, inAnyConfiguration)
 
   /** General settings. */
