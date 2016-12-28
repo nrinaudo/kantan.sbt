@@ -16,17 +16,15 @@
 
 package kantan.sbt
 
+import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
+import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
-import com.typesafe.sbt.SbtSite
-import com.typesafe.sbt.SbtSite.SiteKeys
-import com.typesafe.sbt.site.SitePlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.headers
 import de.heikoseeberger.sbtheader.license.Apache2_0
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
 import sbt.Keys._
-import scala.xml.transform.{RewriteRule, RuleTransformer}
 
 /** Settings common to all projects.
   *
@@ -104,16 +102,18 @@ object KantanPlugin extends AutoPlugin {
     val license = Apache2_0("2016", "Nicolas Rinaudo")
 
     Seq(
-      organization       := "com.nrinaudo",
-      scalaVersion       := "2.12.0",
-      crossScalaVersions := Seq("2.10.6", "2.11.8", "2.12.0"),
-      autoAPIMappings    := true,
-      incOptions         := incOptions.value.withNameHashing(true),
-      headers            := Map(
+      organization            := "com.nrinaudo",
+      scalaVersion            := "2.12.0",
+      crossScalaVersions      := Seq("2.10.6", "2.11.8", "2.12.0"),
+      autoAPIMappings         := true,
+      incOptions              := incOptions.value.withNameHashing(true),
+      doctestWithDependencies := false,
+      doctestTestFramework    := DoctestTestFramework.ScalaTest,
+      headers                 := Map(
         "scala" → license,
         "java"  → license
       ),
-      resolvers          := Seq(
+      resolvers               := Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
       )
