@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Nicolas Rinaudo
+ * Copyright 2017 Nicolas Rinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -99,12 +99,12 @@ object KantanPlugin extends AutoPlugin {
 
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
-    val license = Apache2_0("2016", "Nicolas Rinaudo")
+    val license = Apache2_0("2017", "Nicolas Rinaudo")
 
     Seq(
       organization            := "com.nrinaudo",
-      scalaVersion            := "2.12.0",
-      crossScalaVersions      := Seq("2.10.6", "2.11.8", "2.12.0"),
+      scalaVersion            := "2.12.1",
+      crossScalaVersions      := Seq("2.10.6", "2.11.8", "2.12.1"),
       autoAPIMappings         := true,
       incOptions              := incOptions.value.withNameHashing(true),
       doctestWithDependencies := false,

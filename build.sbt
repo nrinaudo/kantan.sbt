@@ -22,7 +22,7 @@ scmInfo := Some(ScmInfo(
   s"scm:git:git@github.com:nrinaudo/kantan.build.git"
 ))
 
-val license = Apache2_0("2016", "Nicolas Rinaudo")
+val license = Apache2_0("2017", "Nicolas Rinaudo")
 
 headers := Map(
   "scala" → license,
