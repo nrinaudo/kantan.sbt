@@ -18,8 +18,8 @@ pomExtra := <developers>
 homepage := Some(url(s"https://nrinaudo.github.io/kantan.sbt"))
 
 scmInfo := Some(ScmInfo(
-  url(s"https://github.com/nrinaudo/kantan.build"),
-  s"scm:git:git@github.com:nrinaudo/kantan.build.git"
+  url(s"https://github.com/nrinaudo/kantan.sbt"),
+  s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
 ))
 
 val license = Apache2_0("2017", "Nicolas Rinaudo")
@@ -37,7 +37,7 @@ addSbtPlugin("com.jsuereth"        %  "sbt-pgp"               % "1.0.0")
 addSbtPlugin("org.tpolecat"        %  "tut-plugin"            % "0.4.8")
 addSbtPlugin("com.typesafe.sbt"    %  "sbt-site"              % "1.1.0")
 addSbtPlugin("com.eed3si9n"        %  "sbt-unidoc"            % "0.3.3")
-addSbtPlugin("com.typesafe.sbt"    %  "sbt-ghpages"           % "0.5.4")
+addSbtPlugin("com.typesafe.sbt"    %  "sbt-ghpages"           % "0.6.0")
 addSbtPlugin("de.heikoseeberger"   %  "sbt-header"            % "1.6.0")
 addSbtPlugin("org.scalastyle"      %% "scalastyle-sbt-plugin" % "0.8.0")
 addSbtPlugin("org.scoverage"       %% "sbt-scoverage"         % "1.5.0")

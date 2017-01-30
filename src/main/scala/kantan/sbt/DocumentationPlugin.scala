@@ -16,8 +16,7 @@
 
 package kantan.sbt
 
-import com.typesafe.sbt.SbtGhPages.GhPagesKeys._
-import com.typesafe.sbt.SbtGhPages.ghpages
+import com.typesafe.sbt.sbtghpages.GhpagesPlugin
 import com.typesafe.sbt.site.SitePlugin
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin
 import com.typesafe.sbt.site.util.SiteHelpers._
@@ -43,7 +42,7 @@ object DocumentationPlugin extends AutoPlugin {
   }
   import autoImport._
 
-  override def projectSettings = ghpages.settings ++ unidocSettings ++ tutSettings ++ Seq(
+  override def projectSettings = unidocSettings ++ tutSettings ++ Seq(
     tutSiteDir   := "_tut",
     apiSiteDir   := "api",
     docSourceUrl := scmInfo.value.map(_.browseUrl + "/tree/master€{FILE_PATH}.scala"),
@@ -53,7 +52,7 @@ object DocumentationPlugin extends AutoPlugin {
     },
     tutNameFilter := ((if(!KantanPlugin.supportsJava8) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
     tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import"))),
-    ghpagesNoJekyll := false,
+    GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=
     "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
     "*.woff" | "*.woff2" | "*.otf",
@@ -63,7 +62,7 @@ object DocumentationPlugin extends AutoPlugin {
     doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
   )
 
-  override def requires = PreprocessPlugin && UnpublishedPlugin
+  override def requires = PreprocessPlugin && UnpublishedPlugin && GhpagesPlugin
 
   override def trigger = noTrigger
 }
