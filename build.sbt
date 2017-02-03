@@ -41,6 +41,6 @@ addSbtPlugin("com.typesafe.sbt"    %  "sbt-ghpages"           % "0.6.0")
 addSbtPlugin("de.heikoseeberger"   %  "sbt-header"            % "1.6.0")
 addSbtPlugin("org.scalastyle"      %% "scalastyle-sbt-plugin" % "0.8.0")
 addSbtPlugin("org.scoverage"       %% "sbt-scoverage"         % "1.5.0")
-addSbtPlugin("com.github.tkawachi" %  "sbt-doctest"           % "0.4.2")
+addSbtPlugin("com.github.tkawachi" %  "sbt-doctest"           % "0.5.0")
 
 addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;compile")
