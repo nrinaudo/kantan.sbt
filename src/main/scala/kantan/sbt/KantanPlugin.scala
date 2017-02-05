@@ -56,6 +56,10 @@ object KantanPlugin extends AutoPlugin {
     def ifNotJava8[A](projects: A*): Seq[A] =
       if(!supportsJava8) projects else Nil
 
+    implicit class KantanLaws(val proj: Project) extends AnyVal {
+      def laws(name: String): Project =
+        proj.settings(unmanagedClasspath in Test ++= (fullClasspath in (LocalProject(name), Compile)).value)
+    }
   }
   import autoImport._
 
