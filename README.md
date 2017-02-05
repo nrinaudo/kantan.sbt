@@ -12,7 +12,7 @@ default settings that are only valid if you're, well, me.
 Enabling `kantan.sbt` is done by adding the following line to your `project/plugins.sbt` file:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "1.2.4")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "1.2.5")
 ```
 
 Once that's done, the following plugins will be available:
