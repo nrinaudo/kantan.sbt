@@ -112,6 +112,7 @@ object KantanPlugin extends AutoPlugin {
       autoAPIMappings         := true,
       incOptions              := incOptions.value.withNameHashing(true),
       doctestWithDependencies := false,
+      doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
       headers                 := Map(
         "scala" → license,
