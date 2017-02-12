@@ -18,13 +18,15 @@ package kantan.sbt
 
 import com.typesafe.sbt.sbtghpages.GhpagesPlugin
 import com.typesafe.sbt.site.SitePlugin
+import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin
 import com.typesafe.sbt.site.util.SiteHelpers._
 import sbt._
 import sbt.Keys._
 import sbt.ScopeFilter.ProjectFilter
-import sbtunidoc.Plugin._
-import sbtunidoc.Plugin.UnidocKeys._
+import sbtunidoc.BaseUnidocPlugin.autoImport._
+import sbtunidoc.ScalaUnidocPlugin
+import sbtunidoc.ScalaUnidocPlugin.autoImport._
 import tut.Plugin._
 
 /** Plugin for documentation projects.
@@ -38,7 +40,6 @@ object DocumentationPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
     val tutSiteDir: SettingKey[String]           = settingKey("Website tutorial directory")
-    val apiSiteDir: SettingKey[String]           = settingKey("Unidoc API directory")
     val docSourceUrl: SettingKey[Option[String]] = settingKey("scalac -doc-source-url parameter")
 
     def inProjectsIf(predicate: Boolean)(projects: ProjectReference*): ProjectFilter =
@@ -47,9 +48,9 @@ object DocumentationPlugin extends AutoPlugin {
   }
   import autoImport._
 
-  override def projectSettings = unidocSettings ++ tutSettings ++ Seq(
+  override def projectSettings = tutSettings ++ Seq(
     tutSiteDir   := "_tut",
-    apiSiteDir   := "api",
+    siteSubdirName in ScalaUnidoc := "api",
     docSourceUrl := scmInfo.value.map(_.browseUrl + "/tree/master€{FILE_PATH}.scala"),
     scalacOptions in (ScalaUnidoc, unidoc) ++= {
       Seq("-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath) ++
@@ -62,12 +63,12 @@ object DocumentationPlugin extends AutoPlugin {
     "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
     "*.woff" | "*.woff2" | "*.otf",
     addMappingsToSiteDir(tut, tutSiteDir),
-    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), apiSiteDir),
+    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
     // The doc task will also generate the documentation site.
     doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
   )
 
-  override def requires = PreprocessPlugin && UnpublishedPlugin && GhpagesPlugin
+  override def requires = PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin
 
   override def trigger = noTrigger
 }
