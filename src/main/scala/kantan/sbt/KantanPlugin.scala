@@ -50,24 +50,23 @@ object KantanPlugin extends AutoPlugin {
   object autoImport {
     val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
 
-    def ifJava8[A](projects: A*): Seq[A] =
-      if(supportsJava8) projects else Nil
+    /** `true` if java 8 is supported, `false` otherwise. */
+    lazy val java8Supported = BuildProperties.java8Supported
 
-    def ifNotJava8[A](projects: A*): Seq[A] =
-      if(!supportsJava8) projects else Nil
-
-    implicit class KantanLaws(val proj: Project) extends AnyVal {
+    implicit class KantanOperations(val proj: Project) extends AnyVal {
       def laws(name: String): Project =
         proj.settings(unmanagedClasspath in Test ++= (fullClasspath in (LocalProject(name), Compile)).value)
+
+      def aggregateIf(predicate: Boolean)(refs: ProjectReference*): Project =
+        if(predicate) proj.aggregate(refs:_*)
+        else          proj
+
+      def dependsOnIf(predicate: Boolean)(refs: ClasspathDep[ProjectReference]*): Project =
+        if(predicate) proj.dependsOn(refs:_*)
+        else          proj
     }
   }
   import autoImport._
-
-
-  // - Helper functions ------------------------------------------------------------------------------------------------
-  // -------------------------------------------------------------------------------------------------------------------
-  lazy val javaSpecificationVersion: Double = System.getProperty("java.specification.version").toDouble
-  lazy val supportsJava8: Boolean = javaSpecificationVersion >= 1.8D
 
 
 

@@ -22,6 +22,7 @@ import com.typesafe.sbt.site.preprocess.PreprocessPlugin
 import com.typesafe.sbt.site.util.SiteHelpers._
 import sbt._
 import sbt.Keys._
+import sbt.ScopeFilter.ProjectFilter
 import sbtunidoc.Plugin._
 import sbtunidoc.Plugin.UnidocKeys._
 import tut.Plugin._
@@ -39,6 +40,10 @@ object DocumentationPlugin extends AutoPlugin {
     val tutSiteDir: SettingKey[String]           = settingKey("Website tutorial directory")
     val apiSiteDir: SettingKey[String]           = settingKey("Unidoc API directory")
     val docSourceUrl: SettingKey[Option[String]] = settingKey("scalac -doc-source-url parameter")
+
+    def inProjectsIf(predicate: Boolean)(projects: ProjectReference*): ProjectFilter =
+      if(predicate) inProjects(projects:_*)
+      else          inProjects()
   }
   import autoImport._
 
@@ -50,7 +55,7 @@ object DocumentationPlugin extends AutoPlugin {
       Seq("-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath) ++
       docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty)
     },
-    tutNameFilter := ((if(!KantanPlugin.supportsJava8) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
+    tutNameFilter := ((if(!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
     tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import"))),
     GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=
