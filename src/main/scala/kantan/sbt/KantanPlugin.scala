@@ -20,7 +20,7 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
-import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.{headers, createHeaders}
+import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.{createHeaders, headers}
 import de.heikoseeberger.sbtheader.license.Apache2_0
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
