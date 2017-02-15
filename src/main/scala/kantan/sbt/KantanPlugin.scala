@@ -51,7 +51,7 @@ object KantanPlugin extends AutoPlugin {
     val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
 
     /** `true` if java 8 is supported, `false` otherwise. */
-    lazy val java8Supported = BuildProperties.java8Supported
+    lazy val java8Supported: Boolean = BuildProperties.java8Supported
 
     implicit class KantanOperations(val proj: Project) extends AnyVal {
       def laws(name: String): Project =
