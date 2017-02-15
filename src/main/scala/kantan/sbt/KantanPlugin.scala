@@ -20,7 +20,7 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
-import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.headers
+import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.{headers, createHeaders}
 import de.heikoseeberger.sbtheader.license.Apache2_0
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
@@ -98,7 +98,12 @@ object KantanPlugin extends AutoPlugin {
     ))
   )
 
-  lazy val filter = ScopeFilter(inAnyProject, inAnyConfiguration)
+  private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
+    confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) ⇒
+      acc ++ (unmanagedSources in (conf, createHeaders) ++= (((sourceDirectory in conf).value / "boilerplate") **
+                                                             "*.template").get)
+    }
+
 
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
@@ -114,14 +119,15 @@ object KantanPlugin extends AutoPlugin {
       doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
       headers                 := Map(
-        "scala" → license,
-        "java"  → license
+        "scala"    → license,
+        "java"     → license,
+        "template" → license
       ),
       resolvers               := Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
       )
-    )
+    ) ++ addBoilerplate(Compile, Test)
   }
 
   /** Sane, version dependent scalac settings. */
