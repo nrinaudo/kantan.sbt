@@ -41,5 +41,6 @@ addSbtPlugin("com.typesafe.sbt"    %  "sbt-ghpages"           % Versions.sbtGhPa
 addSbtPlugin("org.scalastyle"      %% "scalastyle-sbt-plugin" % Versions.scalastyle)
 addSbtPlugin("org.scoverage"       %% "sbt-scoverage"         % Versions.scoverage)
 addSbtPlugin("com.github.tkawachi" %  "sbt-doctest"           % Versions.sbtDoctest)
+addSbtPlugin("org.wartremover"     % "sbt-wartremover"        % Versions.wartRemover)
 
 addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;compile")

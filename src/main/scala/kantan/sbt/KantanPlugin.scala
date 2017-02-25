@@ -25,6 +25,7 @@ import de.heikoseeberger.sbtheader.license.Apache2_0
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
 import sbt.Keys._
+import wartremover.{Wart, WartRemover, Warts}
 
 /** Settings common to all projects.
   *
@@ -74,11 +75,11 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   override def trigger = allRequirements
 
-  override def requires = HeaderPlugin
+  override def requires = HeaderPlugin && WartRemover
 
   override lazy val projectSettings =
     generalSettings ++ scalacSettings ++ commonDependencies ++ remoteSettings ++
-    ScalastylePlugin.projectSettings
+    ScalastylePlugin.projectSettings ++ wartRemoverSettings
 
   override def globalSettings =
     addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;coverage;test;coverageReport;coverageAggregate;doc")
@@ -158,6 +159,18 @@ object KantanPlugin extends AutoPlugin {
     // Disable -Ywarn-unused-imports in the console.
     scalacOptions in (Compile, console) ~= { _.filterNot(Set("-Ywarn-unused-import")) }
   )
+
+  /** WartRemover settings, disabled for 2.10 because of weird compatibility issues that I can't bother to get into.
+    * 2.10 support is going to be dropped sooner rather than later anyway.
+    */
+  def wartRemoverSettings: Seq[Setting[_]] =
+    WartRemover.autoImport.wartremoverErrors ++= {
+      if(scalaVersion.value.startsWith("2.10")) Seq.empty
+      // Removes Warts that have too many false positives (and are mostly covered by other tools as well anyway).
+      else Warts.allBut(Wart.NonUnitStatements,
+        Wart.Equals, Wart.Overloading, Wart.ImplicitParameter, Wart.Nothing, Wart.ImplicitConversion, Wart.Any,
+        Wart.ToString, Wart.PublicInference)
+    }
 
   /** Includes common dependencies (macros and kind-projector). */
   lazy val commonDependencies: Seq[Setting[_]] = Seq(
