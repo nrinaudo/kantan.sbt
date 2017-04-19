@@ -57,7 +57,7 @@ object DocumentationPlugin extends AutoPlugin {
       docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty)
     },
     tutNameFilter := ((if(!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
-    tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import"))),
+    tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import", "-Xlint"))),
     GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=
     "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
