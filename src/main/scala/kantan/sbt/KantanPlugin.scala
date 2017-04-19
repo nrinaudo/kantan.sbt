@@ -112,8 +112,8 @@ object KantanPlugin extends AutoPlugin {
 
     Seq(
       organization            := "com.nrinaudo",
-      scalaVersion            := "2.12.1",
-      crossScalaVersions      := Seq("2.10.6", "2.11.8", "2.12.1"),
+      scalaVersion            := "2.12.2",
+      crossScalaVersions      := Seq("2.10.6", "2.11.11", "2.12.2"),
       autoAPIMappings         := true,
       incOptions              := incOptions.value.withNameHashing(true),
       doctestWithDependencies := false,
