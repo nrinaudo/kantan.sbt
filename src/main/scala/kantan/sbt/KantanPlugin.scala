@@ -124,7 +124,7 @@ object KantanPlugin extends AutoPlugin {
         "java"     → license,
         "template" → license
       ),
-      resolvers               := Seq(
+      resolvers              ++= Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
       )
@@ -132,33 +132,37 @@ object KantanPlugin extends AutoPlugin {
   }
 
   /** Sane, version dependent scalac settings. */
-  def scalacSettings: Seq[Setting[_]] = Seq(
-    scalacOptions := Seq(
-      "-deprecation",
+  def scalacSettings: Seq[Setting[_]] = {
+    def base(version: String) = Seq(
       "-encoding", "UTF-8",
       "-feature",
       "-language:existentials",
       "-language:higherKinds",
       "-language:implicitConversions",
       "-language:experimental.macros",
+      "-deprecation",
       "-unchecked",
-      "-Xfatal-warnings",
-      "-Xlint",
       "-Yno-adapted-args",
       "-Ywarn-dead-code",
       "-Ywarn-numeric-widen",
       "-Ywarn-value-discard",
       "-Xfuture"
-    ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((_, x)) if x > 10 ⇒
-        "-Ywarn-unused-import" :: (if(x >= 12) List("-Ypartial-unification") else List.empty)
+    ) ++ (CrossVersion.partialVersion(version) match {
+      case Some((_, x)) if x >= 12 ⇒ Seq("-Ypartial-unification")
       case Some((_, 10)) ⇒ Seq("-Xdivergence211")
-      case _             ⇒ Nil
-    }),
+      case _             ⇒ Seq.empty
+    })
 
-    // Disable -Ywarn-unused-imports in the console.
-    scalacOptions in (Compile, console) ~= { _.filterNot(Set("-Ywarn-unused-import")) }
-  )
+    // Warnings are only fatal when compiling the "main" code. I'd gladly make them fatal everywhere, but -Xlint
+    // can be way too agressive (unused-imports basically make the REPL unusable), and tests sometimes need to do
+    // dodgy things (such as declare two implicits and make sure the right one is picked up - making the other one
+    // unused).
+    Seq(
+      scalacOptions                       := base(scalaVersion.value),
+      scalacOptions in (Compile, compile) ++= Seq("-Xfatal-warnings", "-Xlint"),
+      scalacOptions in Test               ++= Seq("-Xlint")
+    )
+  }
 
   /** WartRemover settings, disabled for 2.10 because of weird compatibility issues that I can't bother to get into.
     * 2.10 support is going to be dropped sooner rather than later anyway.

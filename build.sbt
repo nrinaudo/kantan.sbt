@@ -24,6 +24,8 @@ scmInfo := Some(ScmInfo(
 
 val license = Apache2_0("2017", "Nicolas Rinaudo")
 
+scalacOptions ++= Seq("-feature", "-language:existentials")
+
 headers := Map(
   "scala" → license,
   "java"  → license

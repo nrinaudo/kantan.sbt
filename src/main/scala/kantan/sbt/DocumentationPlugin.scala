@@ -27,7 +27,7 @@ import sbt.ScopeFilter.ProjectFilter
 import sbtunidoc.BaseUnidocPlugin.autoImport._
 import sbtunidoc.ScalaUnidocPlugin
 import sbtunidoc.ScalaUnidocPlugin.autoImport._
-import tut.Plugin._
+import tut.TutPlugin, TutPlugin.autoImport._
 
 /** Plugin for documentation projects.
   *
@@ -48,7 +48,7 @@ object DocumentationPlugin extends AutoPlugin {
   }
   import autoImport._
 
-  override def projectSettings = tutSettings ++ Seq(
+  override def projectSettings = Seq(
     tutSiteDir   := "_tut",
     siteSubdirName in ScalaUnidoc := "api",
     docSourceUrl := scmInfo.value.map(_.browseUrl + "/tree/master€{FILE_PATH}.scala"),
@@ -57,7 +57,6 @@ object DocumentationPlugin extends AutoPlugin {
       docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty)
     },
     tutNameFilter := ((if(!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
-    tutScalacOptions ~= (_.filterNot(Set("-Ywarn-unused-import", "-Xlint"))),
     GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=
     "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
@@ -68,7 +67,7 @@ object DocumentationPlugin extends AutoPlugin {
     doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
   )
 
-  override def requires = PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin
+  override def requires = PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin && TutPlugin
 
   override def trigger = noTrigger
 }
