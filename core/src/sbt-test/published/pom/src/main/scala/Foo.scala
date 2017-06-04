@@ -1,0 +1,2 @@
+object Foo extends App {
+}

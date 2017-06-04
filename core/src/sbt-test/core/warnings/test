@@ -1,0 +1,3 @@
+# Warnings should be fatal neither in main nor in test
+> compile
+> test:compile

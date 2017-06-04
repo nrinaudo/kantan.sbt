@@ -20,12 +20,12 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
+import de.heikoseeberger.sbtheader.license.License
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.{createHeaders, headers}
-import de.heikoseeberger.sbtheader.license.Apache2_0
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
 import sbt.Keys._
-import wartremover.{Wart, WartRemover, Warts}
+import scala.util.matching.Regex
 
 /** Settings common to all projects.
   *
@@ -49,7 +49,7 @@ object KantanPlugin extends AutoPlugin {
   // - Public settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
-    val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
+    val license: SettingKey[Option[(Regex, String)]] = settingKey("License to use for the project")
 
     /** `true` if java 8 is supported, `false` otherwise. */
     lazy val java8Supported: Boolean = BuildProperties.java8Supported
@@ -75,11 +75,11 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   override def trigger = allRequirements
 
-  override def requires = HeaderPlugin && WartRemover
+  override def requires = HeaderPlugin
 
   override lazy val projectSettings =
-    generalSettings ++ scalacSettings ++ commonDependencies ++ remoteSettings ++
-    ScalastylePlugin.projectSettings ++ wartRemoverSettings
+    generalSettings ++ scalacSettings ++ commonDependencies ++
+    ScalastylePlugin.projectSettings
 
   override def globalSettings =
     addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;coverage;test;coverageReport;coverageAggregate;doc")
@@ -88,42 +88,28 @@ object KantanPlugin extends AutoPlugin {
 
   // - Custom settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  /** Remote identifiers, computed from [[autoImport.kantanProject]]. */
-  lazy val remoteSettings: Seq[Setting[_]] = Seq(
-    homepage       := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}")),
-    apiURL         := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}/api/")),
-    git.remoteRepo := s"git@github.com:nrinaudo/kantan.${kantanProject.value}.git",
-    scmInfo        := Some(ScmInfo(
-      url(s"https://github.com/nrinaudo/kantan.${kantanProject.value}"),
-      s"scm:git:git@github.com:nrinaudo/kantan.${kantanProject.value}.git"
-    ))
-  )
-
   private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
     confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) ⇒
       acc ++ (unmanagedSources in (conf, createHeaders) ++= (((sourceDirectory in conf).value / "boilerplate") **
-                                                             "*.template").get)
+        "*.template").get)
     }
 
 
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
-    val license = Apache2_0("2017", "Nicolas Rinaudo")
-
     Seq(
-      organization            := "com.nrinaudo",
       scalaVersion            := "2.12.2",
-      crossScalaVersions      := Seq("2.10.6", "2.11.11", "2.12.2"),
       autoAPIMappings         := true,
       incOptions              := incOptions.value.withNameHashing(true),
       doctestWithDependencies := false,
       doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
-      headers                 := Map(
-        "scala"    → license,
-        "java"     → license,
-        "template" → license
-      ),
+      license                 := None,
+      headers                 := license.value.fold(Map.empty[String, (Regex, String)])(l ⇒ Map(
+        "scala"    → l,
+        "java"     → l,
+        "template" → l
+      )),
       resolvers              ++= Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
@@ -153,29 +139,16 @@ object KantanPlugin extends AutoPlugin {
       case _             ⇒ Seq.empty
     })
 
-    // Warnings are only fatal when compiling the "main" code. I'd gladly make them fatal everywhere, but -Xlint
-    // can be way too agressive (unused-imports basically make the REPL unusable), and tests sometimes need to do
-    // dodgy things (such as declare two implicits and make sure the right one is picked up - making the other one
-    // unused).
+    // Sane defaults for warnings / errors:
+    // - -Xlint is only enabled for Compile & Test, since it basically makes the REPL unusable.
+    // - nothing is fatal (use StrictKantanPlugin for that)
     Seq(
       scalacOptions                       := base(scalaVersion.value),
-      scalacOptions in (Compile, compile) ++= Seq("-Xfatal-warnings", "-Xlint"),
-      scalacOptions in Test               ++= Seq("-Xlint")
+      scalacOptions in (Compile, compile) += "-Xlint",
+      scalacOptions in Test               += "-Xlint"
     )
   }
 
-  /** WartRemover settings, disabled for 2.10 because of weird compatibility issues that I can't bother to get into.
-    * 2.10 support is going to be dropped sooner rather than later anyway.
-    */
-  def wartRemoverSettings: Seq[Setting[_]] = {
-    List(Compile, Test).flatMap { c ⇒ inConfig(c)(WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++= {
-      if(scalaVersion.value.startsWith("2.10")) Seq.empty
-      // Removes Warts that have too many false positives (and are mostly covered by other tools as well anyway).
-      else Warts.allBut(Wart.NonUnitStatements,
-        Wart.Equals, Wart.Overloading, Wart.ImplicitParameter, Wart.Nothing, Wart.ImplicitConversion, Wart.Any,
-        Wart.ToString, Wart.PublicInference)
-    })}
-  }
 
   /** Includes common dependencies (macros and kind-projector). */
   lazy val commonDependencies: Seq[Setting[_]] = Seq(

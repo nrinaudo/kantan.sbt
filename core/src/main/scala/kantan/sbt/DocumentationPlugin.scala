@@ -48,7 +48,7 @@ object DocumentationPlugin extends AutoPlugin {
   }
   import autoImport._
 
-  override def projectSettings = Seq(
+  override def projectSettings: Seq[Setting[_]] = Seq(
     tutSiteDir   := "_tut",
     siteSubdirName in ScalaUnidoc := "api",
     docSourceUrl := scmInfo.value.map(_.browseUrl + "/tree/master€{FILE_PATH}.scala"),
