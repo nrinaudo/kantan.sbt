@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Nicolas Rinaudo
+ * Copyright 2016 com.nrinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,7 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
-import de.heikoseeberger.sbtheader.license.License
-import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.{createHeaders, headers}
+import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.headerCreate
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
 import sbt.Keys._
@@ -49,8 +48,6 @@ object KantanPlugin extends AutoPlugin {
   // - Public settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
-    val license: SettingKey[Option[(Regex, String)]] = settingKey("License to use for the project")
-
     /** `true` if java 8 is supported, `false` otherwise. */
     lazy val java8Supported: Boolean = BuildProperties.java8Supported
 
@@ -90,7 +87,7 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
     confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) ⇒
-      acc ++ (unmanagedSources in (conf, createHeaders) ++= (((sourceDirectory in conf).value / "boilerplate") **
+      acc ++ (unmanagedSources in (conf, headerCreate) ++= (((sourceDirectory in conf).value / "boilerplate") **
         "*.template").get)
     }
 
@@ -104,12 +101,6 @@ object KantanPlugin extends AutoPlugin {
       doctestWithDependencies := false,
       doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
-      license                 := None,
-      headers                 := license.value.fold(Map.empty[String, (Regex, String)])(l ⇒ Map(
-        "scala"    → l,
-        "java"     → l,
-        "template" → l
-      )),
       resolvers              ++= Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")

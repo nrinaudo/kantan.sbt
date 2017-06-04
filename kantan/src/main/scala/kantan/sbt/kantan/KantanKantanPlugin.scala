@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Nicolas Rinaudo
+ * Copyright 2016 com.nrinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
 package kantan.sbt.kantan
 
 import com.typesafe.sbt.SbtGit.git
-import de.heikoseeberger.sbtheader.license.Apache2_0
 import kantan.sbt.strict.StrictKantanPlugin
-import kantan.sbt.KantanPlugin.autoImport.license
 import kantan.sbt.PublishedPlugin.autoImport._
 import sbt._
 import sbt.Keys._
@@ -48,7 +46,6 @@ object KantanKantanPlugin extends AutoPlugin {
     organizationHomepage    := Some(url("https://nrinaudo.github.io")),
     organization            := "com.nrinaudo",
     crossScalaVersions      := Seq("2.10.6", "2.11.11", "2.12.2"),
-    license                 := Some(Apache2_0("2017", "Nicolas Rinaudo")),
     licenses                := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html"))
   )
 

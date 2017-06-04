@@ -1,12 +1,10 @@
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
-import de.heikoseeberger.sbtheader.HeaderKey._
-import de.heikoseeberger.sbtheader.license.Apache2_0
 
 lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
-  val license = Apache2_0("2017", "Nicolas Rinaudo")
   Seq(
     sbtPlugin    := true,
     organization := "com.nrinaudo",
+    startYear    := Some(2016),
     licenses := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     pomExtra := <developers>
       <developer>
@@ -20,11 +18,7 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
       url(s"https://github.com/nrinaudo/kantan.sbt"),
       s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
     )),
-    scalacOptions ++= Seq("-feature", "-language:existentials"),
-    headers := Map(
-      "scala" → license,
-      "java"  → license
-    )
+    scalacOptions ++= Seq("-feature", "-language:existentials")
   ) ++ testSettings
 }
 
