@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 com.nrinaudo
+ * Copyright 2016 Nicolas Rinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,8 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
-import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport.headerCreate
+import de.heikoseeberger.sbtheader.FileType
+import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
 import sbt.Keys._
@@ -87,8 +88,11 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
     confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) ⇒
-      acc ++ (unmanagedSources in (conf, headerCreate) ++= (((sourceDirectory in conf).value / "boilerplate") **
-        "*.template").get)
+      acc ++ Seq(
+        unmanagedSources in (conf, headerCreate) ++= (((sourceDirectory in conf).value / "boilerplate") **
+          "*.template").get,
+        headerMappings += (FileType("template") -> HeaderCommentStyle.CStyleBlockComment)
+      )
     }
 
 

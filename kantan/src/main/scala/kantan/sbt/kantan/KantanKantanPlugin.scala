@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 com.nrinaudo
+ * Copyright 2016 Nicolas Rinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +18,18 @@ package kantan.sbt.kantan
 
 import com.typesafe.sbt.SbtGit.git
 import kantan.sbt.strict.StrictKantanPlugin
-import kantan.sbt.PublishedPlugin.autoImport._
 import sbt._
 import sbt.Keys._
 
 /** Plugin that sets kantan-specific values.
   *
   * This is really only meant for kantan projects. Don't use this unless you're me.
+  *
+  * In order for kantan builds to behave properly, the following two lines *must* be present in the `build.sbt` files:
+  * {{{
+  * kantanProject in ThisBuild := "foobar"
+  * startYear     in ThisBuild := Some(1978)
+  * }}}
   */
 object KantanKantanPlugin extends AutoPlugin {
   object autoImport {
@@ -40,11 +45,11 @@ object KantanKantanPlugin extends AutoPlugin {
 
   lazy val generalSettings: Seq[Setting[_]] = Seq(
     name                    := s"kantan.${kantanProject.value}",
-    developerName           := Some("Nicolas Rinaudo"),
-    developerId             := Some("nrinaudo"),
-    developerUrl            := Some(url("https://nrinaudo.github.io")),
-    organizationHomepage    := Some(url("https://nrinaudo.github.io")),
     organization            := "com.nrinaudo",
+    organizationHomepage    := Some(url("https://nrinaudo.github.io")),
+    organizationName        := "Nicolas Rinaudo",
+    developers              := List(Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com",
+      url("https://twitter.com/nicolasrinaudo"))),
     crossScalaVersions      := Seq("2.10.6", "2.11.11", "2.12.2"),
     licenses                := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html"))
   )

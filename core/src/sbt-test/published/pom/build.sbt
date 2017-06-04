@@ -1,11 +1,9 @@
 enablePlugins(PublishedPlugin)
 
-name          := "foo"
-organization  := "com.baz"
-version       := "1.2.3"
-developerId   := Some("com.baz.id")
-developerName := Some("Baz Name")
-developerUrl  := Some(url("https://baz.url"))
+name                 := "foo"
+organization         := "com.baz"
+organizationHomepage := Some(url("https://baz.url"))
+version              := "1.2.3"
 
 
 version := "1.0.0"
@@ -18,8 +16,10 @@ check := {
 
   val pom = makePomConfiguration.value.file.asUnsafeNode
 
-  def assertPom[A: NodeDecoder](path: String, expected: A): Unit =
-    assert(pom.unsafeEvalXPath(Query.unsafeCompile[A](path)) == expected)
+  def assertPom[A: NodeDecoder](path: String, expected: A): Unit =  {
+    val actual = pom.unsafeEvalXPath(Query.unsafeCompile[A](path))
+    assert(actual == expected, s"$path: Expected '$expected' but found '$actual'")
+  }
 
   // Basic description
   assertPom("/project/name",        "foo")
@@ -31,15 +31,10 @@ check := {
 
   // Organization info
   assertPom("/project/organization/name", "com.baz")
-  assertPom("/project/organization/url",  Option.empty[String])
+  assertPom("/project/organization/url",  "https://baz.url")
 
   // SCM info
   assertPom("/project/scm", Option.empty[String])
-
-  // Developer info
-  assertPom("/project/developers/developer/id",   "com.baz.id")
-  assertPom("/project/developers/developer/name", "Baz Name")
-  assertPom("/project/developers/developer/url",  "https://baz.url")
 
   // Documentation
   assertPom("/project/properties", Option.empty[String])

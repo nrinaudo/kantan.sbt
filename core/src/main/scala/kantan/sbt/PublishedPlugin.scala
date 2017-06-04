@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 com.nrinaudo
+ * Copyright 2016 Nicolas Rinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,26 +26,7 @@ import scala.xml.transform.{RewriteRule, RuleTransformer}
   * This mostly has to do with configuring POM files correctly.
   */
 object PublishedPlugin extends AutoPlugin {
-  object autoImport {
-    val developerId: SettingKey[Option[String]] = settingKey("Identifier of the developer publishing the artifacts")
-    val developerName: SettingKey[Option[String]] = settingKey("Name of the developer publishing the artifacts")
-    val developerUrl: SettingKey[Option[URL]] = settingKey("URL of the developer's website")
-  }
-
-  import autoImport._
-
   override def projectSettings = Seq(
-    developerId    := None,
-    developerName  := None,
-    developerUrl   := None,
-    pomExtra       :=
-      <developers>
-        <developer>
-          { developerId.value. map(d ⇒ <id>{d}</id>).getOrElse("") }
-          { developerName.value.map(n ⇒ <name>{n}</name>).getOrElse("") }
-          { developerUrl.value.map(u ⇒ <url>{u}</url>).getOrElse("") }
-        </developer>
-      </developers>,
     pomPostProcess := { (node: xml.Node) ⇒
       new RuleTransformer(
         new RewriteRule {

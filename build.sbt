@@ -3,17 +3,14 @@ import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
   Seq(
     sbtPlugin    := true,
-    organization := "com.nrinaudo",
+    organization            := "com.nrinaudo",
+    organizationHomepage    := Some(url("https://nrinaudo.github.io")),
+    organizationName        := "Nicolas Rinaudo",
     startYear    := Some(2016),
-    licenses := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
-    pomExtra := <developers>
-      <developer>
-        <id>nrinaudo</id>
-        <name>Nicolas Rinaudo</name>
-        <url>http://nrinaudo.github.io</url>
-      </developer>
-    </developers>,
-    homepage := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
+    licenses     := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+    homepage     := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
+    developers   := List(Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com",
+      url("https://twitter.com/nicolasrinaudo"))),
     scmInfo := Some(ScmInfo(
       url(s"https://github.com/nrinaudo/kantan.sbt"),
       s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
