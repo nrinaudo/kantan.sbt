@@ -20,7 +20,6 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
-import de.heikoseeberger.sbtheader.FileType
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
@@ -86,16 +85,6 @@ object KantanPlugin extends AutoPlugin {
 
   // - Custom settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
-    confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) ⇒
-      acc ++ Seq(
-        unmanagedSources in (conf, headerCreate) ++= (((sourceDirectory in conf).value / "boilerplate") **
-          "*.template").get,
-        headerMappings += (FileType("template") -> HeaderCommentStyle.CStyleBlockComment)
-      )
-    }
-
-
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
@@ -109,7 +98,7 @@ object KantanPlugin extends AutoPlugin {
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
       )
-    ) ++ addBoilerplate(Compile, Test)
+    )
   }
 
   /** Sane, version dependent scalac settings. */

@@ -1,4 +1,5 @@
 object Versions {
+  val boilerplate: String = "0.6.0"
   val sbtHeader: String   = "2.0.0"
   val sbtSonatype: String = "1.1"
   val sbtPgp: String      = "1.0.0"

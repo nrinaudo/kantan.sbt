@@ -30,7 +30,7 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
     publishLocal    := (),
     publishArtifact := false
   )
-  .aggregate(core, strict, kantan)
+  .aggregate(core, strict, kantan, boilerplate)
 
 lazy val core = project
   .settings(
@@ -60,6 +60,16 @@ lazy val strict = project
   .settings(baseSettings)
   .enablePlugins(AutomateHeaderPlugin)
   .settings(addSbtPlugin("org.wartremover" % "sbt-wartremover" % Versions.wartRemover))
+  .dependsOn(core)
+
+lazy val boilerplate = project
+  .settings(
+    moduleName := "kantan.sbt-boilerplate",
+    name       := "boilerplate"
+  )
+  .settings(baseSettings)
+  .enablePlugins(AutomateHeaderPlugin)
+  .settings(addSbtPlugin("io.spray" % "sbt-boilerplate" % Versions.boilerplate))
   .dependsOn(core)
 
 lazy val kantan = project
