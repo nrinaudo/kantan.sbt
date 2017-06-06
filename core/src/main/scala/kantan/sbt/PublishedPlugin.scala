@@ -23,23 +23,9 @@ import scala.xml.transform.{RewriteRule, RuleTransformer}
 
 /** Configures projects whose artifacts are meant for publication to maven.
   *
-  * This mostly has to do with configuring POM files correctly.
+  * This is mostly meant as a "tag" for other plugins to piggyback. See, for example, `KantanKantanPlugin`.
   */
 object PublishedPlugin extends AutoPlugin {
-  override def projectSettings = Seq(
-    pomPostProcess := { (node: xml.Node) ⇒
-      new RuleTransformer(
-        new RewriteRule {
-          override def transform(node: xml.Node): Seq[xml.Node] = node match {
-            case e: xml.Elem
-              if e.label == "dependency" && e.child.exists(child ⇒ child.label == "groupId" &&
-                                                                   child.text == "org.scoverage") ⇒ Nil
-            case _ ⇒ Seq(node)
-          }
-        }).transform(node).head
-    }
-  )
-
   override def requires = KantanPlugin && AutomateHeaderPlugin
 
   override def trigger = noTrigger
