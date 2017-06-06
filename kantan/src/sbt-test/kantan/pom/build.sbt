@@ -21,6 +21,7 @@ check := {
   assertPom("/project/name",        "kantan.foo")
   assertPom("/project/description", "kantan.foo")
   assertPom("/project/url",         "https://nrinaudo.github.io/kantan.foo")
+  assertPom("/project/groupId",     "com.nrinaudo")
 
   // License info
   assertPom("/project/licenses/license/name", "Apache-2.0")
