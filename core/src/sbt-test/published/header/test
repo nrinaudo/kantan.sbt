@@ -2,8 +2,8 @@
 -> headerCheck
 
 # It should be picked up when explicitely generating headers though.
-> headerCreate
 > compile
+> headerCheck
 
 # The header should have the expected value
 > check
