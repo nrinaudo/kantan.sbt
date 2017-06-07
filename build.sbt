@@ -41,8 +41,6 @@ lazy val core = project
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
     addSbtPlugin("de.heikoseeberger"   %  "sbt-header"            % Versions.sbtHeader),
-    addSbtPlugin("org.xerial.sbt"      %  "sbt-sonatype"          % Versions.sbtSonatype),
-    addSbtPlugin("com.jsuereth"        %  "sbt-pgp"               % Versions.sbtPgp),
     addSbtPlugin("org.tpolecat"        %  "tut-plugin"            % Versions.tut),
     addSbtPlugin("com.typesafe.sbt"    %  "sbt-site"              % Versions.sbtSite),
     addSbtPlugin("com.eed3si9n"        %  "sbt-unidoc"            % Versions.sbtUnidoc),
@@ -79,6 +77,10 @@ lazy val kantan = project
   )
   .settings(baseSettings)
   .enablePlugins(AutomateHeaderPlugin)
+  .settings(
+    addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
+    addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
+  )
   .dependsOn(strict)
 
 
