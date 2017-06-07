@@ -40,7 +40,7 @@ import scala.util.matching.Regex
 object KantanPlugin extends AutoPlugin {
   // - Common dependency versions --------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
-  val kindProjectorVersion = "0.9.3"
+  val kindProjectorVersion = "0.9.4"
   val macroParadiseVersion = "2.1.0"
 
 
@@ -72,7 +72,7 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   override def trigger = allRequirements
 
-  override def requires = HeaderPlugin
+  override def requires = JvmPlugin && HeaderPlugin
 
   override lazy val projectSettings =
     generalSettings ++ scalacSettings ++ commonDependencies ++
