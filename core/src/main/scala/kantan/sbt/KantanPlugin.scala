@@ -24,6 +24,7 @@ import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
 import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
 import sbt.Keys._
+import sbt.plugins.JvmPlugin
 import scala.util.matching.Regex
 
 /** Settings common to all projects.

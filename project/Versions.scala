@@ -10,5 +10,5 @@ object Versions {
   val scalastyle: String  = "0.8.0"
   val scoverage: String   = "1.5.0"
   val sbtDoctest: String  = "0.5.0"
-  val wartRemover: String = "2.0.3"
+  val wartRemover: String = "2.1.0"
 }
