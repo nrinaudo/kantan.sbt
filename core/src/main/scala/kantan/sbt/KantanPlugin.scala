@@ -89,7 +89,7 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      scalaVersion            := "2.12.2",
+      scalaVersion            := { if(BuildProperties.java8Supported) "2.12.2" else "2.11.11" },
       autoAPIMappings         := true,
       incOptions              := incOptions.value.withNameHashing(true),
       doctestWithDependencies := false,
