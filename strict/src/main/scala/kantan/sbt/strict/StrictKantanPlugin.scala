@@ -50,7 +50,7 @@ object StrictKantanPlugin extends AutoPlugin {
       // Removes Warts that have too many false positives (and are mostly covered by other tools as well anyway).
       else Warts.allBut(Wart.NonUnitStatements,
         Wart.Equals, Wart.Overloading, Wart.ImplicitParameter, Wart.Nothing, Wart.ImplicitConversion, Wart.Any,
-        Wart.ToString, Wart.PublicInference)
+        Wart.ToString, Wart.PublicInference, Wart.Recursion)
     })}
   }
 }

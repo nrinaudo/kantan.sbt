@@ -1,6 +1,5 @@
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 
-
 lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
   Seq(
     organization         := "com.nrinaudo",
