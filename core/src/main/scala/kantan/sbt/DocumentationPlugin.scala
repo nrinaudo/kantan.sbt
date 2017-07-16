@@ -52,10 +52,10 @@ object DocumentationPlugin extends AutoPlugin {
     tutSiteDir   := "_tut",
     siteSubdirName in ScalaUnidoc := "api",
     docSourceUrl := scmInfo.value.map(_.browseUrl + "/tree/master€{FILE_PATH}.scala"),
-    scalacOptions in (ScalaUnidoc, unidoc) ++= {
-      Seq("-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath) ++
-      docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty)
-    },
+    scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
+      "-sourcepath", baseDirectory.in(LocalRootProject).value.getAbsolutePath,
+      "-groups"
+    ) ++ docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty),
     tutNameFilter := ((if(!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
     GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=
