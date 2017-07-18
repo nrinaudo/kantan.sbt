@@ -17,7 +17,9 @@
 package kantan.sbt.kantan
 
 import com.typesafe.sbt.SbtGit.git
+import kantan.sbt.Resources._
 import kantan.sbt.strict.StrictKantanPlugin
+import org.scalastyle.sbt.ScalastylePlugin.autoImport._
 import sbt._
 import sbt.Keys._
 
@@ -34,6 +36,7 @@ import sbt.Keys._
 object KantanKantanPlugin extends AutoPlugin {
   object autoImport {
     val kantanProject: SettingKey[String] = settingKey("Name of the kantan project")
+    val copyScalastyleConfig: TaskKey[Unit] = taskKey("Copies the kantan scalastyle config if necessary")
   }
   import autoImport._
 
@@ -51,8 +54,9 @@ object KantanKantanPlugin extends AutoPlugin {
     developers              := List(Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com",
       url("https://twitter.com/nicolasrinaudo"))),
     crossScalaVersions      := Seq("2.10.6", "2.11.11", "2.12.2"),
-    licenses                := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html"))
-  )
+    licenses                := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+    copyScalastyleConfig    := copyIfNeeded("/kantan/sbt/scalastyle-config.xml", file("./scalastyle-config.xml"))
+  ) ++ inConfig(Compile)(overrideScalastyle()) ++ inConfig(Test)(overrideScalastyle())
 
   /** Remote identifiers, computed from [[autoImport.kantanProject]]. */
   lazy val remoteSettings: Seq[Setting[_]] = Seq(
@@ -63,5 +67,12 @@ object KantanKantanPlugin extends AutoPlugin {
       url(s"https://github.com/nrinaudo/kantan.${kantanProject.value}"),
       s"scm:git:git@github.com:nrinaudo/kantan.${kantanProject.value}.git"
     ))
+  )
+
+
+  // - Configuration file copying --------------------------------------------------------------------------------------
+  // -------------------------------------------------------------------------------------------------------------------
+  private def overrideScalastyle(): Seq[Setting[_]] = Seq(
+    scalastyle := scalastyle.dependsOn(copyScalastyleConfig).evaluated
   )
 }

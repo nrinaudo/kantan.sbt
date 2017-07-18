@@ -7,7 +7,7 @@ object Versions {
   val sbtSite: String     = "1.2.0"
   val sbtUnidoc: String   = "0.4.0"
   val sbtGhPages: String  = "0.6.0"
-  val scalastyle: String  = "0.8.0"
+  val scalastyle: String  = "0.9.0"
   val scoverage: String   = "1.5.0"
   val sbtDoctest: String  = "0.5.0"
   val wartRemover: String = "2.1.1"
