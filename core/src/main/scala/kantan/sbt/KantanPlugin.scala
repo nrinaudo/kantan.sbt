@@ -39,13 +39,6 @@ import scala.util.matching.Regex
   *  - [[DocumentationPlugin]]: configures projects whose output is a documentation website.
   */
 object KantanPlugin extends AutoPlugin {
-  // - Common dependency versions --------------------------------------------------------------------------------------
-  // -------------------------------------------------------------------------------------------------------------------
-  val kindProjectorVersion = "0.9.4"
-  val macroParadiseVersion = "2.1.0"
-
-
-
   // - Public settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
@@ -64,6 +57,10 @@ object KantanPlugin extends AutoPlugin {
         if(predicate) proj.dependsOn(refs:_*)
         else          proj
     }
+
+    val checkStyle: TaskKey[Unit] = taskKey[Unit]("run all style checks")
+    val kindProjectorVersion: SettingKey[String] = settingKey[String]("version of kind-projector to use")
+    val macroParadiseVersion: SettingKey[String] = settingKey[String]("version of macro-paradise to use")
   }
   import autoImport._
 
@@ -73,15 +70,19 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   override def trigger = allRequirements
 
-  override def requires = JvmPlugin && HeaderPlugin
+  override def requires = JvmPlugin && HeaderPlugin && ScalastylePlugin
 
-  override lazy val projectSettings =
-    generalSettings ++ scalacSettings ++ commonDependencies ++
-    ScalastylePlugin.projectSettings
+  override lazy val projectSettings = generalSettings ++ scalacSettings ++ commonDependencies ++
+  inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
 
-  override def globalSettings =
-    addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;coverage;test;coverageReport;coverageAggregate;doc")
+  private def checkStyleSettings: Seq[Setting[_]] = Seq(
+    checkStyle := {
+      ScalastylePlugin.autoImport.scalastyle.toTask("").value
+    }
+  )
 
+  override def globalSettings: Seq[Setting[_]] =
+    addCommandAlias("validate", ";clean;checkStyle;test:checkStyle;coverage;test;coverageReport;coverageAggregate;doc")
 
 
   // - Custom settings -------------------------------------------------------------------------------------------------
@@ -90,6 +91,8 @@ object KantanPlugin extends AutoPlugin {
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
       scalaVersion            := { if(BuildProperties.java8Supported) "2.12.2" else "2.11.11" },
+      kindProjectorVersion    := "0.9.4",
+      macroParadiseVersion    := "2.1.0",
       autoAPIMappings         := true,
       incOptions              := incOptions.value.withNameHashing(true),
       doctestWithDependencies := false,
@@ -138,11 +141,11 @@ object KantanPlugin extends AutoPlugin {
   /** Includes common dependencies (macros and kind-projector). */
   lazy val commonDependencies: Seq[Setting[_]] = Seq(
     libraryDependencies ++= Seq(
-      compilerPlugin("org.spire-math" % "kind-projector" % kindProjectorVersion cross CrossVersion.binary),
+      compilerPlugin("org.spire-math" % "kind-projector" % kindProjectorVersion.value cross CrossVersion.binary),
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
     ) ++ {
       if(scalaVersion.value.startsWith("2.10"))
-        List(compilerPlugin("org.scalamacros" % "paradise" % macroParadiseVersion cross CrossVersion.full))
+        List(compilerPlugin("org.scalamacros" % "paradise" % macroParadiseVersion.value cross CrossVersion.full))
       else Nil
     }
   )
