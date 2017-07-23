@@ -31,7 +31,7 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
     publishLocal    := (),
     publishArtifact := false
   )
-  .aggregate(core, strict, kantan, boilerplate)
+  .aggregate(core, strict, kantan, boilerplate, scalastyle, scalafmt)
 
 lazy val core = project
   .settings(
@@ -47,7 +47,6 @@ lazy val core = project
     addSbtPlugin("com.typesafe.sbt"    %  "sbt-site"              % Versions.sbtSite),
     addSbtPlugin("com.eed3si9n"        %  "sbt-unidoc"            % Versions.sbtUnidoc),
     addSbtPlugin("com.typesafe.sbt"    %  "sbt-ghpages"           % Versions.sbtGhPages),
-    addSbtPlugin("org.scalastyle"      %% "scalastyle-sbt-plugin" % Versions.scalastyle),
     addSbtPlugin("org.scoverage"       %% "sbt-scoverage"         % Versions.scoverage),
     addSbtPlugin("com.github.tkawachi" %  "sbt-doctest"           % Versions.sbtDoctest)
   )
@@ -61,6 +60,28 @@ lazy val strict = project
   .settings(pluginSettings)
   .enablePlugins(AutomateHeaderPlugin)
   .settings(addSbtPlugin("org.wartremover" % "sbt-wartremover" % Versions.wartRemover))
+  .dependsOn(core)
+
+lazy val scalastyle = project
+  .settings(
+    moduleName := "kantan.sbt-scalastyle",
+    name       := "scalastyle"
+  )
+  .settings(baseSettings)
+  .settings(pluginSettings)
+  .enablePlugins(AutomateHeaderPlugin)
+  .settings(addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % Versions.scalastyle))
+  .dependsOn(core)
+
+lazy val scalafmt = project
+  .settings(
+    moduleName := "kantan.sbt-scalafmt",
+    name       := "scalafmt"
+  )
+  .settings(baseSettings)
+  .settings(pluginSettings)
+  .enablePlugins(AutomateHeaderPlugin)
+  .settings(addSbtPlugin("com.lucidchart" %  "sbt-scalafmt" % Versions.sbtScalafmt))
   .dependsOn(core)
 
 lazy val boilerplate = project
@@ -83,10 +104,10 @@ lazy val kantan = project
   .settings(pluginSettings)
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
-    addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
-    addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
+    addSbtPlugin("org.xerial.sbt" % "sbt-sonatype"  % Versions.sbtSonatype),
+    addSbtPlugin("com.jsuereth"   % "sbt-pgp"       % Versions.sbtPgp)
   )
-  .dependsOn(strict)
+  .dependsOn(strict, scalastyle, scalafmt)
 
 
 addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;compile;scripted")

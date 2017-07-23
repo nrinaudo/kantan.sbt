@@ -1,0 +1,7 @@
+<scalastyle>
+    <check level="error" class="org.scalastyle.file.RegexChecker" enabled="true">
+        <parameters>
+            <parameter name="regex">println</parameter>
+        </parameters>
+    </check>
+</scalastyle>

@@ -11,4 +11,5 @@ object Versions {
   val scoverage: String   = "1.5.0"
   val sbtDoctest: String  = "0.5.0"
   val wartRemover: String = "2.1.1"
+  val sbtScalafmt: String = "1.8"
 }

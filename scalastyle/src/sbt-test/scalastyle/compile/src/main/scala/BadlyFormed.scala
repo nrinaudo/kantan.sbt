@@ -1,0 +1,3 @@
+object BadlyFormed {
+  println("foobar")
+}

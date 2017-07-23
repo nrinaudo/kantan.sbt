@@ -21,7 +21,6 @@ import com.github.tkawachi.doctest.DoctestPlugin.DoctestTestFramework
 import com.typesafe.sbt.SbtGit.git
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
-import org.scalastyle.sbt.ScalastylePlugin
 import sbt._
 import sbt.Keys._
 import sbt.plugins.JvmPlugin
@@ -70,15 +69,13 @@ object KantanPlugin extends AutoPlugin {
   // -------------------------------------------------------------------------------------------------------------------
   override def trigger = allRequirements
 
-  override def requires = JvmPlugin && HeaderPlugin && ScalastylePlugin
+  override def requires = JvmPlugin && HeaderPlugin
 
   override lazy val projectSettings = generalSettings ++ scalacSettings ++ commonDependencies ++
-  inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
+    inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
 
   private def checkStyleSettings: Seq[Setting[_]] = Seq(
-    checkStyle := {
-      ScalastylePlugin.autoImport.scalastyle.toTask("").value
-    }
+    checkStyle := {}
   )
 
   override def globalSettings: Seq[Setting[_]] =
