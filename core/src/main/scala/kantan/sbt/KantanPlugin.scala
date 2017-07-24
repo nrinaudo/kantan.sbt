@@ -71,7 +71,7 @@ object KantanPlugin extends AutoPlugin {
 
   override def requires = JvmPlugin && HeaderPlugin
 
-  override lazy val projectSettings = generalSettings ++ scalacSettings ++ commonDependencies ++
+  override lazy val projectSettings = generalSettings ++ scalacSettings ++ javacSettings ++ commonDependencies ++
     inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
 
   private def checkStyleSettings: Seq[Setting[_]] = Seq(
@@ -101,6 +101,17 @@ object KantanPlugin extends AutoPlugin {
       )
     )
   }
+
+  def javacSettings: Seq[Setting[_]] = Seq(
+    // If we're running 2.12+, compile to 1.8 bytecode. Otherwise, 1.6.
+    javacOptions := {
+      val jvm = (CrossVersion.partialVersion(version.value) match {
+      case Some((maj, min)) if maj > 2 || min >= 12 ⇒ "1.8"
+      case _                                        ⇒ "1.6"
+      })
+
+      Seq("-source", jvm, "-target", jvm)
+    })
 
   /** Sane, version dependent scalac settings. */
   def scalacSettings: Seq[Setting[_]] = {
