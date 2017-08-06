@@ -19,7 +19,7 @@ package kantan.sbt.scalafmt
 import com.lucidchart.sbt.scalafmt.{ScalafmtCorePlugin, ScalafmtSbtPlugin}
 import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import com.lucidchart.sbt.scalafmt.ScalafmtSbtPlugin.autoImport._
-import kantan.sbt.KantanPlugin
+import kantan.sbt.{BuildProperties, KantanPlugin}
 import kantan.sbt.KantanPlugin.autoImport._
 import kantan.sbt.Resources._
 import sbt._
@@ -44,11 +44,12 @@ object KantanScalafmtPlugin extends AutoPlugin {
   ) ++ rawScalafmtSettings(Compile, Test, Sbt) ++ checkStyleSettings
 
   // Makes sure checkStyle depends on the right scalafmt commands depending on the context.
-  private def checkStyleSettings: Seq[Setting[_]] = Seq(
+  private def checkStyleSettings: Seq[Setting[_]] =
+    if(BuildProperties.java8Supported) Seq(
     (checkStyle in Compile) := (checkStyle in Compile).dependsOn(test in (Compile, scalafmt),
       test in (Sbt, scalafmt)).value,
-    (checkStyle in Test) := (checkStyle in Test).dependsOn(test in (Test, scalafmt)).value
-  )
+    (checkStyle in Test) := (checkStyle in Test).dependsOn(test in (Test, scalafmt)).value)
+    else Seq.empty
 
   // Makes sure all relevant scalafmt tasks depend on copyScalafmtConfig
   private def rawScalafmtSettings(configs: Configuration*): Seq[Setting[_]] =
