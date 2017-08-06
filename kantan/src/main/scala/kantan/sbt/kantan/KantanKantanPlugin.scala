@@ -57,7 +57,7 @@ object KantanKantanPlugin extends AutoPlugin {
     scalafmtVersion              := "1.1.0",
     developers                   := List(Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com",
       url("https://twitter.com/nicolasrinaudo"))),
-    crossScalaVersions           := Seq("2.10.6", "2.11.11", "2.12.2"),
+    crossScalaVersions           := Seq("2.10.6", "2.11.11", "2.12.3"),
     licenses                     := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource           := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource             := Some("/kantan/sbt/scalafmt.conf")
