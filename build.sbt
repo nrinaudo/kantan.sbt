@@ -13,7 +13,8 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
     scmInfo              := Some(ScmInfo(
       url(s"https://github.com/nrinaudo/kantan.sbt"),
       s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
-    ))
+    )),
+    scalafmtVersion := Versions.scalafmt
   )
 }
 
