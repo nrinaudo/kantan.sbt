@@ -17,8 +17,7 @@
 package kantan.sbt.strict
 
 import kantan.sbt.KantanPlugin
-import sbt._
-import sbt.Keys._
+import sbt._, Keys._
 import wartremover.{Wart, WartRemover, Warts}
 
 /** Makes compilation much more strict.
@@ -44,13 +43,24 @@ object StrictKantanPlugin extends AutoPlugin {
   /** WartRemover settings, disabled for 2.10 because of weird compatibility issues that I can't bother to get into.
     * 2.10 support is going to be dropped sooner rather than later anyway.
     */
-  def wartRemoverSettings: Seq[Setting[_]] = {
-    List(Compile, Test).flatMap { c ⇒ inConfig(c)(WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++= {
-      if(scalaVersion.value.startsWith("2.10")) Seq.empty
-      // Removes Warts that have too many false positives (and are mostly covered by other tools as well anyway).
-      else Warts.allBut(Wart.NonUnitStatements,
-        Wart.Equals, Wart.Overloading, Wart.ImplicitParameter, Wart.Nothing, Wart.ImplicitConversion, Wart.Any,
-        Wart.ToString, Wart.PublicInference, Wart.Recursion)
-    })}
-  }
+  def wartRemoverSettings: Seq[Setting[_]] =
+    List(Compile, Test).flatMap { c ⇒
+      inConfig(c)(WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++= {
+        if (scalaVersion.value.startsWith("2.10")) Seq.empty
+        // Removes Warts that have too many false positives (and are mostly covered by other tools as well anyway).
+        else
+          Warts.allBut(
+            Wart.NonUnitStatements,
+            Wart.Equals,
+            Wart.Overloading,
+            Wart.ImplicitParameter,
+            Wart.Nothing,
+            Wart.ImplicitConversion,
+            Wart.Any,
+            Wart.ToString,
+            Wart.PublicInference,
+            Wart.Recursion
+          )
+      })
+    }
 }

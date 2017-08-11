@@ -26,8 +26,8 @@ import sbt.Keys._
   */
 object UnpublishedPlugin extends AutoPlugin {
   override def projectSettings = Seq(
-    publish         := (),
-    publishLocal    := (),
+    publish         := {},
+    publishLocal    := {},
     publishArtifact := false
   )
 

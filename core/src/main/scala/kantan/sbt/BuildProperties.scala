@@ -18,5 +18,5 @@ package kantan.sbt
 
 object BuildProperties {
   lazy val javaSpecificationVersion: Double = System.getProperty("java.specification.version").toDouble
-  lazy val java8Supported: Boolean = javaSpecificationVersion >= 1.8D
+  lazy val java8Supported: Boolean          = javaSpecificationVersion >= 1.8D
 }

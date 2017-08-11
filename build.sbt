@@ -8,19 +8,36 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
     startYear            := Some(2016),
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
-    developers           := List(Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com",
-      url("https://twitter.com/nicolasrinaudo"))),
-    scmInfo              := Some(ScmInfo(
-      url(s"https://github.com/nrinaudo/kantan.sbt"),
-      s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
-    ))
+    scalafmtVersion      := Versions.scalafmt,
+    developers := List(
+      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))),
+    scmInfo := Some(
+      ScmInfo(
+        url(s"https://github.com/nrinaudo/kantan.sbt"),
+        s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
+      ))
   )
 }
 
 lazy val pluginSettings = scriptedSettings ++ Seq(
   scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value),
-  sbtPlugin           := true,
-  scalacOptions       ++= Seq("-feature", "-language:existentials")
+  sbtPlugin          := true,
+  scalacOptions      ++= Seq(
+        "-encoding",
+        "UTF-8",
+        "-feature",
+        "-language:existentials",
+        "-language:higherKinds",
+        "-language:implicitConversions",
+        "-deprecation",
+        "-unchecked",
+        "-Yno-adapted-args",
+        "-Ywarn-dead-code",
+        "-Ywarn-numeric-widen",
+        "-Ywarn-value-discard",
+        "-Xfuture",
+        "-Xlint"
+      )
 )
 
 lazy val root = Project(id = "kantan-sbt", base = file("."))
@@ -42,13 +59,13 @@ lazy val core = project
   .settings(pluginSettings)
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
-    addSbtPlugin("de.heikoseeberger"   %  "sbt-header"            % Versions.sbtHeader),
-    addSbtPlugin("org.tpolecat"        %  "tut-plugin"            % Versions.tut),
-    addSbtPlugin("com.typesafe.sbt"    %  "sbt-site"              % Versions.sbtSite),
-    addSbtPlugin("com.eed3si9n"        %  "sbt-unidoc"            % Versions.sbtUnidoc),
-    addSbtPlugin("com.typesafe.sbt"    %  "sbt-ghpages"           % Versions.sbtGhPages),
-    addSbtPlugin("org.scoverage"       %% "sbt-scoverage"         % Versions.scoverage),
-    addSbtPlugin("com.github.tkawachi" %  "sbt-doctest"           % Versions.sbtDoctest)
+    addSbtPlugin("de.heikoseeberger"   % "sbt-header"     % Versions.sbtHeader),
+    addSbtPlugin("org.tpolecat"        % "tut-plugin"     % Versions.tut),
+    addSbtPlugin("com.typesafe.sbt"    % "sbt-site"       % Versions.sbtSite),
+    addSbtPlugin("com.eed3si9n"        % "sbt-unidoc"     % Versions.sbtUnidoc),
+    addSbtPlugin("com.typesafe.sbt"    % "sbt-ghpages"    % Versions.sbtGhPages),
+    addSbtPlugin("org.scoverage"       %% "sbt-scoverage" % Versions.scoverage),
+    addSbtPlugin("com.github.tkawachi" % "sbt-doctest"    % Versions.sbtDoctest)
   )
 
 lazy val strict = project
@@ -81,7 +98,7 @@ lazy val scalafmt = project
   .settings(baseSettings)
   .settings(pluginSettings)
   .enablePlugins(AutomateHeaderPlugin)
-  .settings(addSbtPlugin("com.lucidchart" %  "sbt-scalafmt" % Versions.sbtScalafmt))
+  .settings(addSbtPlugin("com.lucidchart" % "sbt-scalafmt" % Versions.sbtScalafmt))
   .dependsOn(core)
 
 lazy val boilerplate = project
@@ -104,10 +121,9 @@ lazy val kantan = project
   .settings(pluginSettings)
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
-    addSbtPlugin("org.xerial.sbt" % "sbt-sonatype"  % Versions.sbtSonatype),
-    addSbtPlugin("com.jsuereth"   % "sbt-pgp"       % Versions.sbtPgp)
+    addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
+    addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
   )
   .dependsOn(strict, scalastyle, scalafmt)
-
 
 addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;compile;scripted")

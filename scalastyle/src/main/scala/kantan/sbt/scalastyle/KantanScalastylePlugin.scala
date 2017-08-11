@@ -21,15 +21,13 @@ import kantan.sbt.KantanPlugin.autoImport._
 import kantan.sbt.Resources._
 import org.scalastyle.sbt.ScalastylePlugin
 import org.scalastyle.sbt.ScalastylePlugin.autoImport._
-import sbt._
-import sbt.Keys._
-
+import sbt._, Keys._
 
 /** Provides support for shared scalastyle configuration files. */
 object KantanScalastylePlugin extends AutoPlugin {
   object autoImport {
     val scalastyleResource: SettingKey[Option[String]] = settingKey("resource that holds the scalastyle stylesheet")
-    val copyScalastyleConfig: TaskKey[Unit] = taskKey("Copies the scalastyle resource if necessary")
+    val copyScalastyleConfig: TaskKey[Unit]            = taskKey("Copies the scalastyle resource if necessary")
   }
 
   import autoImport._
