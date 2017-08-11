@@ -20,8 +20,7 @@ import de.heikoseeberger.sbtheader.FileType
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
 import kantan.sbt.KantanPlugin
-import sbt._
-import sbt.Keys._
+import sbt._, Keys._
 import spray.boilerplate.BoilerplatePlugin
 
 /** Makes compilation much more strict.
@@ -40,7 +39,7 @@ object KantanBoilerplatePlugin extends AutoPlugin {
       acc ++ Seq(
         unmanagedSources in (conf, headerCreate) ++= (((sourceDirectory in conf).value / "boilerplate") **
           "*.template").get,
-        headerMappings += (FileType("template") -> HeaderCommentStyle.CStyleBlockComment)
+        headerMappings += (FileType("template") → HeaderCommentStyle.CStyleBlockComment)
       )
     }
 }

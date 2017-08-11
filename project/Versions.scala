@@ -6,11 +6,11 @@ object Versions {
   val tut: String         = "0.5.2"
   val sbtSite: String     = "1.2.1"
   val sbtUnidoc: String   = "0.4.1"
-  val sbtGhPages: String  = "0.6.0"
+  val sbtGhPages: String  = "0.6.1"
   val scalastyle: String  = "0.9.0"
   val scoverage: String   = "1.5.0"
   val sbtDoctest: String  = "0.5.0"
   val wartRemover: String = "2.1.1"
-  val sbtScalafmt: String = "1.8"
+  val sbtScalafmt: String = "1.10"
   val scalafmt: String    = "1.1.0"
 }

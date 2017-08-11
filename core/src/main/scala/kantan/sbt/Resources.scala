@@ -23,6 +23,7 @@ import sbt._
 import scala.io.Source
 
 object Resources {
+
   /** Computes the digest of the specified stream. */
   private def digest(in: ⇒ InputStream): Array[Byte] = {
     val digest = MessageDigest.getInstance("SHA-1")
@@ -31,23 +32,19 @@ object Resources {
 
     def loop(): Array[Byte] = {
       val count = stream.read(buffer)
-      if(count >= 0) {
+      if (count >= 0) {
         digest.update(buffer, 0, count)
         loop()
-      }
-      else digest.digest()
+      } else digest.digest()
     }
 
-    try { loop() }
-    finally { stream.close() }
+    try { loop() } finally { stream.close() }
   }
-
 
   /** Copies the content of `from` to `to`, if `to` does not exist or is different from `from`. */
-  def copyIfNeeded(from: URL, to: File): Unit = {
-    if(!(to.exists && digest(from.openStream).sameElements(digest(new FileInputStream(to)))))
+  def copyIfNeeded(from: URL, to: File): Unit =
+    if (!(to.exists && digest(from.openStream).sameElements(digest(new FileInputStream(to)))))
       IO.download(from, to)
-  }
 
   def copyIfNeeded(res: String, to: File): Unit = copyIfNeeded(getClass.getResource(res), to)
 }
