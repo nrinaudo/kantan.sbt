@@ -47,11 +47,11 @@ object KantanPlugin extends AutoPlugin {
         proj.settings(unmanagedClasspath in Test ++= (fullClasspath in (LocalProject(name), Compile)).value)
 
       def aggregateIf(predicate: Boolean)(refs: ProjectReference*): Project =
-        if (predicate) proj.aggregate(refs: _*)
+        if(predicate) proj.aggregate(refs: _*)
         else proj
 
       def dependsOnIf(predicate: Boolean)(refs: ClasspathDep[ProjectReference]*): Project =
-        if (predicate) proj.dependsOn(refs: _*)
+        if(predicate) proj.dependsOn(refs: _*)
         else proj
     }
 
@@ -82,12 +82,11 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      scalaVersion            := { if (BuildProperties.java8Supported) "2.12.3" else "2.11.11" },
+      scalaVersion            := { if(BuildProperties.java8Supported) "2.12.3" else "2.11.11" },
       kindProjectorVersion    := "0.9.4",
       macroParadiseVersion    := "2.1.0",
       autoAPIMappings         := true,
       incOptions              := incOptions.value.withNameHashing(true),
-      doctestWithDependencies := false,
       doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
       resolvers ++= Seq(
@@ -149,7 +148,7 @@ object KantanPlugin extends AutoPlugin {
       compilerPlugin("org.spire-math" % "kind-projector" % kindProjectorVersion.value cross CrossVersion.binary),
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
     ) ++ {
-      if (scalaVersion.value.startsWith("2.10"))
+      if(scalaVersion.value.startsWith("2.10"))
         List(compilerPlugin("org.scalamacros" % "paradise" % macroParadiseVersion.value cross CrossVersion.full))
       else Nil
     }

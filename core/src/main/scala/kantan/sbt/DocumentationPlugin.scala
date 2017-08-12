@@ -41,7 +41,7 @@ object DocumentationPlugin extends AutoPlugin {
     val docSourceUrl: SettingKey[Option[String]] = settingKey("scalac -doc-source-url parameter")
 
     def inProjectsIf(predicate: Boolean)(projects: ProjectReference*): ProjectFilter =
-      if (predicate) inProjects(projects: _*)
+      if(predicate) inProjects(projects: _*)
       else inProjects()
   }
   import autoImport._
@@ -55,7 +55,7 @@ object DocumentationPlugin extends AutoPlugin {
       baseDirectory.in(LocalRootProject).value.getAbsolutePath,
       "-groups"
     ) ++ docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty),
-    tutNameFilter                            := ((if (!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
+    tutNameFilter                            := ((if(!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r,
     GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
     includeFilter in SitePlugin.autoImport.makeSite :=
       "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |

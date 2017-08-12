@@ -44,7 +44,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
 
   // Makes sure checkStyle depends on the right scalafmt commands depending on the context.
   private def checkStyleSettings: Seq[Setting[_]] =
-    if (BuildProperties.java8Supported)
+    if(BuildProperties.java8Supported)
       Seq(
         (checkStyle in Compile) := (checkStyle in Compile)
           .dependsOn(test in (Compile, scalafmt), test in (Sbt, scalafmt))
