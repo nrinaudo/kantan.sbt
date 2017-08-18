@@ -60,6 +60,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
         Seq(
           test in scalafmt := (test in scalafmt).dependsOn(copyScalafmtConfig).value,
           scalafmt         := scalafmt.dependsOn(copyScalafmtConfig).value
-        ))
+        )
+      )
     }
 }

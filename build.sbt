@@ -10,12 +10,14 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
     homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
     scalafmtVersion      := Versions.scalafmt,
     developers := List(
-      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))),
+      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
+    ),
     scmInfo := Some(
       ScmInfo(
         url(s"https://github.com/nrinaudo/kantan.sbt"),
         s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
-      ))
+      )
+    )
   )
 }
 

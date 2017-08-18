@@ -82,13 +82,13 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      scalaVersion            := { if(BuildProperties.java8Supported) "2.12.3" else "2.11.11" },
-      kindProjectorVersion    := "0.9.4",
-      macroParadiseVersion    := "2.1.0",
-      autoAPIMappings         := true,
-      incOptions              := incOptions.value.withNameHashing(true),
-      doctestMarkdownEnabled  := true,
-      doctestTestFramework    := DoctestTestFramework.ScalaTest,
+      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.3" else "2.11.11" },
+      kindProjectorVersion   := "0.9.4",
+      macroParadiseVersion   := "2.1.0",
+      autoAPIMappings        := true,
+      incOptions             := incOptions.value.withNameHashing(true),
+      doctestMarkdownEnabled := true,
+      doctestTestFramework   := DoctestTestFramework.ScalaTest,
       resolvers ++= Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
@@ -106,7 +106,8 @@ object KantanPlugin extends AutoPlugin {
         })
 
         Seq("-source", jvm, "-target", jvm)
-      })
+      }
+    )
 
   /** Sane, version dependent scalac settings. */
   def scalacSettings: Seq[Setting[_]] = {

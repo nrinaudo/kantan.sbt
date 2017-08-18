@@ -59,7 +59,8 @@ object KantanKantanPlugin extends AutoPlugin {
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),
     developers := List(
-      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo")))
+      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
+    )
   )
 
   /** Remote identifiers, computed from [[autoImport.kantanProject]]. */
@@ -71,6 +72,7 @@ object KantanKantanPlugin extends AutoPlugin {
       ScmInfo(
         url(s"https://github.com/nrinaudo/kantan.${kantanProject.value}"),
         s"scm:git:git@github.com:nrinaudo/kantan.${kantanProject.value}.git"
-      ))
+      )
+    )
   )
 }
