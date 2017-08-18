@@ -18,7 +18,6 @@ package kantan.sbt.kantan
 
 import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import com.typesafe.sbt.SbtGit.git
-import kantan.sbt.Resources._
 import kantan.sbt.scalafmt.KantanScalafmtPlugin
 import kantan.sbt.scalafmt.KantanScalafmtPlugin.autoImport._
 import kantan.sbt.scalastyle.KantanScalastylePlugin

@@ -10,7 +10,7 @@ check := {
   import kantan.xpath._
   import kantan.xpath.implicits._
 
-  val pom = makePomConfiguration.value.file.asUnsafeNode
+  val pom = makePomConfiguration.value.file.get.asUnsafeNode
 
   def assertPom[A: NodeDecoder](path: String, expected: A): Unit =  {
     val actual = pom.unsafeEvalXPath(Query.unsafeCompile[A](path))

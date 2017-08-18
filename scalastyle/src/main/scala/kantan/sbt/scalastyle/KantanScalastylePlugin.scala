@@ -21,7 +21,7 @@ import kantan.sbt.KantanPlugin.autoImport._
 import kantan.sbt.Resources._
 import org.scalastyle.sbt.ScalastylePlugin
 import org.scalastyle.sbt.ScalastylePlugin.autoImport._
-import sbt._, Keys._
+import sbt._
 
 /** Provides support for shared scalastyle configuration files. */
 object KantanScalastylePlugin extends AutoPlugin {
