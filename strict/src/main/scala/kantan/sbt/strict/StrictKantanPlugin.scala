@@ -46,7 +46,7 @@ object StrictKantanPlugin extends AutoPlugin {
   def wartRemoverSettings: Seq[Setting[_]] =
     List(Compile, Test).flatMap { c ⇒
       inConfig(c)(WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++= {
-        if (scalaVersion.value.startsWith("2.10")) Seq.empty
+        if(scalaVersion.value.startsWith("2.10")) Seq.empty
         // Removes Warts that have too many false positives (and are mostly covered by other tools as well anyway).
         else
           Warts.allBut(

@@ -10,7 +10,7 @@ lazy val overwrite        = TaskKey[Unit]("overwrite")
 def confFile: Option[File] = {
   val conf = file(".scalafmt.conf")
 
-  if (conf.exists) Some(conf)
+  if(conf.exists) Some(conf)
   else None
 }
 
@@ -32,7 +32,7 @@ checkExpected := {
 }
 
 checkDoesntExist := {
-  if (confFile.isDefined)
+  if(confFile.isDefined)
     sys.error(s"Expected not to find .scalafmt.conf but did")
   ()
 }

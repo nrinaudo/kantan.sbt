@@ -10,34 +10,36 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
     homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
     scalafmtVersion      := Versions.scalafmt,
     developers := List(
-      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))),
+      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
+    ),
     scmInfo := Some(
       ScmInfo(
         url(s"https://github.com/nrinaudo/kantan.sbt"),
         s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
-      ))
+      )
+    )
   )
 }
 
 lazy val pluginSettings = scriptedSettings ++ Seq(
   scriptedLaunchOpts ++= Seq("-Xmx1024M", "-XX:MaxPermSize=256M", "-Dplugin.version=" + version.value),
   sbtPlugin          := true,
-  scalacOptions      ++= Seq(
-        "-encoding",
-        "UTF-8",
-        "-feature",
-        "-language:existentials",
-        "-language:higherKinds",
-        "-language:implicitConversions",
-        "-deprecation",
-        "-unchecked",
-        "-Yno-adapted-args",
-        "-Ywarn-dead-code",
-        "-Ywarn-numeric-widen",
-        "-Ywarn-value-discard",
-        "-Xfuture",
-        "-Xlint"
-      )
+  scalacOptions ++= Seq(
+    "-encoding",
+    "UTF-8",
+    "-feature",
+    "-language:existentials",
+    "-language:higherKinds",
+    "-language:implicitConversions",
+    "-deprecation",
+    "-unchecked",
+    "-Yno-adapted-args",
+    "-Ywarn-dead-code",
+    "-Ywarn-numeric-widen",
+    "-Ywarn-value-discard",
+    "-Xfuture",
+    "-Xlint"
+  )
 )
 
 lazy val root = Project(id = "kantan-sbt", base = file("."))

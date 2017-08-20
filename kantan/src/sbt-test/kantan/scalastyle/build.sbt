@@ -10,7 +10,7 @@ lazy val overwrite        = TaskKey[Unit]("overwrite")
 def confFile: Option[File] = {
   val conf = file("scalastyle-config.xml")
 
-  if (conf.exists) Some(conf)
+  if(conf.exists) Some(conf)
   else None
 }
 
@@ -30,7 +30,7 @@ checkExpected := {
 }
 
 checkDoesntExist := {
-  if (confFile.isDefined) sys.error(s"Expected not to find scalastyle-config.xml but did")
+  if(confFile.isDefined) sys.error(s"Expected not to find scalastyle-config.xml but did")
   ()
 }
 
