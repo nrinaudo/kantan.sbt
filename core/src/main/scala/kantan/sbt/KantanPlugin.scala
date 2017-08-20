@@ -139,7 +139,7 @@ object KantanPlugin extends AutoPlugin {
     Seq(
       scalacOptions                       := base(scalaVersion.value),
       scalacOptions in (Compile, compile) += "-Xlint",
-      scalacOptions in Test               += "-Xlint"
+      scalacOptions in (Test, compile)    += "-Xlint"
     )
   }
 
