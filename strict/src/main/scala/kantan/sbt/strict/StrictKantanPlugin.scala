@@ -57,7 +57,6 @@ object StrictKantanPlugin extends AutoPlugin {
             Wart.Nothing,
             Wart.ImplicitConversion,
             Wart.Any,
-            Wart.ToString,
             Wart.PublicInference,
             Wart.Recursion
           )
