@@ -128,4 +128,7 @@ lazy val kantan = project
   )
   .dependsOn(strict, scalastyle, scalafmt)
 
-addCommandAlias("validate", ";clean;scalastyle;test:scalastyle;compile;scripted")
+addCommandAlias(
+  "validate",
+  ";clean;scalastyle;test:scalastyle;scalafmt::test;test:scalafmt::test;sbt:scalafmt::test;compile;scripted"
+)
