@@ -6,16 +6,13 @@
   <check class="org.scalastyle.scalariform.ClassNamesChecker"          level="error"   enabled="true">
     <parameters>
       <parameter name="regex">[A-Z\~\*\/][A-Za-z]*</parameter>
+      <parameter name="ignoreRegex">^[^a-zA-Z0-9].*$</parameter>
     </parameters>
   </check>
   <check class="org.scalastyle.scalariform.ObjectNamesChecker"         level="error"   enabled="true">
     <parameters>
       <parameter name="regex">[A-Za-z\~\*\/][A-Za-z]*</parameter>
-    </parameters>
-  </check>
-  <check class="org.scalastyle.scalariform.PackageObjectNamesChecker"  level="error"   enabled="true">
-    <parameters>
-      <parameter name="regex">^[a-z][a-z0-9]*$</parameter>
+      <parameter name="ignoreRegex">^[^a-zA-Z0-9].*$</parameter>
     </parameters>
   </check>
   <check class="org.scalastyle.scalariform.ClassTypeParameterChecker"  level="warning" enabled="true">
@@ -26,12 +23,13 @@
   <check class="org.scalastyle.scalariform.MethodArgumentNamesChecker" level="error"   enabled="true">
     <parameters>
       <parameter name="regex">^[a-z][A-Za-z0-9]*$</parameter>
-      <parameter name="ignoreRegex">^$</parameter>
     </parameters>
   </check>
   <check class="org.scalastyle.scalariform.MethodNamesChecker"         level="error"   enabled="true">
     <parameters>
       <parameter name="regex">^[a-z][a-zA-Z0-9]*$</parameter>
+      <parameter name="ignoreRegex">^([^a-zA-Z0-9].*)|(unary_!)$</parameter>
+      <parameter name="ignoreOverride">true</parameter>
     </parameters>
   </check>
   <check class="org.scalastyle.scalariform.PackageNamesChecker"        level="error"   enabled="true">
