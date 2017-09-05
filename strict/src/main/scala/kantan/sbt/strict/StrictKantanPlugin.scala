@@ -40,15 +40,10 @@ object StrictKantanPlugin extends AutoPlugin {
     scalacOptions in (Compile, compile) += "-Xfatal-warnings"
   )
 
-  /** WartRemover settings, disabled for 2.10 because of weird compatibility issues that I can't bother to get into.
-    * 2.10 support is going to be dropped sooner rather than later anyway.
-    */
   def wartRemoverSettings: Seq[Setting[_]] =
     List(Compile, Test).flatMap { c ⇒
-      inConfig(c)(WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++= {
-        if(scalaVersion.value.startsWith("2.10")) Seq.empty
-        // Removes Warts that have too many false positives (and are mostly covered by other tools as well anyway).
-        else
+      inConfig(c)(
+        WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
           Warts.allBut(
             Wart.NonUnitStatements,
             Wart.Equals,
@@ -60,6 +55,6 @@ object StrictKantanPlugin extends AutoPlugin {
             Wart.PublicInference,
             Wart.Recursion
           )
-      })
+      )
     }
 }

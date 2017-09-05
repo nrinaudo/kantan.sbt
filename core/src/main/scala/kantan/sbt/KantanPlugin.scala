@@ -55,7 +55,6 @@ object KantanPlugin extends AutoPlugin {
 
     val checkStyle: TaskKey[Unit]                = taskKey[Unit]("run all style checks")
     val kindProjectorVersion: SettingKey[String] = settingKey[String]("version of kind-projector to use")
-    val macroParadiseVersion: SettingKey[String] = settingKey[String]("version of macro-paradise to use")
   }
   import autoImport._
 
@@ -82,7 +81,6 @@ object KantanPlugin extends AutoPlugin {
     Seq(
       scalaVersion           := { if(BuildProperties.java8Supported) "2.12.3" else "2.11.11" },
       kindProjectorVersion   := "0.9.4",
-      macroParadiseVersion   := "2.1.0",
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
       doctestTestFramework   := DoctestTestFramework.ScalaTest,
@@ -126,7 +124,6 @@ object KantanPlugin extends AutoPlugin {
         "-Xfuture"
       ) ++ (CrossVersion.partialVersion(version) match {
         case Some((_, x)) if x >= 12 ⇒ Seq("-Ypartial-unification")
-        case Some((_, 10))           ⇒ Seq("-Xdivergence211")
         case _                       ⇒ Seq.empty
       })
 
@@ -145,10 +142,6 @@ object KantanPlugin extends AutoPlugin {
     libraryDependencies ++= Seq(
       compilerPlugin("org.spire-math" % "kind-projector" % kindProjectorVersion.value cross CrossVersion.binary),
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
-    ) ++ {
-      if(scalaVersion.value.startsWith("2.10"))
-        List(compilerPlugin("org.scalamacros" % "paradise" % macroParadiseVersion.value cross CrossVersion.full))
-      else Nil
-    }
+    )
   )
 }

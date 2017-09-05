@@ -2,7 +2,8 @@ import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 
 def wartRemoverSettings: Seq[Setting[_]] =
   List(Compile, Test).flatMap { c ⇒
-    inConfig(c)(WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
+    inConfig(c)(
+      WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
         Warts.allBut(
           Wart.NonUnitStatements,
           Wart.Equals,
