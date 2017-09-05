@@ -1,6 +1,23 @@
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 
-lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
+def wartRemoverSettings: Seq[Setting[_]] =
+  List(Compile, Test).flatMap { c ⇒
+    inConfig(c)(WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
+        Warts.allBut(
+          Wart.NonUnitStatements,
+          Wart.Equals,
+          Wart.Overloading,
+          Wart.ImplicitParameter,
+          Wart.Nothing,
+          Wart.ImplicitConversion,
+          Wart.Any,
+          Wart.PublicInference,
+          Wart.Recursion
+        )
+    )
+  }
+
+lazy val baseSettings: Seq[sbt.Def.Setting[_]] =
   Seq(
     organization         := "com.nrinaudo",
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
@@ -18,8 +35,7 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] = {
         s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
       )
     )
-  )
-}
+  ) ++ wartRemoverSettings
 
 lazy val pluginSettings = Seq(
   scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value),
