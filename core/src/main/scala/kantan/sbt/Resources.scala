@@ -19,8 +19,7 @@ package kantan.sbt
 import java.io._
 import java.net.URL
 import java.security.MessageDigest
-import sbt._
-import scala.io.Source
+import sbt._, io.Using
 
 object Resources {
 
@@ -44,8 +43,12 @@ object Resources {
 
   /** Copies the content of `from` to `to`, if `to` does not exist or is different from `from`. */
   def copyIfNeeded(from: URL, to: File): Unit =
-    if(!(to.exists && digest(from.openStream).sameElements(digest(new FileInputStream(to)))))
-      IO.download(from, to)
+    if(!(to.exists && digest(from.openStream).sameElements(digest(new FileInputStream(to))))) {
+      Using.urlInputStream(from) { inputStream ⇒
+        IO.transfer(inputStream, to)
+      }
+      //IO.transfer(from, to)
+    }
 
   def copyIfNeeded(res: String, to: File): Unit = copyIfNeeded(getClass.getResource(res), to)
 }

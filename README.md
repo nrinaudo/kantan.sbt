@@ -20,7 +20,7 @@ addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "1.5.2")
 This will, among other things:
 
 * set sane `scalac` options
-* add dependencies on common compiler plugins (macroparadise and kind-projector)
+* add dependencies on common compiler plugins (kind-projector)
 * enable [sbt-doctest](https://github.com/tkawachi/sbt-doctest) (defaulting to scalatest)
 * enable [sbt-header](https://github.com/sbt/sbt-header)
 * enable [scalastyle](http://www.scalastyle.org/sbt.html)

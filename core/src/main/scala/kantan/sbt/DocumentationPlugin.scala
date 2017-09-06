@@ -49,7 +49,7 @@ object DocumentationPlugin extends AutoPlugin {
   override def projectSettings: Seq[Setting[_]] = Seq(
     tutSiteDir                    := "_tut",
     siteSubdirName in ScalaUnidoc := "api",
-    docSourceUrl                  := scmInfo.value.map(_.browseUrl + "/tree/master€{FILE_PATH}.scala"),
+    docSourceUrl                  := scmInfo.value.map(i ⇒ s"${i.browseUrl}/tree/master€{FILE_PATH}.scala"),
     scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
       "-sourcepath",
       baseDirectory.in(LocalRootProject).value.getAbsolutePath,

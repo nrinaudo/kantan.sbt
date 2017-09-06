@@ -18,7 +18,6 @@ package kantan.sbt.kantan
 
 import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import com.typesafe.sbt.SbtGit.git
-import kantan.sbt.Resources._
 import kantan.sbt.scalafmt.KantanScalafmtPlugin
 import kantan.sbt.scalafmt.KantanScalafmtPlugin.autoImport._
 import kantan.sbt.scalastyle.KantanScalastylePlugin
@@ -54,7 +53,7 @@ object KantanKantanPlugin extends AutoPlugin {
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
     organizationName     := "Nicolas Rinaudo",
     scalafmtVersion      := "1.2.0",
-    crossScalaVersions   := Seq("2.10.6", "2.11.11", "2.12.3"),
+    crossScalaVersions   := Seq("2.11.11", "2.12.3"),
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),

@@ -19,7 +19,6 @@ package kantan.sbt.boilerplate
 import de.heikoseeberger.sbtheader.FileType
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
-import kantan.sbt.KantanPlugin
 import sbt._, Keys._
 import spray.boilerplate.BoilerplatePlugin
 

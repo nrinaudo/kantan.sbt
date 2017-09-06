@@ -17,8 +17,7 @@
 package kantan.sbt
 
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
-import sbt._, Keys._
-import scala.xml.transform.{RewriteRule, RuleTransformer}
+import sbt._
 
 /** Configures projects whose artifacts are meant for publication to maven.
   *
