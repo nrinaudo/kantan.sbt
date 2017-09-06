@@ -27,6 +27,12 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] =
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
     scalafmtVersion      := Versions.scalafmt,
+    publishTo := Some(
+      if(isSnapshot.value)
+        Opts.resolver.sonatypeSnapshots
+      else
+        Opts.resolver.sonatypeStaging
+    ),
     developers := List(
       Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
     ),

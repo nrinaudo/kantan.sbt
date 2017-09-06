@@ -57,6 +57,12 @@ object KantanKantanPlugin extends AutoPlugin {
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),
+    publishTo := Some(
+      if(isSnapshot.value)
+        Opts.resolver.sonatypeSnapshots
+      else
+        Opts.resolver.sonatypeStaging
+    ),
     developers := List(
       Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
     )
