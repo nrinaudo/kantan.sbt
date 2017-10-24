@@ -10,7 +10,7 @@ before_cache:
   - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
   - find $HOME/.sbt -name "*.lock" -delete
 scala:
-  - 2.12.3
+  - 2.12.4
 jdk:
 # This is currently disabled because scalafmt does not run under java 1.7-.
 #  - oraclejdk7
