@@ -24,6 +24,7 @@ lazy val baseSettings: Seq[sbt.Def.Setting[_]] =
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
     organizationName     := "Nicolas Rinaudo",
     startYear            := Some(2016),
+    scalaVersion         := "2.12.4",
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
     scalafmtVersion      := Versions.scalafmt,

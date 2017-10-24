@@ -52,7 +52,7 @@ object StrictKantanPlugin extends AutoPlugin {
             Wart.Nothing,
             Wart.ImplicitConversion,
             Wart.Any,
-            Wart.PublicInference,
+            Wart.PublicInference, // Disabled because https://github.com/wartremover/wartremover/issues/337
             Wart.Recursion
           )
       )
