@@ -14,7 +14,7 @@ my own needs in mind, and it might not yet be generic enough to plug in seemless
 Adding the core module is done by adding the following to your `project/plugins.sbt` file:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "1.5.2")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "1.6.0")
 ```
 
 This will, among other things:
@@ -43,7 +43,7 @@ You can also manually enable the following plugins, which all enable automatic h
 Adding the strict module is done by adding the following to your `project/plugins.sbt` file:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-strict" % "1.5.2")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-strict" % "1.6.0")
 ```
 
 This is very similar to the core module, but will be much more strict when it comes to error handling. Standard
@@ -56,7 +56,7 @@ This is very similar to the core module, but will be much more strict when it co
 If you use [sbt-boilerplate](https://github.com/sbt/sbt-boilerplate), consider using the kantan wrapper for it instead:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-boilerplate" % "1.5.2")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-boilerplate" % "1.6.0")
 ```
 
 The only difference, at the time of writing, is that headers will be generated for template files as well.
@@ -66,7 +66,7 @@ The only difference, at the time of writing, is that headers will be generated f
 If you want to use scalastype, you can use the dedicated kantan module:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "1.5.2")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "1.6.0")
 ```
 
 This adds `scalastyle` to the `checkStyle` task, and lets you define a resource from which to read the scalastyle
@@ -78,7 +78,7 @@ be copied to the default location and kept up to date.
 If you want to use scalafmt, you can use the dedicated kantan module:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "1.5.2")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "1.6.0")
 ```
 
 This adds `scalafmt` to the `checkStyle` task, and lets you define a resource from which to read the scalafmt
