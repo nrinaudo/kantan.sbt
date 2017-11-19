@@ -1,4 +1,5 @@
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
+import ReleaseTransformations._
 
 def wartRemoverSettings: Seq[Setting[_]] =
   List(Compile, Test).flatMap { c ⇒
@@ -102,11 +103,30 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
   .settings(moduleName := "root")
   .settings(baseSettings)
   .settings(
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      releaseStepCommand("scalastyle"),
+      releaseStepCommand("scalafmt"),
+      releaseStepCommand("sbt:scalafmt"),
+      releaseStepCommand("scripted"),
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      releaseStepCommand("publishSigned"),
+      setNextVersion,
+      commitNextVersion,
+      releaseStepCommand("sonatypeReleaseAll"),
+      pushChanges
+    )
+  )
+  .settings(
     publish         := {},
     publishLocal    := {},
     publishArtifact := false
   )
-  .aggregate(core, strict, kantan, boilerplate, scalastyle, scalafmt)
+  .aggregate(core, strict, kantan, boilerplate, scalastyle, scalafmt, release)
 
 lazy val core = project
   .settings(
@@ -170,6 +190,17 @@ lazy val boilerplate = project
   .settings(addSbtPlugin("io.spray" % "sbt-boilerplate" % Versions.boilerplate))
   .dependsOn(core)
 
+lazy val release = project
+  .settings(
+    moduleName := "kantan.sbt-release",
+    name       := "release"
+  )
+  .settings(baseSettings)
+  .settings(pluginSettings)
+  .enablePlugins(AutomateHeaderPlugin)
+  .settings(addSbtPlugin("com.github.gseitz" % "sbt-release" % Versions.sbtRelease))
+  .dependsOn(core)
+
 lazy val kantan = project
   .settings(
     moduleName := "kantan.sbt-kantan",
@@ -182,7 +213,7 @@ lazy val kantan = project
     addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
     addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
   )
-  .dependsOn(strict, scalastyle, scalafmt)
+  .dependsOn(strict, scalastyle, scalafmt, release)
 
 addCommandAlias(
   "validate",
