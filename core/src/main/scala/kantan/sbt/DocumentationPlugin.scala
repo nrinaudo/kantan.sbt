@@ -20,6 +20,7 @@ import com.typesafe.sbt.sbtghpages.GhpagesPlugin
 import com.typesafe.sbt.site.SitePlugin
 import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin
+import com.typesafe.sbt.site.preprocess.PreprocessPlugin.autoImport._
 import com.typesafe.sbt.site.util.SiteHelpers._
 import sbt._, Keys._, ScopeFilter.ProjectFilter
 import sbtunidoc.BaseUnidocPlugin.autoImport._
@@ -37,7 +38,6 @@ object DocumentationPlugin extends AutoPlugin {
   // - Public settings -------------------------------------------------------------------------------------------------
   // -------------------------------------------------------------------------------------------------------------------
   object autoImport {
-    val tutSiteDir: SettingKey[String]           = settingKey("Website tutorial directory")
     val docSourceUrl: SettingKey[Option[String]] = settingKey("scalac -doc-source-url parameter")
 
     def inProjectsIf(predicate: Boolean)(projects: ProjectReference*): ProjectFilter =
@@ -47,7 +47,8 @@ object DocumentationPlugin extends AutoPlugin {
   import autoImport._
 
   override def projectSettings: Seq[Setting[_]] = Seq(
-    tutSiteDir                    := "_tut",
+    sourceDirectory in Preprocess := resourceManaged.value / "main" / "site-preprocess",
+    tutTargetDirectory            := (sourceDirectory in Preprocess).value,
     siteSubdirName in ScalaUnidoc := "api",
     docSourceUrl                  := scmInfo.value.map(i ⇒ s"${i.browseUrl}/tree/master€{FILE_PATH}.scala"),
     scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
@@ -60,10 +61,10 @@ object DocumentationPlugin extends AutoPlugin {
     includeFilter in SitePlugin.autoImport.makeSite :=
       "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
         "*.woff" | "*.woff2" | "*.otf",
-    addMappingsToSiteDir(tut, tutSiteDir),
     addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
     // The doc task will also generate the documentation site.
-    doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
+    SitePlugin.autoImport.makeSite := SitePlugin.autoImport.makeSite.dependsOn(tut).value,
+    doc                            := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
   )
 
   override def requires = PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin && TutPlugin
