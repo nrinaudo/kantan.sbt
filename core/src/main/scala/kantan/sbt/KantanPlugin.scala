@@ -111,32 +111,63 @@ object KantanPlugin extends AutoPlugin {
   def scalacSettings: Seq[Setting[_]] = {
     def base(version: String) =
       Seq(
+        "-deprecation",
         "-encoding",
-        "UTF-8",
+        "utf-8",
+        "-explaintypes",
         "-feature",
         "-language:existentials",
+        "-language:experimental.macros",
         "-language:higherKinds",
         "-language:implicitConversions",
-        "-language:experimental.macros",
-        "-deprecation",
         "-unchecked",
+        "-Xcheckinit",
+        "-Xfuture",
+        "-Xlint:adapted-args",
+        "-Xlint:by-name-right-associative",
+        "-Xlint:delayedinit-select",
+        "-Xlint:doc-detached",
+        "-Xlint:inaccessible",
+        "-Xlint:infer-any",
+        "-Xlint:missing-interpolator",
+        "-Xlint:nullary-override",
+        "-Xlint:nullary-unit",
+        "-Xlint:option-implicit",
+        "-Xlint:package-object-classes",
+        "-Xlint:poly-implicit-overload",
+        "-Xlint:private-shadow",
+        "-Xlint:stars-align",
+        "-Xlint:type-parameter-shadow",
+        "-Xlint:unsound-match",
         "-Yno-adapted-args",
         "-Ywarn-dead-code",
+        "-Ywarn-inaccessible",
+        "-Ywarn-infer-any",
+        "-Ywarn-nullary-override",
+        "-Ywarn-nullary-unit",
         "-Ywarn-numeric-widen",
-        "-Ywarn-value-discard",
-        "-Xfuture"
+        "-Ywarn-value-discard"
       ) ++ (CrossVersion.partialVersion(version) match {
-        case Some((_, x)) if x >= 12 ⇒ Seq("-Ypartial-unification")
-        case _                       ⇒ Seq.empty
+        case Some((_, x)) if x >= 12 ⇒
+          Seq(
+            "-Ypartial-unification",
+            "-Xlint:constant",
+            "-Ywarn-extra-implicit",
+            "-Ywarn-unused:implicits",
+            "-Ywarn-unused:locals",
+            "-Ywarn-unused:params",
+            "-Ywarn-unused:patvars",
+            "-Ywarn-unused:privates"
+          )
+        case _ ⇒ Seq.empty
       })
 
     // Sane defaults for warnings / errors:
     // - -Xlint is only enabled for Compile & Test, since it basically makes the REPL unusable.
     // - nothing is fatal (use StrictKantanPlugin for that)
     Seq(
-      scalacOptions                       := base(scalaVersion.value),
-      scalacOptions in (Compile, compile) += "-Xlint",
-      scalacOptions in (Test, compile)    += "-Xlint"
+      scalacOptions := base(scalaVersion.value),
+      scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports")
     )
   }
 
