@@ -22,10 +22,7 @@ import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
 import sbt._, Keys._
 import spray.boilerplate.BoilerplatePlugin
 
-/** Makes compilation much more strict.
-  *
-  * This will make warnings fatal, as well as turn on various Scala linters (such as WartRemover).
-  */
+/** Add support for headers in sbt-boilerplate. */
 object KantanBoilerplatePlugin extends AutoPlugin {
   override def trigger = allRequirements
 
