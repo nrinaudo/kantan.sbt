@@ -141,6 +141,7 @@ object KantanPlugin extends AutoPlugin {
         "-Xlint:unsound-match",
         "-Yno-adapted-args",
         "-Ywarn-dead-code",
+        "-Ywarn-unused:imports",
         "-Ywarn-inaccessible",
         "-Ywarn-infer-any",
         "-Ywarn-nullary-override",
@@ -163,7 +164,7 @@ object KantanPlugin extends AutoPlugin {
       })
 
     // Sane defaults for warnings / errors:
-    // - -Xlint is only enabled for Compile & Test, since it basically makes the REPL unusable.
+    // - disable unused imports from the REPL since it basically makes it unusable
     // - nothing is fatal (use StrictKantanPlugin for that)
     Seq(
       scalacOptions := base(scalaVersion.value),
