@@ -141,7 +141,6 @@ object KantanPlugin extends AutoPlugin {
         "-Xlint:unsound-match",
         "-Yno-adapted-args",
         "-Ywarn-dead-code",
-        "-Ywarn-unused:imports",
         "-Ywarn-inaccessible",
         "-Ywarn-infer-any",
         "-Ywarn-nullary-override",
@@ -158,8 +157,11 @@ object KantanPlugin extends AutoPlugin {
             "-Ywarn-unused:locals",
             "-Ywarn-unused:params",
             "-Ywarn-unused:patvars",
-            "-Ywarn-unused:privates"
+            "-Ywarn-unused:privates",
+            "-Ywarn-unused:imports"
           )
+        case Some((_, x)) if x == 11 ⇒
+          Seq("-Ywarn-unused-import")
         case _ ⇒ Seq.empty
       })
 
@@ -168,7 +170,7 @@ object KantanPlugin extends AutoPlugin {
     // - nothing is fatal (use StrictKantanPlugin for that)
     Seq(
       scalacOptions := base(scalaVersion.value),
-      scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports")
+      scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Ywarn-unused-import")
     )
   }
 
