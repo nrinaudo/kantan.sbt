@@ -17,7 +17,7 @@
 package kantan.sbt
 
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
-import sbt.AutoPlugin
+import sbt.{file, AutoPlugin, Resolver}
 import sbt.Keys._
 
 /** Configures projects whose artifacts are not meant for publication to maven central.
@@ -26,9 +26,15 @@ import sbt.Keys._
   */
 object UnpublishedPlugin extends AutoPlugin {
   override def projectSettings = Seq(
+    // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
+    makePom         := file(""),
+    deliver         := file(""),
+    deliverLocal    := file(""),
     publish         := {},
     publishLocal    := {},
-    publishArtifact := false
+    publishM2       := {},
+    publishArtifact := false,
+    publishTo       := Some(Resolver.file("devnull", file("/dev/null")))
   )
 
   override def requires = KantanPlugin && AutomateHeaderPlugin
