@@ -16,11 +16,9 @@
 
 package kantan.sbt.kantan
 
-import com.typesafe.sbt.pgp.PgpKeys.publishSigned
 import kantan.sbt.PublishedPlugin
-import kantan.sbt.release.{KantanRelease, KantanReleasePlugin}
+import kantan.sbt.release.KantanReleasePlugin
 import sbt._, Keys._
-import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._
 
 /** Configures publication for kantan projects. */
 object KantanPublishedPlugin extends AutoPlugin {
@@ -28,37 +26,10 @@ object KantanPublishedPlugin extends AutoPlugin {
 
   override def requires = KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
 
-  /** Runs publishSigned. */
-  lazy val runPublishSigned: State ⇒ State = { st: State ⇒
-    val extracted = Project.extract(st)
-    val ref       = extracted.get(thisProjectRef)
-    extracted.runAggregated(publishSigned in Global in ref, st)
-  }
-
-  override lazy val projectSettings = Seq(
-    releaseCrossBuild := true,
-    releaseProcess := Seq[ReleaseStep](
-      checkSnapshotDependencies,
-      inquireVersions,
-      runClean,
-      KantanRelease.runCoverageOff,
-      KantanRelease.runCheckStyle,
-      runTest,
-      setReleaseVersion,
-      commitReleaseVersion,
-      tagRelease,
-      runPublishSigned,
-      setNextVersion,
-      commitNextVersion,
-      releaseStepCommand("sonatypeReleaseAll"),
-      KantanRelease.runPushSite,
-      pushChanges
-    ),
-    publishTo := Some(
-      if(isSnapshot.value)
-        Opts.resolver.sonatypeSnapshots
-      else
-        Opts.resolver.sonatypeStaging
-    )
+  override lazy val projectSettings = publishTo := Some(
+    if(isSnapshot.value)
+      Opts.resolver.sonatypeSnapshots
+    else
+      Opts.resolver.sonatypeStaging
   )
 }

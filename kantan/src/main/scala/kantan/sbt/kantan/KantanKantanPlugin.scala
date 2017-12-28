@@ -18,12 +18,15 @@ package kantan.sbt.kantan
 
 import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import com.typesafe.sbt.SbtGit.git
+import com.typesafe.sbt.pgp.PgpKeys.publishSigned
+import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafmt.KantanScalafmtPlugin
 import kantan.sbt.scalafmt.KantanScalafmtPlugin.autoImport._
 import kantan.sbt.scalastyle.KantanScalastylePlugin
 import kantan.sbt.scalastyle.KantanScalastylePlugin.autoImport._
 import kantan.sbt.strict.StrictKantanPlugin
 import sbt._, Keys._
+import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._
 
 /** Plugin that sets kantan-specific values.
   *
@@ -57,6 +60,28 @@ object KantanKantanPlugin extends AutoPlugin {
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),
+    // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,
+    // root projects are unpublished, but if they do not have releaseCrossBuilder set to true, no underlying project
+    // will either.
+    releaseCrossBuild             := true,
+    releasePublishArtifactsAction := publishSigned.value,
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      KantanRelease.runCoverageOff,
+      KantanRelease.runCheckStyle,
+      runTest,
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      publishArtifacts,
+      releaseStepCommand("sonatypeReleaseAll"),
+      KantanRelease.runPushSite,
+      setNextVersion,
+      commitNextVersion,
+      pushChanges
+    ),
     developers := List(
       Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
     )
