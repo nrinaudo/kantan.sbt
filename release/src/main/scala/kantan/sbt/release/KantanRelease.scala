@@ -17,7 +17,6 @@
 package kantan.sbt.release
 
 import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport.ghpagesPushSite
-import com.typesafe.sbt.site.SitePlugin.autoImport.makeSite
 import kantan.sbt.KantanPlugin.autoImport._
 import sbt._, Keys._
 import sbtrelease.ReleasePlugin.autoImport._
@@ -38,13 +37,11 @@ object KantanRelease {
     }
   )
 
-  /** Runs `makeSite` followed by `pushSite`. */
+  /** Runs `pushSite`. */
   lazy val runPushSite: ReleaseStep = { st: State ⇒
     val extracted = Project.extract(st)
     val ref       = extracted.get(thisProjectRef)
 
-    val stMakeSite = extracted.runTask(makeSite in ref, st)._1
-
-    extracted.runTask(ghpagesPushSite in ref, stMakeSite)._1
+    extracted.runAggregated(ghpagesPushSite in ref, st)
   }
 }
