@@ -82,7 +82,7 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.4" else "2.11.11" },
+      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.4" else "2.11.12" },
       kindProjectorVersion   := "0.9.5",
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
