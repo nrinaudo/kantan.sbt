@@ -16,8 +16,8 @@
 
 package kantan.sbt
 
-import com.typesafe.sbt.sbtghpages.GhpagesPlugin
-import com.typesafe.sbt.site.SitePlugin
+import com.typesafe.sbt.sbtghpages.GhpagesPlugin, GhpagesPlugin.autoImport._
+import com.typesafe.sbt.site.SitePlugin, SitePlugin.autoImport.makeSite
 import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin.autoImport._
@@ -62,9 +62,10 @@ object DocumentationPlugin extends AutoPlugin {
       "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
         "*.woff" | "*.woff2" | "*.otf",
     addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
+    ghpagesPushSite := ghpagesPushSite.dependsOn(makeSite).value,
+    makeSite        := makeSite.dependsOn(tut).value,
     // The doc task will also generate the documentation site.
-    SitePlugin.autoImport.makeSite := SitePlugin.autoImport.makeSite.dependsOn(tut).value,
-    doc                            := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
+    doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
   )
 
   override def requires = PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin && TutPlugin
