@@ -20,6 +20,7 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt._, Keys._
 import sbt.plugins.JvmPlugin
+import tut.TutPlugin.autoImport._
 
 /** Settings common to all projects.
   *
@@ -166,11 +167,14 @@ object KantanPlugin extends AutoPlugin {
       })
 
     // Sane defaults for warnings / errors:
-    // - disable unused imports from the REPL since it basically makes it unusable
+    // - disable unused imports from the REPL, since it basically make sit unusable
+    // - disable unused imports from tut, since we don't want spurious warnings in our documentation
     // - nothing is fatal (use StrictKantanPlugin for that)
+    val unusedImports = Seq("-Ywarn-unused:imports", "-Ywarn-unused-import")
     Seq(
       scalacOptions := base(scalaVersion.value),
-      scalacOptions in (Compile, console) --= Seq("-Ywarn-unused:imports", "-Ywarn-unused-import")
+      scalacOptions in (Compile, console) --= unusedImports,
+      scalacOptions in Tut --= unusedImports
     )
   }
 
