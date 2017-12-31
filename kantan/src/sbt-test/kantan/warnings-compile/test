@@ -1,0 +1,2 @@
+# Compilation should fail when warnings are generated
+-> compile
