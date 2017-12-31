@@ -1,8 +1,6 @@
 kantanProject in ThisBuild := "foo"
 startYear                  := Some(2017)
 
-enablePlugins(AutomateHeaderPlugin)
-
 lazy val check = TaskKey[Unit]("check")
 
 check := {

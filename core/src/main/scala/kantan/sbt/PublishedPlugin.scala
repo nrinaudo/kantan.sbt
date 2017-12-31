@@ -16,7 +16,6 @@
 
 package kantan.sbt
 
-import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import sbt._
 
 /** Configures projects whose artifacts are meant for publication to maven.
@@ -24,7 +23,7 @@ import sbt._
   * This is mostly meant as a "tag" for other plugins to piggyback. See, for example, `KantanKantanPlugin`.
   */
 object PublishedPlugin extends AutoPlugin {
-  override def requires = KantanPlugin && AutomateHeaderPlugin
+  override def requires = KantanPlugin
 
   override def trigger = noTrigger
 }

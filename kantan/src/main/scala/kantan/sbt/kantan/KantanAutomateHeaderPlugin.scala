@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Nicolas Rinaudo
+ * Copyright 2016 Nicolas Rinaudo
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,4 +14,16 @@
  * limitations under the License.
  */
 
-object Foo extends App
+package kantan.sbt.kantan
+
+import de.heikoseeberger.sbtheader.{AutomateHeaderPlugin, HeaderPlugin}
+import sbt._
+
+object KantanAutomateHeaderPlugin extends AutoPlugin {
+  override def trigger  = allRequirements
+  override def requires = KantanKantanPlugin && HeaderPlugin
+
+  val autoImport = AutomateHeaderPlugin.autoImport
+
+  override lazy val projectSettings = AutomateHeaderPlugin.projectSettings
+}
