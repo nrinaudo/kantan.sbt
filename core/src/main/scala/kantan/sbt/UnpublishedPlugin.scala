@@ -16,7 +16,6 @@
 
 package kantan.sbt
 
-import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import sbt.{file, AutoPlugin, Resolver}
 import sbt.Keys._
 
@@ -37,7 +36,7 @@ object UnpublishedPlugin extends AutoPlugin {
     publishTo       := Some(Resolver.file("devnull", file("/dev/null")))
   )
 
-  override def requires = KantanPlugin && AutomateHeaderPlugin
+  override def requires = KantanPlugin
 
   override def trigger = noTrigger
 }

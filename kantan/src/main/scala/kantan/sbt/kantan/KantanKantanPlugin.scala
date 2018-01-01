@@ -19,12 +19,11 @@ package kantan.sbt.kantan
 import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import com.typesafe.sbt.SbtGit.git
 import com.typesafe.sbt.pgp.PgpKeys.publishSigned
-import kantan.sbt.release.KantanRelease
-import kantan.sbt.scalafmt.KantanScalafmtPlugin
-import kantan.sbt.scalafmt.KantanScalafmtPlugin.autoImport._
-import kantan.sbt.scalastyle.KantanScalastylePlugin
-import kantan.sbt.scalastyle.KantanScalastylePlugin.autoImport._
-import kantan.sbt.strict.StrictKantanPlugin
+import kantan.sbt.KantanRelease
+import kantan.sbt.KantanScalafmtPlugin
+import kantan.sbt.KantanScalafmtPlugin.autoImport._
+import kantan.sbt.KantanScalastylePlugin
+import kantan.sbt.KantanScalastylePlugin.autoImport._
 import sbt._, Keys._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._
 
@@ -46,7 +45,7 @@ object KantanKantanPlugin extends AutoPlugin {
 
   override def trigger = allRequirements
 
-  override def requires = StrictKantanPlugin && KantanScalastylePlugin && KantanScalafmtPlugin
+  override def requires = KantanScalastylePlugin && KantanScalafmtPlugin
 
   override lazy val projectSettings = generalSettings ++ remoteSettings
 

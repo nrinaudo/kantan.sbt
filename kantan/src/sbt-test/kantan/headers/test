@@ -1,9 +1,0 @@
-# Foo should not contain a header.
--> headerCheck
-
-# It should be picked up when explicitely generating headers though.
-> headerCreate
-> headerCheck
-
-# The header should have the expected value
-> check

@@ -16,20 +16,13 @@
 
 package kantan.sbt.kantan
 
-import kantan.sbt.KantanReleasePlugin
-import kantan.sbt.PublishedPlugin
-import sbt._, Keys._
+import kantan.sbt.StrictPlugin
+import sbt._
+import wartremover.WartRemover
 
-/** Configures publication for kantan projects. */
-object KantanPublishedPlugin extends AutoPlugin {
-  override def trigger = allRequirements
+object KantanStrictPlugin extends AutoPlugin {
+  override def trigger  = allRequirements
+  override def requires = KantanKantanPlugin && WartRemover
 
-  override def requires = KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
-
-  override lazy val projectSettings = publishTo := Some(
-    if(isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
-    else
-      Opts.resolver.sonatypeStaging
-  )
+  override lazy val projectSettings = StrictPlugin.projectSettings
 }

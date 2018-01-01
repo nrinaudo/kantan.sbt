@@ -16,20 +16,14 @@
 
 package kantan.sbt.kantan
 
-import kantan.sbt.KantanReleasePlugin
-import kantan.sbt.PublishedPlugin
-import sbt._, Keys._
+import de.heikoseeberger.sbtheader.{AutomateHeaderPlugin, HeaderPlugin}
+import sbt._
 
-/** Configures publication for kantan projects. */
-object KantanPublishedPlugin extends AutoPlugin {
-  override def trigger = allRequirements
+object KantanAutomateHeaderPlugin extends AutoPlugin {
+  override def trigger  = allRequirements
+  override def requires = KantanKantanPlugin && HeaderPlugin
 
-  override def requires = KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
+  val autoImport = AutomateHeaderPlugin.autoImport
 
-  override lazy val projectSettings = publishTo := Some(
-    if(isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
-    else
-      Opts.resolver.sonatypeStaging
-  )
+  override lazy val projectSettings = AutomateHeaderPlugin.projectSettings
 }
