@@ -1,0 +1,26 @@
+import com.typesafe.sbt.SbtGit.git
+import com.typesafe.sbt.sbtghpages.GhpagesPlugin, GhpagesPlugin.autoImport._
+import com.typesafe.sbt.site.SitePlugin, SitePlugin.autoImport.makeSite
+import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
+import com.typesafe.sbt.site.preprocess.PreprocessPlugin
+import com.typesafe.sbt.site.preprocess.PreprocessPlugin.autoImport._
+import com.typesafe.sbt.site.util.SiteHelpers._
+import sbt._, Keys._
+import sbt.plugins.JvmPlugin
+
+object DocumentationPlugin extends AutoPlugin {
+  override def trigger = noTrigger
+
+  override def requires = JvmPlugin && PreprocessPlugin && GhpagesPlugin
+
+  override lazy val projectSettings = Seq(
+    GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
+    git.remoteRepo                           := s"git@github.com:nrinaudo/kantan.sbt.git",
+    includeFilter in SitePlugin.autoImport.makeSite :=
+      "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
+        "*.woff" | "*.woff2" | "*.otf",
+    ghpagesPushSite := ghpagesPushSite.dependsOn(makeSite).value,
+    // The doc task will also generate the documentation site.
+    doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
+  )
+}

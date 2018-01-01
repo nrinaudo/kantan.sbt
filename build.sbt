@@ -5,7 +5,7 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
     publishLocal    := {},
     publishArtifact := false
   )
-  .aggregate(core, kantan, release, scalafmt, scalastyle)
+  .aggregate(docs, core, kantan, release, scalafmt, scalastyle)
 
 lazy val core = project
   .settings(
@@ -74,3 +74,6 @@ lazy val kantan = project
     addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
   )
   .dependsOn(core, release, scalafmt, scalastyle)
+
+lazy val docs = project
+  .enablePlugins(DocumentationPlugin)

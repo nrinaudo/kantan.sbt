@@ -1,10 +1,9 @@
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import sbt._, Keys._
 import sbt.plugins.JvmPlugin
+import sbt.ScriptedPlugin.autoImport._
 import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
 import wartremover.{Wart, WartRemover, Warts}
-
-import sbt.ScriptedPlugin.autoImport._
 
 object BuildPlugin extends AutoPlugin {
   override def trigger = allRequirements
@@ -43,9 +42,11 @@ object BuildPlugin extends AutoPlugin {
         commitReleaseVersion,
         tagRelease,
         releaseStepCommand("publishSigned"),
+        releaseStepCommand("sonatypeReleaseAll"),
+        releaseStepCommand("makeSite"),
+        releaseStepCommand("ghpagesPushSite"),
         setNextVersion,
         commitNextVersion,
-        releaseStepCommand("sonatypeReleaseAll"),
         pushChanges
       )
     )
