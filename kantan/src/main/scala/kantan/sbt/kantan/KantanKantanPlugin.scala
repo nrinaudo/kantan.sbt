@@ -16,14 +16,11 @@
 
 package kantan.sbt.kantan
 
-import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
 import com.typesafe.sbt.SbtGit.git
 import com.typesafe.sbt.pgp.PgpKeys.publishSigned
 import kantan.sbt.KantanRelease
-import kantan.sbt.KantanScalafmtPlugin
-import kantan.sbt.KantanScalafmtPlugin.autoImport._
-import kantan.sbt.KantanScalastylePlugin
-import kantan.sbt.KantanScalastylePlugin.autoImport._
+import kantan.sbt.KantanScalafmtPlugin, KantanScalafmtPlugin.autoImport._
+import kantan.sbt.KantanScalastylePlugin, KantanScalastylePlugin.autoImport._
 import sbt._, Keys._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._
 
@@ -54,7 +51,6 @@ object KantanKantanPlugin extends AutoPlugin {
     organization         := "com.nrinaudo",
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
     organizationName     := "Nicolas Rinaudo",
-    scalafmtVersion      := "1.3.0",
     crossScalaVersions   := Seq("2.11.12", "2.12.4"),
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),

@@ -18,7 +18,7 @@ lazy val core = project
     addSbtPlugin("com.eed3si9n"        % "sbt-unidoc"             % Versions.sbtUnidoc),
     addSbtPlugin("com.github.gseitz"   % "sbt-release"            % Versions.sbtRelease),
     addSbtPlugin("com.github.tkawachi" % "sbt-doctest"            % Versions.sbtDoctest),
-    addSbtPlugin("com.lucidchart"      % "sbt-scalafmt"           % Versions.sbtScalafmt),
+    addSbtPlugin("com.geirsson"        % "sbt-scalafmt"           % Versions.sbtScalafmt),
     addSbtPlugin("com.typesafe.sbt"    % "sbt-ghpages"            % Versions.sbtGhPages),
     addSbtPlugin("com.typesafe.sbt"    % "sbt-site"               % Versions.sbtSite),
     addSbtPlugin("de.heikoseeberger"   % "sbt-header"             % Versions.sbtHeader),
@@ -44,5 +44,5 @@ lazy val kantan = project
 
 addCommandAlias(
   "validate",
-  ";clean;scalastyle;test:scalastyle;scalafmt::test;test:scalafmt::test;sbt:scalafmt::test;compile;scripted"
+  ";clean;scalastyle;test:scalastyle;scalafmtCheck;test:scalafmtCheck;scalafmtSbtCheck;compile;scripted"
 )

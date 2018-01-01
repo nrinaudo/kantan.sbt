@@ -1,5 +1,3 @@
-import com.lucidchart.sbt.scalafmt.ScalafmtCorePlugin.autoImport._
-import com.lucidchart.sbt.scalafmt.ScalafmtSbtPlugin.autoImport._
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import sbt._, Keys._
 import sbt.plugins.JvmPlugin
@@ -16,12 +14,13 @@ object BuildPlugin extends AutoPlugin {
   lazy val runScripted: ReleaseStep = {
     val scriptedStep = releaseStepInputTask(scripted)
     ReleaseStep(
-    action = { st: State =>
-      if (!st.get(skipTests).getOrElse(false)) {
-        scriptedStep(st)
-      } else st
-    }
-  )
+      action = { st: State ⇒
+        if(!st.get(skipTests).getOrElse(false)) {
+          scriptedStep(st)
+        }
+        else st
+      }
+    )
   }
 
   def releaseSettings: Seq[Setting[_]] =
@@ -31,8 +30,8 @@ object BuildPlugin extends AutoPlugin {
         inquireVersions,
         runClean,
         releaseStepCommand("scalastyle"),
-        releaseStepCommand("scalafmt"),
-        releaseStepCommand("sbt:scalafmt"),
+        releaseStepCommand("scalafmtCheck"),
+        releaseStepCommand("scalafmtSbtCheck"),
         runScripted,
         setReleaseVersion,
         commitReleaseVersion,
@@ -44,7 +43,6 @@ object BuildPlugin extends AutoPlugin {
         pushChanges
       )
     )
-
 
   def wartRemoverSettings: Seq[Setting[_]] =
     List(Compile, Test).flatMap { c ⇒
@@ -73,7 +71,6 @@ object BuildPlugin extends AutoPlugin {
       scalaVersion         := "2.12.4",
       licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
-      scalafmtVersion      := Versions.scalafmt,
       publishTo := Some(
         if(isSnapshot.value)
           Opts.resolver.sonatypeSnapshots
