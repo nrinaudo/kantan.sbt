@@ -3,7 +3,7 @@ import com.lucidchart.sbt.scalafmt.ScalafmtSbtPlugin.autoImport._
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import sbt._, Keys._
 import sbt.plugins.JvmPlugin
-import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._
+import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
 import wartremover.{Wart, WartRemover, Warts}
 
 import sbt.ScriptedPlugin.autoImport._
@@ -12,6 +12,17 @@ object BuildPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
   override lazy val projectSettings = baseSettings ++ wartRemoverSettings ++ releaseSettings
+
+  lazy val runScripted: ReleaseStep = {
+    val scriptedStep = releaseStepInputTask(scripted)
+    ReleaseStep(
+    action = { st: State =>
+      if (!st.get(skipTests).getOrElse(false)) {
+        scriptedStep(st)
+      } else st
+    }
+  )
+  }
 
   def releaseSettings: Seq[Setting[_]] =
     Seq(
@@ -22,7 +33,7 @@ object BuildPlugin extends AutoPlugin {
         releaseStepCommand("scalastyle"),
         releaseStepCommand("scalafmt"),
         releaseStepCommand("sbt:scalafmt"),
-        releaseStepCommand("scripted"),
+        runScripted,
         setReleaseVersion,
         commitReleaseVersion,
         tagRelease,
