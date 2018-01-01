@@ -12,8 +12,8 @@ before_cache:
 scala:
   - 2.12.4
 jdk:
-# This is currently disabled because scalafmt does not run under java 1.7-.
-#  - oraclejdk7
   - oraclejdk8
+  - openjdk8
+  - oraclejdk9
 script:
   - sbt ++$TRAVIS_SCALA_VERSION validate
