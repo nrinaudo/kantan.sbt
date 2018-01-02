@@ -1,1 +1,1 @@
-scalafmtVersion                   := "1.1.0"
+startYear      := Some(1901)
