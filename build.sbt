@@ -74,8 +74,3 @@ lazy val kantan = project
     addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
   )
   .dependsOn(core, release, scalafmt, scalastyle)
-
-addCommandAlias(
-  "validate",
-  ";clean;scalastyle;test:scalastyle;scalafmtCheck;test:scalafmtCheck;scalafmtSbtCheck;compile;scripted"
-)

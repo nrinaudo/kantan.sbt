@@ -11,6 +11,12 @@ object BuildPlugin extends AutoPlugin {
 
   override lazy val projectSettings = baseSettings ++ wartRemoverSettings ++ releaseSettings
 
+  override def globalSettings: Seq[Setting[_]] =
+    addCommandAlias(
+      "validate",
+      ";clean;scalastyle;test:scalastyle;scalafmtCheck;test:scalafmtCheck;scalafmtSbtCheck;compile;scripted"
+    )
+
   lazy val runScripted: ReleaseStep = {
     val scriptedStep = releaseStepInputTask(scripted)
     ReleaseStep(
