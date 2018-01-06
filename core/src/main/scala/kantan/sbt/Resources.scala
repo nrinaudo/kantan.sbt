@@ -47,7 +47,6 @@ object Resources {
       Using.urlInputStream(from) { inputStream ⇒
         IO.transfer(inputStream, to)
       }
-      //IO.transfer(from, to)
     }
 
   def copyIfNeeded(res: String, to: File): Unit = copyIfNeeded(getClass.getResource(res), to)
