@@ -1,0 +1,12 @@
+# Makes sure that scalafmtAll does format all sources.
+
+# Test files, SBT files and main files all have errors.
+-> scalafmtSbtCheck
+-> scalafmtCheck
+-> test:scalafmtcheck
+-> checkStyle
+-> test:checkStyle
+
+# Formatting them yields the expected result.
+> scalafmtAll
+> check

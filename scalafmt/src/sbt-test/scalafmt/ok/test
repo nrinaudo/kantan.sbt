@@ -1,0 +1,8 @@
+# Makes sure that, when all files are properly formatted, no scalafmt* command
+# fails the build.
+
+> scalafmtCheck
+> scalafmtSbtCheck
+> checkStyle
+> test:scalafmtCheck
+> test:checkStyle

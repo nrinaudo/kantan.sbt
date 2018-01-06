@@ -11,17 +11,22 @@ check := {
 
   validate(
     (scalaSource in Compile).value / "Foo.scala",
-    file("expected-foo.txt")
+    file("expected/foo.txt")
   )
 
   validate(
     (scalaSource in Test).value / "Bar.scala",
-    file("expected-bar.txt")
+    file("expected/bar.txt")
   )
 
   validate(
     file("project/plugins.sbt"),
-    file("expected-plugins.txt")
+    file("expected/plugins.txt")
+  )
+
+  validate(
+    file("project/Versions.scala"),
+    file("expected/Versions.txt")
   )
 
   ()

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package kantan.sbt
+package kantan.sbt.scalafmt
 
-import kantan.sbt.KantanPlugin.autoImport._
+import kantan.sbt.KantanPlugin, KantanPlugin.autoImport._
 import kantan.sbt.Resources._
 import org.scalafmt.sbt.ScalafmtPlugin, ScalafmtPlugin.autoImport._
 import sbt._
