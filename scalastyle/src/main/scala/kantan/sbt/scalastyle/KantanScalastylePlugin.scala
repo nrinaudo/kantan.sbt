@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package kantan.sbt
+package kantan.sbt.scalastyle
 
-import kantan.sbt.KantanPlugin.autoImport._
+import kantan.sbt.KantanPlugin, KantanPlugin.autoImport._
 import kantan.sbt.Resources.copyIfNeeded
 import org.scalastyle.sbt.ScalastylePlugin
 import org.scalastyle.sbt.ScalastylePlugin.autoImport._
