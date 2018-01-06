@@ -5,7 +5,7 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
     publishLocal    := {},
     publishArtifact := false
   )
-  .aggregate(core, kantan, scalastyle)
+  .aggregate(core, kantan, release, scalastyle)
 
 lazy val core = project
   .settings(
@@ -16,7 +16,6 @@ lazy val core = project
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
     addSbtPlugin("com.eed3si9n"        % "sbt-unidoc"      % Versions.sbtUnidoc),
-    addSbtPlugin("com.github.gseitz"   % "sbt-release"     % Versions.sbtRelease),
     addSbtPlugin("com.github.tkawachi" % "sbt-doctest"     % Versions.sbtDoctest),
     addSbtPlugin("com.geirsson"        % "sbt-scalafmt"    % Versions.sbtScalafmt),
     addSbtPlugin("com.typesafe.sbt"    % "sbt-ghpages"     % Versions.sbtGhPages),
@@ -27,6 +26,18 @@ lazy val core = project
     addSbtPlugin("org.tpolecat"        % "tut-plugin"      % Versions.tut),
     addSbtPlugin("org.wartremover"     % "sbt-wartremover" % Versions.wartRemover)
   )
+
+lazy val release = project
+  .settings(
+    moduleName := "kantan.sbt-release",
+    name       := "release",
+    sbtPlugin  := true
+  )
+  .enablePlugins(AutomateHeaderPlugin)
+  .settings(
+    addSbtPlugin("com.github.gseitz" % "sbt-release" % Versions.sbtRelease)
+  )
+  .dependsOn(core)
 
 lazy val scalastyle = project
   .settings(
@@ -51,7 +62,7 @@ lazy val kantan = project
     addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
     addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
   )
-  .dependsOn(core, scalastyle)
+  .dependsOn(core, release, scalastyle)
 
 addCommandAlias(
   "validate",

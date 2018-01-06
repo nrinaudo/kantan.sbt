@@ -18,8 +18,8 @@ package kantan.sbt.kantan
 
 import com.typesafe.sbt.SbtGit.git
 import com.typesafe.sbt.pgp.PgpKeys.publishSigned
-import kantan.sbt.KantanRelease
 import kantan.sbt.KantanScalafmtPlugin, KantanScalafmtPlugin.autoImport._
+import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalastyle.KantanScalastylePlugin, KantanScalastylePlugin.autoImport._
 import sbt._, Keys._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._

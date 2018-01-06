@@ -1,5 +1,5 @@
 releaseProcess := Seq[ReleaseStep](
-  kantan.sbt.KantanRelease.runCoverageOff
+  kantan.sbt.release.KantanRelease.runCoverageOff
 )
 
 lazy val check = TaskKey[Unit]("check")

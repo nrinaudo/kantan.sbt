@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-package kantan.sbt
+package kantan.sbt.release
 
+import kantan.sbt.KantanPlugin
 import sbt._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._
 
