@@ -16,8 +16,8 @@
 
 package kantan.sbt.kantan
 
-import kantan.sbt.KantanReleasePlugin
 import kantan.sbt.PublishedPlugin
+import kantan.sbt.release.KantanReleasePlugin
 import sbt._, Keys._
 
 /** Configures publication for kantan projects. */

@@ -1,0 +1,9 @@
+# Makes sure that invalid files in src/main will:
+# - fail scalastyle & checkStyle
+# - have no impact on test:scalastyle and test:checkStyle
+
+-> scalastyle
+-> checkStyle
+
+> test:scalastyle
+> test:checkStyle

@@ -1,0 +1,5 @@
+# Makes sure that running release will disable code instrumentation.
+
+> coverageOn
+> release
+> check

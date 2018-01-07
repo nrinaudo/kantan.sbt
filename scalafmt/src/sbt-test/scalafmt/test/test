@@ -1,0 +1,9 @@
+# Makes sure that, when test sources are ill formatted:
+# - test:scalafmtCheck & test:checkStyle fail
+# - no other scalafmt* does
+
+> checkStyle
+> scalafmtCheck
+> scalafmtSbtCheck
+-> test:scalafmtCheck
+-> test:checkStyle

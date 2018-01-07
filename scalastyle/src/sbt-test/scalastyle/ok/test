@@ -1,0 +1,6 @@
+# Makes sure that valid projects are not failed by any style command.
+
+> scalastyle
+> test:scalastyle
+> checkStyle
+> test:checkStyle

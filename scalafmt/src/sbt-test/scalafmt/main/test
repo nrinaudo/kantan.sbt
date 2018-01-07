@@ -1,0 +1,9 @@
+# Makes sure that incorrectly formatted files in /src/main are:
+# - spotted by scalafmtCheck & checkStyle
+# - not spotted by any other scalafmt* command
+
+> scalafmtSbtCheck
+> test:scalafmtCheck
+> test:checkStyle
+-> scalafmtCheck
+-> checkStyle

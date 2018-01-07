@@ -1,0 +1,9 @@
+# Makes sure that, when an SBT file is ill-formatted:
+# - scalafmtSbtCheck & checkStyle fail
+# - not other scalafmt* does
+
+> scalafmtCheck
+> test:scalafmtCheck
+> test:checkStyle
+-> checkStyle
+-> scalafmtSbtCheck
