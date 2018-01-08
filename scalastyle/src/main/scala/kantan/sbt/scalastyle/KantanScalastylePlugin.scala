@@ -37,7 +37,7 @@ object KantanScalastylePlugin extends AutoPlugin {
 
   override lazy val projectSettings = Seq(
     scalastyleResource   := None,
-    copyScalastyleConfig := scalastyleResource.value.foreach(r ⇒ copyIfNeeded(r, file("./scalastyle-config.xml")))
+    copyScalastyleConfig := scalastyleResource.value.foreach(r ⇒ copyIfNeeded(r, scalastyleConfig.value))
   ) ++ inConfig(Compile)(rawScalastyleSettings) ++ inConfig(Test)(rawScalastyleSettings)
 
   private def rawScalastyleSettings = Seq(
