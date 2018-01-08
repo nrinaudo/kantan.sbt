@@ -1,0 +1,6 @@
+# Note that this test is in the kantan subproject because it needs a
+# scalastyle-config.xml resource, and this proved awkward to achieve in
+# the core module
+
+> scalastyle
+> check
