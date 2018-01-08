@@ -1,0 +1,12 @@
+name: kantan.sbt
+markdown: kramdown
+highlighter: rouge
+baseurl: /kantan.sbt
+
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+collections:
+  tut:
+    output: true
