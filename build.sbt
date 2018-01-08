@@ -5,7 +5,7 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
     publishLocal    := {},
     publishArtifact := false
   )
-  .aggregate(core, kantan, release, scalafmt, scalastyle)
+  .aggregate(docs, core, kantan, release, scalafmt, scalastyle)
 
 lazy val core = project
   .settings(
@@ -75,7 +75,5 @@ lazy val kantan = project
   )
   .dependsOn(core, release, scalafmt, scalastyle)
 
-addCommandAlias(
-  "validate",
-  ";clean;scalastyle;test:scalastyle;scalafmtCheck;test:scalafmtCheck;scalafmtSbtCheck;compile;scripted"
-)
+lazy val docs = project
+  .enablePlugins(DocumentationPlugin)
