@@ -1,6 +1,6 @@
-# Foo should not contain a header.
+# Makes sure some files lack a header
 -> headerCheck
 
-# It should be picked up when explicitely generating headers though.
+# Makes sure that compilation creates these headers
 > headerCreate
 > headerCheck
