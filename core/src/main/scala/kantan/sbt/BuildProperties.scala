@@ -16,7 +16,16 @@
 
 package kantan.sbt
 
+/** Common build properties.
+  *
+  * At the time of writing, this is mostly meant to check for Java8 support. I'm expecting this to disappear when kantan
+  * drops support for Java7.
+  */
 object BuildProperties {
+
+  /** Specification version of the JVM SBT is running on. */
   lazy val javaSpecificationVersion: Double = System.getProperty("java.specification.version").toDouble
-  lazy val java8Supported: Boolean          = javaSpecificationVersion >= 1.8D
+
+  /** Whether or not Java8 is supported. */
+  lazy val java8Supported: Boolean = javaSpecificationVersion >= 1.8D
 }

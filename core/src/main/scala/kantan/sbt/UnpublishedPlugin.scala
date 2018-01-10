@@ -24,6 +24,7 @@ import sbt.Keys._
   * This simply disables all publication-related settings.
   */
 object UnpublishedPlugin extends AutoPlugin {
+
   override def projectSettings = Seq(
     // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
     makePom         := file(""),

@@ -34,14 +34,23 @@ import tut.TutPlugin.autoImport._
   *  - [[DocumentationPlugin]]: configures projects whose output is a documentation website.
   */
 object KantanPlugin extends AutoPlugin {
-  // - Public settings -------------------------------------------------------------------------------------------------
-  // -------------------------------------------------------------------------------------------------------------------
+
   object autoImport {
 
     /** `true` if java 8 is supported, `false` otherwise. */
     lazy val java8Supported: Boolean = BuildProperties.java8Supported
 
     implicit class KantanOperations(val proj: Project) extends AnyVal {
+
+      /** Hack to let you work around the fact that SBT refuses scenarios like:
+        *
+        * - project `a`
+        * - project `tests` depends on `a` and provides useful tools, such as scalacheck Arbitrary instances
+        * - project `a` depends on `tests` in its `Test` configuration
+        *
+        * This is perfectly legal, but not supported. You can, however, use `.laws("tests")` in project `a` to
+        * enable it.
+        */
       def laws(name: String): Project =
         proj.settings(unmanagedClasspath in Test ++= (fullClasspath in (LocalProject(name), Compile)).value)
 
@@ -56,11 +65,11 @@ object KantanPlugin extends AutoPlugin {
 
     val checkStyle: TaskKey[Unit]                = taskKey[Unit]("run all style checks")
     val kindProjectorVersion: SettingKey[String] = settingKey[String]("version of kind-projector to use")
+
   }
+
   import autoImport._
 
-  // - AutoPlugin implementation ---------------------------------------------------------------------------------------
-  // -------------------------------------------------------------------------------------------------------------------
   override def trigger = allRequirements
 
   override def requires = JvmPlugin && HeaderPlugin
@@ -68,6 +77,7 @@ object KantanPlugin extends AutoPlugin {
   override lazy val projectSettings = generalSettings ++ scalacSettings ++ javacSettings ++ commonDependencies ++
     inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
 
+  /** By default, `checkStyle` does nothing. Other modules, such as scalafmt and scalastyle, plug in to that. */
   private def checkStyleSettings: Seq[Setting[_]] = Seq(
     checkStyle := {}
   )
@@ -78,13 +88,13 @@ object KantanPlugin extends AutoPlugin {
       ";clean;checkStyle;test:checkStyle;coverageOn;test;coverageReport;coverageAggregate;coverageOff;doc"
     )
 
-  // - Custom settings -------------------------------------------------------------------------------------------------
-  // -------------------------------------------------------------------------------------------------------------------
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.4" else "2.11.12" },
+      // This is unpleasant, especially since it means there's no easy way to know whether we're running on an outdated
+      // version. I haven't yet found a workaround.
       kindProjectorVersion   := "0.9.5",
+      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.4" else "2.11.12" },
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
       doctestTestFramework   := DoctestTestFramework.ScalaTest,

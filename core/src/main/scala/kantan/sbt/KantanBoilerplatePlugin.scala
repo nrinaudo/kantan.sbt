@@ -22,8 +22,12 @@ import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
 import sbt._, Keys._
 import spray.boilerplate.BoilerplatePlugin
 
-/** Add support for headers in sbt-boilerplate. */
+/** Add support for headers in sbt-boilerplate.
+  *
+  * See the [Boilerplate](https://github.com/sbt/sbt-header#sbt-boilerplate) documentation.
+  */
 object KantanBoilerplatePlugin extends AutoPlugin {
+
   override def trigger = allRequirements
 
   override def requires = HeaderPlugin && BoilerplatePlugin

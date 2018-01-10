@@ -24,6 +24,7 @@ import wartremover.{Wart, WartRemover, Warts}
   * This will make warnings fatal, as well as turn on various Scala linters (such as WartRemover).
   */
 object StrictPlugin extends AutoPlugin {
+
   override def trigger = noTrigger
 
   override def requires = KantanPlugin && WartRemover
