@@ -22,7 +22,7 @@ import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafmt.KantanScalafmtPlugin, KantanScalafmtPlugin.autoImport._
 import kantan.sbt.scalastyle.KantanScalastylePlugin, KantanScalastylePlugin.autoImport._
 import sbt._, Keys._
-import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._
+import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._
 
 /** Plugin that sets kantan-specific values.
   *

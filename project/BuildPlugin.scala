@@ -2,11 +2,13 @@ import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import sbt._, Keys._
 import sbt.plugins.JvmPlugin
 import sbt.ScriptedPlugin.autoImport._
-import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
+import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
 import wartremover.{Wart, WartRemover, Warts}
 
 object BuildPlugin extends AutoPlugin {
   override def trigger = allRequirements
+
+  override def requires = JvmPlugin && ReleasePlugin
 
   override lazy val projectSettings = baseSettings ++ wartRemoverSettings ++ releaseSettings
 
