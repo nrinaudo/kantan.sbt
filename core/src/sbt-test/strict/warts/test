@@ -1,2 +1,2 @@
-# Compilation should fail when known warts are present.
+# Compilation should fail when known warts are present
 -> compile

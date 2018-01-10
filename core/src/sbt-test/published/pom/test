@@ -1,2 +1,4 @@
+# After generating the POM, makes sure it has the expected value
+
 > makePom
 > check
