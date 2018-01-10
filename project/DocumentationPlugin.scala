@@ -21,6 +21,15 @@ object DocumentationPlugin extends AutoPlugin {
         "*.woff" | "*.woff2" | "*.otf",
     ghpagesPushSite := ghpagesPushSite.dependsOn(makeSite).value,
     // The doc task will also generate the documentation site.
-    doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value
+    doc := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value,
+    // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
+    makePom         := file(""),
+    deliver         := file(""),
+    deliverLocal    := file(""),
+    publish         := {},
+    publishLocal    := {},
+    publishM2       := {},
+    publishArtifact := false,
+    publishTo       := Some(Resolver.file("devnull", file("/dev/null")))
   )
 }
