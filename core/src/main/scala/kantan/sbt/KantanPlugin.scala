@@ -35,6 +35,18 @@ import tut.TutPlugin.autoImport._
   */
 object KantanPlugin extends AutoPlugin {
 
+  /** Hack to let you work around the fact that SBT refuses scenarios like:
+    *
+    * - project `a`
+    * - project `tests` depends on `a` and provides useful tools, such as scalacheck Arbitrary instances
+    * - project `a` depends on `tests` in its `Test` configuration
+    *
+    * This is perfectly legal, but not supported. You can, however, use `.laws("tests")` in project `a` to
+    * enable it.
+    */
+  def setLaws(name: String): Setting[Task[Classpath]] =
+    unmanagedClasspath in Test ++= (fullClasspath in (LocalProject(name), Compile)).value
+
   object autoImport {
 
     /** `true` if java 8 is supported, `false` otherwise. */
@@ -42,17 +54,8 @@ object KantanPlugin extends AutoPlugin {
 
     implicit class KantanOperations(val proj: Project) extends AnyVal {
 
-      /** Hack to let you work around the fact that SBT refuses scenarios like:
-        *
-        * - project `a`
-        * - project `tests` depends on `a` and provides useful tools, such as scalacheck Arbitrary instances
-        * - project `a` depends on `tests` in its `Test` configuration
-        *
-        * This is perfectly legal, but not supported. You can, however, use `.laws("tests")` in project `a` to
-        * enable it.
-        */
       def laws(name: String): Project =
-        proj.settings(unmanagedClasspath in Test ++= (fullClasspath in (LocalProject(name), Compile)).value)
+        proj.settings(setLaws(name))
 
       def aggregateIf(predicate: Boolean)(refs: ProjectReference*): Project =
         if(predicate) proj.aggregate(refs: _*)
