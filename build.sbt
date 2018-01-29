@@ -5,7 +5,7 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
     publishLocal    := {},
     publishArtifact := false
   )
-  .aggregate(docs, core, kantan, release, scalafmt, scalastyle)
+  .aggregate(docs, core, kantan, release, scalajs, scalafmt, scalastyle)
 
 lazy val core = project
   .settings(
@@ -59,6 +59,18 @@ lazy val scalafmt = project
   .enablePlugins(AutomateHeaderPlugin)
   .settings(
     addSbtPlugin("com.geirsson" % "sbt-scalafmt" % Versions.sbtScalafmt)
+  )
+  .dependsOn(core)
+
+lazy val scalajs = project
+  .settings(
+    moduleName := "kantan.sbt-scalajs",
+    name       := "scalajs",
+    sbtPlugin  := true
+  )
+  .enablePlugins(AutomateHeaderPlugin)
+  .settings(
+    addSbtPlugin("org.scala-js" % "sbt-scalajs" % Versions.scalajs)
   )
   .dependsOn(core)
 
