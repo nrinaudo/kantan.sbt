@@ -1,0 +1,3 @@
+# Both JS and JVM should compile if sbt-boilerplate was properly executed
+> root-js/compile
+> root-jvm/test
