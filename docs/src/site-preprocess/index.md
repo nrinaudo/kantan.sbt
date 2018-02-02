@@ -36,11 +36,8 @@ to release steps. The initial goal of kantan.sbt was to aggregate all these in a
 avoid maintaining the same tasks in, at the time of writing, 4 different projects.
 
 The scope has somewhat changed since my current employer, [Besedo](https://besedo.com/), has started
-using Scala - kantan.sbt has become the basis for our internal builds. Because of this, it's now split
-in two main modules:
-
-* `core`, which is generic and can be used by any project with minimal configuration
-* `kantan`, with default configuration for kantan projects (and that is truly useless for anything
-  else)
+using Scala - kantan.sbt has become the basis for our internal builds. Because of this, the `kantan`
+submodule has been extracted and contains all the kantan-specific configuration, while the other modules
+strive to be more generic.
 
 [SBT]:https://www.scala-sbt.org/
