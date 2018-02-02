@@ -8,3 +8,5 @@ Collection of SBT plugins and settings used by all kantan.projects.
 
 This _can_ be used by other projects (only the `kantan` module is strictly kantan specific), but bear in mind that I wrote this with
 my own needs in mind, and it might not yet be generic enough to plug in seemlessly into other buildfiles.
+
+Documentation and tutorials are available on the [companion site](https://nrinaudo.github.io/kantan.sbt/).
