@@ -12,21 +12,21 @@ kantan.sbt is a collection of [SBT] plugins and settings used by all kantan.proj
 
 kantan.sbt is currently available for SBT 1.0.
 
-The current version is `2.0.0`, which can be added to your project with the following line
+The current version is `2.1.0`, which can be added to your project with the following line
 in your build files (traditionally `project/plugins.sbt`, although that's not a requirement):
 
 ```scala
 // Adds the core kantan.sbt plugins
-addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "2.0.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "2.1.0")
 
 // Adds support for sbt-release
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.0.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.1.0")
 
 // Adds support for scalafmt
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.0.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.1.0")
 
 // Adds support for scalastyle
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.0.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.1.0")
 ```
 
 ## Motivation
@@ -36,11 +36,8 @@ to release steps. The initial goal of kantan.sbt was to aggregate all these in a
 avoid maintaining the same tasks in, at the time of writing, 4 different projects.
 
 The scope has somewhat changed since my current employer, [Besedo](https://besedo.com/), has started
-using Scala - kantan.sbt has become the basis for our internal builds. Because of this, it's now split
-in two main modules:
-
-* `core`, which is generic and can be used by any project with minimal configuration
-* `kantan`, with default configuration for kantan projects (and that is truly useless for anything
-  else)
+using Scala - kantan.sbt has become the basis for our internal builds. Because of this, the `kantan`
+submodule has been extracted and contains all the kantan-specific configuration, while the other modules
+strive to be more generic.
 
 [SBT]:https://www.scala-sbt.org/
