@@ -55,6 +55,16 @@ kantan.sbt enables [sbt-doctest], with a few default configuration options. At t
 
 These can of course be overriden in your own buildfiles.
 
+## Dependency resolver
+
+[coursier] is a clear improvement on SBT's native dependency resolver, and is enabled by default
+in all projects.
+
+One concrete reason, other than it being an all around improvement, is that it works around a
+blocking bug with SBT: it is, apparently, possible to have multiple incompatible versions of the
+same library in the CLASSPATH.
+
+
 ## Validation
 
 kantan.sbt declares a `validate` command that will run all tests, check code style, generate
@@ -70,3 +80,4 @@ Note that style checking is documented [here]({{ site.baseurl }}/style.html)
 [sbt-header]:https://github.com/sbt/sbt-header
 [sbt-doctest]:https://github.com/tkawachi/sbt-doctest
 [sbt-boilerplate]:https://github.com/sbt/sbt-boilerplate
+[coursier]:https://github.com/coursier/coursier

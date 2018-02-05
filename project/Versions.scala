@@ -1,5 +1,6 @@
 object Versions {
   val boilerplate: String = "0.6.1"
+  val coursier: String    = "1.0.0"
   val sbtDoctest: String  = "0.7.0"
   val sbtGhPages: String  = "0.6.2"
   // This is not the latest version: 4.0.0 is out, but it suffers from a regression in the way headerCheck behaves
