@@ -17,6 +17,7 @@
 package kantan.sbt
 package scalajs
 
+import KantanPlugin.autoImport.checkStyle
 import KantanPlugin.setLaws
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import org.scalajs.sbtplugin.cross.{CrossProject, CrossType}
@@ -31,6 +32,10 @@ object KantanScalaJsPlugin extends AutoPlugin {
   override def requires = KantanPlugin
 
   object autoImport {
+    lazy val testJS        = taskKey[Unit]("run tests for JS projects only")
+    lazy val testJVM       = taskKey[Unit]("run tests for JVM projects only")
+    lazy val checkStyleJS  = taskKey[Unit]("run style checks for JS projects only")
+    lazy val checkStyleJVM = taskKey[Unit]("run style checks for JVM projects only")
 
     def kantanCrossProject(id: String): CrossProject =
       CrossProject(jvmId = id + "-jvm", jsId = id + "-js", file(id), CrossType.Full)
@@ -40,10 +45,17 @@ object KantanScalaJsPlugin extends AutoPlugin {
         )
         .jsSettings(
           name := id + "-js",
-          // Disables sbt-doctests for scala.js: https://github.com/tkawachi/sbt-doctest/issues/52
+          // Disables sbt-doctests in JS mode: https://github.com/tkawachi/sbt-doctest/issues/52
           doctestGenTests := Seq.empty,
           // Disables coverage in JS mode: https://github.com/scoverage/scalac-scoverage-plugin/issues/196
-          coverageEnabled := false
+          coverageEnabled := false,
+          // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
+          parallelExecution       := false,
+          testJS in Test          := (test in Test).value,
+          testJVM in Test         := { () },
+          checkStyleJS in Compile := (checkStyle in Compile).value,
+          checkStyleJS in Test    := (checkStyle in Test).value,
+          checkStyleJVM           := { () }
         )
         .jvmSettings(name := id + "-jvm")
 
@@ -57,5 +69,24 @@ object KantanScalaJsPlugin extends AutoPlugin {
     }
 
   }
+
+  import autoImport._
+
+  override lazy val projectSettings = Seq(
+    testJS in Test           := { () },
+    testJVM in Test          := (test in Test).value,
+    checkStyleJS             := { () },
+    checkStyleJVM in Compile := (checkStyle in Compile).value,
+    checkStyleJVM in Test    := (checkStyle in Test).value
+  )
+
+  override def globalSettings =
+    addCommandAlias(
+      "validateJVM",
+      ";clean;checkStyleJVM;test:checkStyleJVM;coverageOn;testJVM;coverageReport;coverageAggregate;coverageOff;doc"
+    ) ++ addCommandAlias(
+      "validateJS",
+      ";clean;checkStyleJS;test:checkStyleJS;testJS"
+    )
 
 }
