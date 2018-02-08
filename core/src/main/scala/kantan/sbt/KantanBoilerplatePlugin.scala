@@ -37,9 +37,8 @@ object KantanBoilerplatePlugin extends AutoPlugin {
   private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
     confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) ⇒
       acc ++ Seq(
-        unmanagedSources in (conf, headerCreate) ++= (((sourceDirectory in conf).value / "boilerplate") **
-          "*.template").get,
-        headerMappings += (FileType("template") → HeaderCommentStyle.CStyleBlockComment)
+        headerSources in conf ++= (((sourceDirectory in conf).value / "boilerplate") ** "*.template").get,
+        headerMappings        += (FileType("template") → HeaderCommentStyle.cStyleBlockComment)
       )
     }
 }
