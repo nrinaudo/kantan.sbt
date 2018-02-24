@@ -8,7 +8,7 @@ sort_order: 6
 You can use kantan.sbt's [sbt-release] support by adding the following SBT line:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.1.2")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.2.0")
 ```
 
 This declares the following additional release steps:
