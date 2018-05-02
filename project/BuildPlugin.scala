@@ -77,7 +77,7 @@ object BuildPlugin extends AutoPlugin {
       organizationHomepage := Some(url("https://nrinaudo.github.io")),
       organizationName     := "Nicolas Rinaudo",
       startYear            := Some(2016),
-      scalaVersion         := "2.12.4",
+      scalaVersion         := "2.12.6",
       licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
       publishTo := Some(
@@ -142,7 +142,9 @@ object BuildPlugin extends AutoPlugin {
         "-Ywarn-unused:params",
         "-Ywarn-unused:patvars",
         "-Ywarn-unused:privates",
-        "-Ywarn-value-discard"
+        "-Ywarn-value-discard",
+        "-Ybackend-parallelism",
+        java.lang.Runtime.getRuntime().availableProcessors().toString
       )
     )
 }
