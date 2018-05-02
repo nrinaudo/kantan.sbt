@@ -97,7 +97,7 @@ object KantanPlugin extends AutoPlugin {
       // This is unpleasant, especially since it means there's no easy way to know whether we're running on an outdated
       // version. I haven't yet found a workaround.
       kindProjectorVersion   := "0.9.6",
-      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.4" else "2.11.12" },
+      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.6" else "2.11.12" },
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
       doctestTestFramework   := DoctestTestFramework.ScalaTest,
@@ -172,7 +172,9 @@ object KantanPlugin extends AutoPlugin {
             "-Ywarn-unused:params",
             "-Ywarn-unused:patvars",
             "-Ywarn-unused:privates",
-            "-Ywarn-unused:imports"
+            "-Ywarn-unused:imports",
+            "-Ybackend-parallelism",
+            java.lang.Runtime.getRuntime().availableProcessors().toString
           )
         case Some((_, x)) if x == 11 ⇒
           Seq("-Ywarn-unused-import")
