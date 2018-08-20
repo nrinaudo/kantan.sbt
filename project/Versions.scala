@@ -13,6 +13,6 @@ object Versions {
   val scalajs: String     = "0.6.22"
   val scalastyle: String  = "1.0.0"
   val scoverage: String   = "1.5.1"
-  val tut: String         = "0.6.4"
+  val tut: String         = "0.6.7"
   val wartRemover: String = "2.3.4"
 }
