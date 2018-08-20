@@ -1,6 +1,6 @@
 import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
 import sbt._, Keys._
-import sbt.plugins.JvmPlugin
+import sbt.plugins.{JvmPlugin, SbtPlugin}
 import sbt.ScriptedPlugin.autoImport._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
 import wartremover.{Wart, WartRemover, Warts}
