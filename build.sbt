@@ -13,7 +13,7 @@ lazy val core = project
     name       := "core",
     sbtPlugin  := true
   )
-  .enablePlugins(AutomateHeaderPlugin)
+  .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
     addSbtPlugin("com.eed3si9n"        % "sbt-unidoc"      % Versions.sbtUnidoc),
     addSbtPlugin("com.github.tkawachi" % "sbt-doctest"     % Versions.sbtDoctest),
@@ -33,7 +33,7 @@ lazy val release = project
     name       := "release",
     sbtPlugin  := true
   )
-  .enablePlugins(AutomateHeaderPlugin)
+  .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
     addSbtPlugin("com.github.gseitz" % "sbt-release" % Versions.sbtRelease)
   )
@@ -45,7 +45,7 @@ lazy val scalastyle = project
     name       := "scalastyle",
     sbtPlugin  := true
   )
-  .enablePlugins(AutomateHeaderPlugin)
+  .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
     addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % Versions.scalastyle)
   )
@@ -57,7 +57,7 @@ lazy val scalafmt = project
     name       := "scalafmt",
     sbtPlugin  := true
   )
-  .enablePlugins(AutomateHeaderPlugin)
+  .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
     addSbtPlugin("com.geirsson" % "sbt-scalafmt" % Versions.sbtScalafmt)
   )
@@ -69,7 +69,7 @@ lazy val scalajs = project
     name       := "scalajs",
     sbtPlugin  := true
   )
-  .enablePlugins(AutomateHeaderPlugin)
+  .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
     addSbtPlugin("org.scala-js" % "sbt-scalajs" % Versions.scalajs)
   )
@@ -81,7 +81,7 @@ lazy val kantan = project
     name       := "kantan",
     sbtPlugin  := true
   )
-  .enablePlugins(AutomateHeaderPlugin)
+  .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
     addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
     addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
