@@ -71,7 +71,8 @@ lazy val scalajs = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
-    addSbtPlugin("org.scala-js" % "sbt-scalajs" % Versions.scalajs)
+    addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % Versions.scalajs),
+    addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % Versions.scalajsCross)
   )
   .dependsOn(core)
 

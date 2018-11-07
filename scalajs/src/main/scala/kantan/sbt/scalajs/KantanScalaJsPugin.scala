@@ -20,8 +20,10 @@ package scalajs
 import KantanPlugin.autoImport.checkStyle
 import KantanPlugin.setLaws
 import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
-import org.scalajs.sbtplugin.cross.{CrossProject, CrossType}
 import sbt._, Keys._
+import sbtcrossproject.CrossPlugin.autoImport._
+import sbtcrossproject.CrossProject
+import scalajscrossproject.ScalaJSCrossPlugin.autoImport._
 import scoverage.ScoverageKeys.coverageEnabled
 import spray.boilerplate.BoilerplatePlugin.autoImport.boilerplateSource
 
@@ -38,8 +40,10 @@ object KantanScalaJsPlugin extends AutoPlugin {
     lazy val checkStyleJVM = taskKey[Unit]("run style checks for JVM projects only")
 
     def kantanCrossProject(id: String): CrossProject =
-      CrossProject(jvmId = id + "-jvm", jsId = id + "-js", file(id), CrossType.Full)
-      // Overrides the default sbt-boilerplate source directory: https://github.com/sbt/sbt-boilerplate/issues/21
+      CrossProject(id = id, file(id))(JSPlatform, JVMPlatform)
+        .withoutSuffixFor(JVMPlatform)
+        .crossType(CrossType.Full)
+        // Overrides the default sbt-boilerplate source directory: https://github.com/sbt/sbt-boilerplate/issues/21
         .settings(
           boilerplateSource in Compile := baseDirectory.value.getParentFile / "shared" / "src" / "main" / "boilerplate"
         )
@@ -63,8 +67,8 @@ object KantanScalaJsPlugin extends AutoPlugin {
     implicit class KantanJsOperations(val proj: CrossProject) extends AnyVal {
       def laws(name: String): CrossProject =
         proj
-          .jvmSettings(setLaws(name + "-jvm"))
-          .jsSettings(setLaws(name + "-js"))
+          .jvmSettings(setLaws(name + ""))
+          .jsSettings(setLaws(name + "JS"))
 
     }
 

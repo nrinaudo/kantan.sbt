@@ -1,5 +1,5 @@
 # Since sbt-doctest is ignored, root-js should pass tests
-> root-js/test
+> rootJS/test
 
-# root-jvm, on the other hand, should fail
--> root-jvm/test
+# root, on the other hand, should fail
+-> root/test
