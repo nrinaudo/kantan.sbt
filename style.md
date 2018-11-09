@@ -20,7 +20,7 @@ Note that `checkStyle` and `test:checkStyle` will be executed whenever you run
 You can use kantan.sbt's [scalafmt] support by adding the following SBT line:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.2.3")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.3.0")
 ```
 
 In addition to all the standard [scalafmt] tasks, this adds `scalafmtAll`, used to run [scalafmt]
@@ -35,7 +35,7 @@ a single configuration accross multiple projects.
 You can use kantan.sbt's [scalastyle] support by adding the following SBT line:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.2.3")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.3.0")
 ```
 
 This allows you to use the `scalastyleResource` setting to specify a resource from which
