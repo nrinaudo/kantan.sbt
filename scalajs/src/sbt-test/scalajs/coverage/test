@@ -1,4 +1,4 @@
 # JS tests must pass, even if coverage is enabled.
 
 > coverageOn
-> root-js/test
+> rootJS/test
