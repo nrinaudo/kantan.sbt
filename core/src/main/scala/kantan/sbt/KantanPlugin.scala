@@ -66,8 +66,7 @@ object KantanPlugin extends AutoPlugin {
         else proj
     }
 
-    val checkStyle: TaskKey[Unit]                = taskKey[Unit]("run all style checks")
-    val kindProjectorVersion: SettingKey[String] = settingKey[String]("version of kind-projector to use")
+    val checkStyle: TaskKey[Unit] = taskKey[Unit]("run all style checks")
 
   }
 
@@ -94,9 +93,6 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      // This is unpleasant, especially since it means there's no easy way to know whether we're running on an outdated
-      // version. I haven't yet found a workaround.
-      kindProjectorVersion   := "0.9.8",
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
       doctestTestFramework   := DoctestTestFramework.ScalaTest,
@@ -192,10 +188,9 @@ object KantanPlugin extends AutoPlugin {
     )
   }
 
-  /** Includes common dependencies (macros and kind-projector). */
+  /** Includes common dependencies. */
   lazy val commonDependencies: Seq[Setting[_]] = Seq(
     libraryDependencies ++= Seq(
-      compilerPlugin("org.spire-math" % "kind-projector" % kindProjectorVersion.value cross CrossVersion.binary),
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
     )
   )
