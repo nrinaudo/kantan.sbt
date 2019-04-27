@@ -97,7 +97,6 @@ object KantanPlugin extends AutoPlugin {
       // This is unpleasant, especially since it means there's no easy way to know whether we're running on an outdated
       // version. I haven't yet found a workaround.
       kindProjectorVersion   := "0.9.8",
-      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.8" else "2.11.12" },
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
       doctestTestFramework   := DoctestTestFramework.ScalaTest,

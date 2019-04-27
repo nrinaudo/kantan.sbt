@@ -18,6 +18,7 @@ package kantan.sbt.kantan
 
 import com.typesafe.sbt.SbtGit.git
 import com.typesafe.sbt.pgp.PgpKeys.publishSigned
+import kantan.sbt.BuildProperties
 import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafmt.KantanScalafmtPlugin, KantanScalafmtPlugin.autoImport._
 import kantan.sbt.scalastyle.KantanScalastylePlugin, KantanScalastylePlugin.autoImport._
@@ -46,12 +47,21 @@ object KantanKantanPlugin extends AutoPlugin {
 
   override lazy val projectSettings = generalSettings ++ remoteSettings
 
+  // Checks whether the specified Scala version can run on the current JVM.
+  // This is currently only meant to filter out 2.12+ on Java 7-
+  private def supportsJvm(version: String): Boolean = CrossVersion.partialVersion(version) match {
+    case Some((maj, min)) if maj > 2 || min >= 12 ⇒ BuildProperties.javaSpecificationVersion >= 1.8D
+    case _                                        ⇒ true
+  }
+
+  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   lazy val generalSettings: Seq[Setting[_]] = Seq(
     name                 := s"kantan.${kantanProject.value}",
     organization         := "com.nrinaudo",
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
     organizationName     := "Nicolas Rinaudo",
-    crossScalaVersions   := Seq("2.11.12", "2.12.8"),
+    crossScalaVersions   := Seq("2.11.12", "2.12.8").filter(supportsJvm),
+    scalaVersion         := crossScalaVersions.value.last,
     licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),
