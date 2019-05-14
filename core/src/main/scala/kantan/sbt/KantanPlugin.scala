@@ -112,7 +112,7 @@ object KantanPlugin extends AutoPlugin {
     Seq(
       // If we're running 2.12+, compile to 1.8 bytecode. Otherwise, 1.6.
       javacOptions := {
-        val jvm = (CrossVersion.partialVersion(version.value) match {
+        val jvm = (CrossVersion.partialVersion(scalaVersion.value) match {
           case Some((maj, min)) if maj > 2 || min >= 12 ⇒ "1.8"
           case _                                        ⇒ "1.6"
         })
