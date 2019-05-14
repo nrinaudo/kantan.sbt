@@ -1,6 +1,6 @@
 kantanProject in ThisBuild := "foo"
 startYear                  := Some(2017)
-scalafmtConfig             := Some(file(".foobar.conf"))
+scalafmtConfig             := file(".foobar.conf")
 
 lazy val check = TaskKey[Unit]("check")
 

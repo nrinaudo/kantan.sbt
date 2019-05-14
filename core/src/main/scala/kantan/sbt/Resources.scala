@@ -38,7 +38,8 @@ object Resources {
       else digest.digest()
     }
 
-    try { loop() } finally { stream.close() }
+    try loop()
+    finally stream.close()
   }
 
   /** Copies the content of `from` to `to`, if `to` does not exist or is different from `from`. */

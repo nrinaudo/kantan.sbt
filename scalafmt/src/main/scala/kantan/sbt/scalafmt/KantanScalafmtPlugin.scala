@@ -31,8 +31,6 @@ object KantanScalafmtPlugin extends AutoPlugin {
 
   import autoImport._
 
-  val defaultConf = file(".scalafmt.conf")
-
   override def trigger = allRequirements
 
   override def requires = KantanPlugin && ScalafmtPlugin
@@ -40,21 +38,13 @@ object KantanScalafmtPlugin extends AutoPlugin {
   override lazy val projectSettings = rawScalafmtSettings(Compile, Test) ++ checkStyleSettings ++ Seq(
     scalafmtResource := None,
     scalafmtAll      := (scalafmt in Compile).dependsOn(scalafmt in Test).dependsOn(scalafmtSbt in Compile).value,
-    // scalafmtConfig is annoying: the default implementation checks whether .scalafmt.conf exists and, if it doesn't,
-    // takes a value of None. This is problematic for our use case: copyScalafmtConfig depends on scalafmtConfig,
-    // which means things happen in the following order:
-    // - copyScalafmtConfig gets the value of scalafmtConfig
-    // - since .scalafmt.conf does not exist, this is None
-    // - we copy the appropriate resource to .scalafmt.conf
-    // - scalafmt, seeing the None value, uses default settings and ignores our configuration
-    //
-    // The point of the code bellow is to make scalafmtConfig aware of scalafmtResource.
-    scalafmtConfig := {
-      scalafmtConfig.value.orElse(scalafmtResource.value.map(_ => defaultConf))
-    },
-    copyScalafmtConfig := scalafmtResource.value.foreach(
-      r => copyIfNeeded(r, scalafmtConfig.value.getOrElse(defaultConf))
-    )
+    copyScalafmtConfig := {
+      val path = scalafmtConfig.value
+
+      scalafmtResource.value.foreach(
+        r => copyIfNeeded(r, path)
+      )
+    }
   )
 
   // Makes sure checkStyle depends on the right scalafmt commands depending on the context.
