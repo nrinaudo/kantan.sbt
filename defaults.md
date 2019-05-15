@@ -19,9 +19,6 @@ A few standard language features will also be enabled by default - macros, exist
 higher-kinded types... because I feel they really should be part of the standard language rather
 than locked away behind weird imports.
 
-Finally, [kind-projector](https://github.com/non/kind-projector) will be added to dependencies
-automatically, because it's such an amazing compiler plugin.
-
 ## Headers
 
 All my code, either OSS or not, falls under some form of license. My OSS work is mostly
