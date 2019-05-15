@@ -50,10 +50,10 @@ object KantanScalafmtPlugin extends AutoPlugin {
     //
     // The point of the code bellow is to make scalafmtConfig aware of scalafmtResource.
     scalafmtConfig := {
-      scalafmtConfig.value.orElse(scalafmtResource.value.map(_ ⇒ defaultConf))
+      scalafmtConfig.value.orElse(scalafmtResource.value.map(_ => defaultConf))
     },
     copyScalafmtConfig := scalafmtResource.value.foreach(
-      r ⇒ copyIfNeeded(r, scalafmtConfig.value.getOrElse(defaultConf))
+      r => copyIfNeeded(r, scalafmtConfig.value.getOrElse(defaultConf))
     )
   )
 
@@ -68,7 +68,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
 
   // Makes sure all relevant scalafmt tasks depend on copyScalafmtConfig
   private def rawScalafmtSettings(configs: Configuration*): Seq[Setting[_]] =
-    configs.flatMap { config ⇒
+    configs.flatMap { config =>
       inConfig(config)(
         Seq(
           scalafmtCheck    := scalafmtCheck.dependsOn(copyScalafmtConfig).value,

@@ -50,8 +50,8 @@ object KantanKantanPlugin extends AutoPlugin {
   // Checks whether the specified Scala version can run on the current JVM.
   // This is currently only meant to filter out 2.12+ on Java 7-
   private def supportsJvm(version: String): Boolean = CrossVersion.partialVersion(version) match {
-    case Some((maj, min)) if maj > 2 || min >= 12 ⇒ BuildProperties.javaSpecificationVersion >= 1.8D
-    case _                                        ⇒ true
+    case Some((maj, min)) if maj > 2 || min >= 12 => BuildProperties.javaSpecificationVersion >= 1.8D
+    case _                                        => true
   }
 
   @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
@@ -62,7 +62,7 @@ object KantanKantanPlugin extends AutoPlugin {
     organizationName     := "Nicolas Rinaudo",
     crossScalaVersions   := Seq("2.11.12", "2.12.8").filter(supportsJvm),
     scalaVersion         := crossScalaVersions.value.last,
-    licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+    licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),
     // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,

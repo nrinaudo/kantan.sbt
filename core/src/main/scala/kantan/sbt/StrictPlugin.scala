@@ -41,7 +41,7 @@ object StrictPlugin extends AutoPlugin {
   )
 
   def wartRemoverSettings: Seq[Setting[_]] =
-    List(Compile, Test).flatMap { c ⇒
+    List(Compile, Test).flatMap { c =>
       inConfig(c)(
         WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
           Warts.allBut(

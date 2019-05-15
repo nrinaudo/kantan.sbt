@@ -17,15 +17,15 @@ def confFile: Option[File] = {
 val charset = java.nio.charset.Charset.forName("utf-8")
 
 def scalastyleText: Option[String] =
-  confFile.map(c ⇒ IO.read(c, charset))
+  confFile.map(c => IO.read(c, charset))
 
 checkExpected := {
   val content = IO.readStream(getClass.getResourceAsStream("/kantan/sbt/scalastyle-config.xml"), charset)
 
   scalastyleText match {
-    case Some(cnt) if cnt != content ⇒ sys.error(s"found scalastyle-config.xml with unexpected content")
-    case None                        ⇒ sys.error(s"failed to find scalastyle-config.xml")
-    case _                           ⇒ ()
+    case Some(cnt) if cnt != content => sys.error(s"found scalastyle-config.xml with unexpected content")
+    case None                        => sys.error(s"failed to find scalastyle-config.xml")
+    case _                           => ()
   }
 }
 
