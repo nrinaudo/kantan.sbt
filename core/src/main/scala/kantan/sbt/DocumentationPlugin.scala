@@ -86,11 +86,11 @@ object DocumentationPlugin extends AutoPlugin {
 
   def scaladocSettings: Seq[Setting[_]] =
     Seq(
-      docSourceUrl := scmInfo.value.map(i ⇒ s"${i.browseUrl}/tree/master€{FILE_PATH}.scala"),
+      docSourceUrl := scmInfo.value.map(i => s"${i.browseUrl}/tree/master€{FILE_PATH}.scala"),
       scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
         "-sourcepath",
         baseDirectory.in(LocalRootProject).value.getAbsolutePath,
         "-groups"
-      ) ++ docSourceUrl.value.map(v ⇒ Seq("-doc-source-url", v)).getOrElse(Seq.empty)
+      ) ++ docSourceUrl.value.map(v => Seq("-doc-source-url", v)).getOrElse(Seq.empty)
     )
 }

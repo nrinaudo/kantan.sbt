@@ -17,17 +17,17 @@ def confFile: Option[File] = {
 val charset = java.nio.charset.Charset.forName("utf-8")
 
 def scalafmtText: Option[String] =
-  confFile.map(c ⇒ IO.read(c, charset))
+  confFile.map(c => IO.read(c, charset))
 
 checkExpected := {
   val content =
     IO.readStream(getClass.getResourceAsStream("/kantan/sbt/scalafmt.conf"), charset)
 
   scalafmtText match {
-    case Some(cnt) if cnt != content ⇒
+    case Some(cnt) if cnt != content =>
       sys.error(s"found .scalafmt.conf with unexpected content")
-    case None ⇒ sys.error(s"failed to find .scalafmt.conf")
-    case _    ⇒ ()
+    case None => sys.error(s"failed to find .scalafmt.conf")
+    case _    => ()
   }
 }
 

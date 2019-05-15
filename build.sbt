@@ -59,7 +59,7 @@ lazy val scalafmt = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
-    addSbtPlugin("com.geirsson" % "sbt-scalafmt" % Versions.sbtScalafmt)
+    addSbtPlugin("org.scalameta" % "sbt-scalafmt" % Versions.sbtScalafmt)
   )
   .dependsOn(core)
 

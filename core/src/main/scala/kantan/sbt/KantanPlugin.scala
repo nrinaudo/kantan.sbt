@@ -66,8 +66,7 @@ object KantanPlugin extends AutoPlugin {
         else proj
     }
 
-    val checkStyle: TaskKey[Unit]                = taskKey[Unit]("run all style checks")
-    val kindProjectorVersion: SettingKey[String] = settingKey[String]("version of kind-projector to use")
+    val checkStyle: TaskKey[Unit] = taskKey[Unit]("run all style checks")
 
   }
 
@@ -94,10 +93,6 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      // This is unpleasant, especially since it means there's no easy way to know whether we're running on an outdated
-      // version. I haven't yet found a workaround.
-      kindProjectorVersion   := "0.9.8",
-      scalaVersion           := { if(BuildProperties.java8Supported) "2.12.7" else "2.11.12" },
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
       doctestTestFramework   := DoctestTestFramework.ScalaTest,
@@ -113,8 +108,8 @@ object KantanPlugin extends AutoPlugin {
       // If we're running 2.12+, compile to 1.8 bytecode. Otherwise, 1.6.
       javacOptions := {
         val jvm = (CrossVersion.partialVersion(scalaVersion.value) match {
-          case Some((maj, min)) if maj > 2 || min >= 12 ⇒ "1.8"
-          case _                                        ⇒ "1.6"
+          case Some((maj, min)) if maj > 2 || min >= 12 => "1.8"
+          case _                                        => "1.6"
         })
 
         Seq("-source", jvm, "-target", jvm)
@@ -162,7 +157,7 @@ object KantanPlugin extends AutoPlugin {
         "-Ywarn-numeric-widen",
         "-Ywarn-value-discard"
       ) ++ (CrossVersion.partialVersion(version) match {
-        case Some((_, x)) if x >= 12 ⇒
+        case Some((_, x)) if x >= 12 =>
           Seq(
             "-Ypartial-unification",
             "-Xlint:constant",
@@ -176,9 +171,9 @@ object KantanPlugin extends AutoPlugin {
             "-Ybackend-parallelism",
             java.lang.Runtime.getRuntime().availableProcessors().toString
           )
-        case Some((_, x)) if x == 11 ⇒
+        case Some((_, x)) if x == 11 =>
           Seq("-Ywarn-unused-import")
-        case _ ⇒ Seq.empty
+        case _ => Seq.empty
       })
 
     // Sane defaults for warnings / errors:
@@ -193,10 +188,9 @@ object KantanPlugin extends AutoPlugin {
     )
   }
 
-  /** Includes common dependencies (macros and kind-projector). */
+  /** Includes common dependencies. */
   lazy val commonDependencies: Seq[Setting[_]] = Seq(
     libraryDependencies ++= Seq(
-      compilerPlugin("org.spire-math" % "kind-projector" % kindProjectorVersion.value cross CrossVersion.binary),
       "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
     )
   )

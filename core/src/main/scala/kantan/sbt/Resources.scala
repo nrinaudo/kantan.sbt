@@ -24,7 +24,7 @@ import sbt._, io.Using
 object Resources {
 
   /** Computes the digest of the specified stream. */
-  private def digest(in: ⇒ InputStream): Array[Byte] = {
+  private def digest(in: => InputStream): Array[Byte] = {
     val digest = MessageDigest.getInstance("SHA-1")
     val stream = in
     val buffer = new Array[Byte](2048)
@@ -38,13 +38,14 @@ object Resources {
       else digest.digest()
     }
 
-    try { loop() } finally { stream.close() }
+    try loop()
+    finally stream.close()
   }
 
   /** Copies the content of `from` to `to`, if `to` does not exist or is different from `from`. */
   def copyIfNeeded(from: URL, to: File): Unit =
     if(!(to.exists && digest(from.openStream).sameElements(digest(new FileInputStream(to))))) {
-      Using.urlInputStream(from) { inputStream ⇒
+      Using.urlInputStream(from) { inputStream =>
         IO.transfer(inputStream, to)
       }
     }

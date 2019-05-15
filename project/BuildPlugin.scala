@@ -21,7 +21,7 @@ object BuildPlugin extends AutoPlugin {
   lazy val runScripted: ReleaseStep = {
     val scriptedStep = releaseStepInputTask(scripted)
     ReleaseStep(
-      action = { st: State ⇒
+      action = { st: State =>
         if(!st.get(skipTests).getOrElse(false)) {
           scriptedStep(st)
         }
@@ -54,7 +54,7 @@ object BuildPlugin extends AutoPlugin {
     )
 
   def wartRemoverSettings: Seq[Setting[_]] =
-    List(Compile, Test).flatMap { c ⇒
+    List(Compile, Test).flatMap { c =>
       inConfig(c)(
         WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
           Warts.allBut(
@@ -77,8 +77,8 @@ object BuildPlugin extends AutoPlugin {
       organizationHomepage := Some(url("https://nrinaudo.github.io")),
       organizationName     := "Nicolas Rinaudo",
       startYear            := Some(2016),
-      scalaVersion         := "2.12.7",
-      licenses             := Seq("Apache-2.0" → url("https://www.apache.org/licenses/LICENSE-2.0.html")),
+      scalaVersion         := "2.12.8",
+      licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
       publishTo := Some(
         if(isSnapshot.value)

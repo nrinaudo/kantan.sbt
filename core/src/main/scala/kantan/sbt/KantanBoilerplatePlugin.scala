@@ -35,10 +35,10 @@ object KantanBoilerplatePlugin extends AutoPlugin {
   override lazy val projectSettings = addBoilerplate(Compile, Test)
 
   private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
-    confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) ⇒
+    confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) =>
       acc ++ Seq(
         headerSources in conf ++= (((sourceDirectory in conf).value / "boilerplate") ** "*.template").get,
-        headerMappings        += (FileType("template") → HeaderCommentStyle.cStyleBlockComment)
+        headerMappings        += (FileType("template") -> HeaderCommentStyle.cStyleBlockComment)
       )
     }
 }
