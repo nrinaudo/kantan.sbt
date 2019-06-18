@@ -49,9 +49,6 @@ object KantanPlugin extends AutoPlugin {
 
   object autoImport {
 
-    /** `true` if java 8 is supported, `false` otherwise. */
-    lazy val java8Supported: Boolean = BuildProperties.java8Supported
-
     implicit class KantanOperations(val proj: Project) extends AnyVal {
 
       def laws(name: String): Project =
@@ -119,20 +116,6 @@ object KantanPlugin extends AutoPlugin {
   /** Sane, version dependent scalac settings. */
   def scalacSettings: Seq[Setting[_]] = {
     def base(version: String) = CrossVersion.partialVersion(version) match {
-      case Some((2, 11)) =>
-        Seq(
-          "-feature",
-          "-deprecation",
-          "-Ywarn-value-discard",
-          "-Xlint",
-          "-unchecked",
-          "-Ywarn-numeric-widen", // Warn when numerics are widened.
-          "-Yno-adapted-args",
-          "-language:existentials",        // Existential types (besides wildcard types) can be written and inferred
-          "-language:experimental.macros", // Allow macro definition (besides implementation and application)
-          "-language:higherKinds",         // Allow higher-kinded types
-          "-language:implicitConversions"  // Allow definition of implicit functions called views
-        )
       case Some((2, 12)) =>
         Seq(
           "-deprecation", // Emit warning and location for usages of deprecated APIs.

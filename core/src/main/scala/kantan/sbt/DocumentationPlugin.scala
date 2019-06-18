@@ -79,9 +79,7 @@ object DocumentationPlugin extends AutoPlugin {
 
   def tutSettings: Seq[Setting[_]] = Seq(
     // Outputs all documentation to wherever sbt-site will preprocess it.
-    tutTargetDirectory := (sourceDirectory in Preprocess).value,
-    // Ugly, ugly hack around the fact that tut obviously can't run java8 specific code on java7.
-    tutNameFilter := ((if(!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r
+    tutTargetDirectory := (sourceDirectory in Preprocess).value
   )
 
   def scaladocSettings: Seq[Setting[_]] =
