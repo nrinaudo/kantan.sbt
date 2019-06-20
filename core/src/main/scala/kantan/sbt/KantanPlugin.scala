@@ -20,6 +20,7 @@ import com.github.tkawachi.doctest.DoctestPlugin.autoImport._
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt._, Keys._
 import sbt.plugins.JvmPlugin
+import scoverage.ScoverageKeys.coverageEnabled
 
 /** Settings common to all projects.
   *
@@ -83,7 +84,7 @@ object KantanPlugin extends AutoPlugin {
   override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validate",
-      ";clean;checkStyle;test:checkStyle;coverageOn;test;coverageReport;coverageAggregate;coverageOff;doc"
+      ";clean;checkStyle;test:checkStyle;coverageOn;test;coverageAggregate;coverageOff;doc"
     )
 
   /** General settings. */
@@ -92,6 +93,7 @@ object KantanPlugin extends AutoPlugin {
       autoAPIMappings        := true,
       doctestMarkdownEnabled := true,
       doctestTestFramework   := DoctestTestFramework.ScalaTest,
+      coverageEnabled        := false,
       resolvers ++= Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
