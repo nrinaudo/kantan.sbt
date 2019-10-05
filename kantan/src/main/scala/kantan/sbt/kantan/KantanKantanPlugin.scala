@@ -16,8 +16,8 @@
 
 package kantan.sbt.kantan
 
+import com.jsuereth.sbtpgp.PgpKeys.publishSigned
 import com.typesafe.sbt.SbtGit.git
-import com.typesafe.sbt.pgp.PgpKeys.publishSigned
 import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafmt.KantanScalafmtPlugin, KantanScalafmtPlugin.autoImport._
 import kantan.sbt.scalastyle.KantanScalastylePlugin, KantanScalastylePlugin.autoImport._
