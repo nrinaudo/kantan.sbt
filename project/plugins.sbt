@@ -6,7 +6,7 @@ addSbtPlugin("de.heikoseeberger" % "sbt-header"             % "5.2.0")
 addSbtPlugin("com.typesafe.sbt"  % "sbt-ghpages"            % "0.6.3")
 addSbtPlugin("com.typesafe.sbt"  % "sbt-site"               % "1.4.0")
 addSbtPlugin("org.scalastyle"    %% "scalastyle-sbt-plugin" % "1.0.0")
-addSbtPlugin("org.wartremover"   % "sbt-wartremover"        % "2.4.2")
+addSbtPlugin("org.wartremover"   % "sbt-wartremover"        % "2.4.3")
 addSbtPlugin("org.xerial.sbt"    % "sbt-sonatype"           % "3.8")
 
 libraryDependencies += "org.scala-sbt" %% "scripted-plugin" % sbtVersion.value
