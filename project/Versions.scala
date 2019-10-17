@@ -6,7 +6,7 @@ object Versions {
   val sbtGhPages: String   = "0.6.3"
   val sbtHeader: String    = "5.2.0"
   val sbtPgp: String       = "2.0.0"
-  val sbtRelease: String   = "1.0.11"
+  val sbtRelease: String   = "1.0.12"
   val sbtScalafmt: String  = "2.0.7"
   val sbtSite: String      = "1.4.0"
   val sbtSonatype: String  = "3.8"
