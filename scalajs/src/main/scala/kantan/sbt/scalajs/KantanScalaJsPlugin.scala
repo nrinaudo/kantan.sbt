@@ -87,7 +87,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
   override def globalSettings =
     addCommandAlias(
       "validateJVM",
-      ";clean;checkStyleJVM;test:checkStyleJVM;coverageOn;testJVM;coverageReport;coverageAggregate;coverageOff;doc"
+      ";clean;checkStyleJVM;test:checkStyleJVM;coverageOn;testJVM;coverageAggregate;coverageOff;doc"
     ) ++ addCommandAlias(
       "validateJS",
       ";clean;checkStyleJS;test:checkStyleJS;testJS"

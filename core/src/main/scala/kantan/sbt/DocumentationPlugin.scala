@@ -22,23 +22,23 @@ import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin.autoImport._
 import com.typesafe.sbt.site.util.SiteHelpers._
+import mdoc.MdocPlugin, MdocPlugin.autoImport._
 import sbt._, Keys._, ScopeFilter.ProjectFilter
 import sbtunidoc.BaseUnidocPlugin.autoImport._
 import sbtunidoc.ScalaUnidocPlugin
 import sbtunidoc.ScalaUnidocPlugin.autoImport._
-import tut.TutPlugin, TutPlugin.autoImport._
 
 /** Plugin for documentation projects.
   *
   * Enabling this will set things up so that:
-  *  - `makeSite` compiles all tut files, generates the unidoc API and builds a complete documentation site.
+  *  - `makeSite` compiles all mdoc files, generates the unidoc API and builds a complete documentation site.
   *  - `ghpagesPushSite` generates the site and pushes it to the current repository's github pages.
   */
 object DocumentationPlugin extends AutoPlugin {
 
   override def trigger = noTrigger
 
-  override def requires = PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin && TutPlugin
+  override def requires = PreprocessPlugin && UnpublishedPlugin && ScalaUnidocPlugin && GhpagesPlugin && MdocPlugin
 
   object autoImport {
 
@@ -48,11 +48,13 @@ object DocumentationPlugin extends AutoPlugin {
     def inProjectsIf(predicate: Boolean)(projects: ProjectReference*): ProjectFilter =
       if(predicate) inProjects(projects: _*)
       else inProjects()
+    val mdocSite    = taskKey[Seq[(File, String)]]("create mdoc documentation in a way that lets sbt-site grab it")
+    val mdocSiteOut = settingKey[String]("name of the directory in which sbt-site will store mdoc documentation")
   }
 
   import autoImport._
 
-  override def projectSettings: Seq[Setting[_]] = scaladocSettings ++ tutSettings ++ ghpagesSettings ++ siteSettings
+  override def projectSettings: Seq[Setting[_]] = scaladocSettings ++ mdocSettings ++ ghpagesSettings ++ siteSettings
 
   def siteSettings: Seq[Setting[_]] = Seq(
     includeFilter in SitePlugin.autoImport.makeSite :=
@@ -61,8 +63,8 @@ object DocumentationPlugin extends AutoPlugin {
     // Lets sbt-site know about unidoc.
     siteSubdirName in ScalaUnidoc := "api",
     addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
-    // Configures task dependencies: doc → makeSite → tut
-    makeSite := makeSite.dependsOn(tut).value,
+    // Configures task dependencies: doc → makeSite → mdoc
+    makeSite := makeSite.dependsOn(mdocSite).value,
     doc      := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value,
     // Use a "managed" source directory for preprocessing - we want all documentation to be preprocessed, and the only
     // way I found to achieve that is to have all md files to be copied / generated to the same directory, and *then*
@@ -77,11 +79,21 @@ object DocumentationPlugin extends AutoPlugin {
     ghpagesPushSite := ghpagesPushSite.dependsOn(makeSite).value
   )
 
-  def tutSettings: Seq[Setting[_]] = Seq(
-    // Outputs all documentation to wherever sbt-site will preprocess it.
-    tutTargetDirectory := (sourceDirectory in Preprocess).value,
-    // Ugly, ugly hack around the fact that tut obviously can't run java8 specific code on java7.
-    tutNameFilter := ((if(!BuildProperties.java8Supported) "^(?!java8)" else "") + ".*\\.(md|markdown)").r
+  def mdocSettings: Seq[Setting[_]] = Seq(
+    mdocSite := {
+      mdoc.toTask(" ").value
+      val out = mdocOut.value
+      for {
+        (file, name) <- out ** AllPassFilter --- out pair Path.relativeTo(out)
+      } yield file -> name
+    },
+    mdocExtraArguments += "--no-link-hygiene",
+    mdocSiteOut        := "./",
+    mdocIn             := (sourceDirectory in Compile).value / "mdoc",
+    mdocVariables := Map(
+      "VERSION" -> version.value
+    ),
+    addMappingsToSiteDir(mdocSite, mdocSiteOut)
   )
 
   def scaladocSettings: Seq[Setting[_]] =
