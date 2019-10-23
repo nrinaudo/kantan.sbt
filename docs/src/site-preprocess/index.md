@@ -3,7 +3,7 @@ layout: index
 ---
 
 [![Build Status](https://travis-ci.org/nrinaudo/kantan.sbt.svg?branch=master)](https://travis-ci.org/nrinaudo/kantan.sbt)
-[![Latest version](https://index.scala-lang.org/nrinaudo/kantan.sbt/kantan.sbt/latest.svg)](https://index.scala-lang.org/nrinaudo/kantan.sbt)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.nrinaudo/kantan.sbt/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.nrinaudo/kantan.sbt)
 [![Join the chat at https://gitter.im/nrinaudo/kantan.sbt](https://img.shields.io/badge/gitter-join%20chat-52c435.svg)](https://gitter.im/nrinaudo/kantan.sbt)
 
 kantan.sbt is a collection of [SBT] plugins and settings used by all kantan.projects.
