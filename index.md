@@ -3,7 +3,7 @@ layout: index
 ---
 
 [![Build Status](https://travis-ci.org/nrinaudo/kantan.sbt.svg?branch=master)](https://travis-ci.org/nrinaudo/kantan.sbt)
-[![Latest version](https://index.scala-lang.org/nrinaudo/kantan.sbt/kantan.sbt/latest.svg)](https://index.scala-lang.org/nrinaudo/kantan.sbt)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.nrinaudo/kantan.sbt/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.nrinaudo/kantan.sbt)
 [![Join the chat at https://gitter.im/nrinaudo/kantan.sbt](https://img.shields.io/badge/gitter-join%20chat-52c435.svg)](https://gitter.im/nrinaudo/kantan.sbt)
 
 kantan.sbt is a collection of [SBT] plugins and settings used by all kantan.projects.
@@ -12,21 +12,21 @@ kantan.sbt is a collection of [SBT] plugins and settings used by all kantan.proj
 
 kantan.sbt is currently available for SBT 1.0.
 
-The current version is `2.5.0`, which can be added to your project with the following line
+The current version is `2.5.1-SNAPSHOT`, which can be added to your project with the following line
 in your build files (traditionally `project/plugins.sbt`, although that's not a requirement):
 
 ```scala
 // Adds the core kantan.sbt plugins
-addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "2.5.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "2.5.1-SNAPSHOT")
 
 // Adds support for sbt-release
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.5.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.5.1-SNAPSHOT")
 
 // Adds support for scalafmt
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.5.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.5.1-SNAPSHOT")
 
 // Adds support for scalastyle
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.5.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.5.1-SNAPSHOT")
 ```
 
 ## Motivation
