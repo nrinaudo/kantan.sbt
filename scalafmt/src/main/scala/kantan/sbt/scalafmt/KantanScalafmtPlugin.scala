@@ -41,9 +41,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
     copyScalafmtConfig := {
       val path = scalafmtConfig.value
 
-      scalafmtResource.value.foreach(
-        r => copyIfNeeded(r, path)
-      )
+      scalafmtResource.value.foreach(r => copyIfNeeded(r, path))
     }
   )
 
