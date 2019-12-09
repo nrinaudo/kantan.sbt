@@ -25,7 +25,6 @@ import sbt._
 object KantanScalafmtPlugin extends AutoPlugin {
   object autoImport {
     val scalafmtResource: SettingKey[Option[String]] = settingKey("resource that holds the scalafmt configuration")
-    val scalafmtAll: TaskKey[Unit]                   = taskKey("Runs scalafmt on all sources")
     val copyScalafmtConfig: TaskKey[Unit]            = taskKey("Copies the scalafmt resource if necessary")
   }
 
@@ -37,7 +36,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
 
   override lazy val projectSettings = rawScalafmtSettings(Compile, Test) ++ checkStyleSettings ++ Seq(
     scalafmtResource := None,
-    scalafmtAll      := (scalafmt in Compile).dependsOn(scalafmt in Test).dependsOn(scalafmtSbt in Compile).value,
+    scalafmtAll      := scalafmtAll.dependsOn(scalafmtSbt in Compile).value,
     copyScalafmtConfig := {
       val path = scalafmtConfig.value
 
