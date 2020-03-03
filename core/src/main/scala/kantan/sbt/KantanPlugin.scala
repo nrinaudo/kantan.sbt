@@ -99,18 +99,14 @@ object KantanPlugin extends AutoPlugin {
     )
   }
 
-  def javacSettings: Seq[Setting[_]] =
-    Seq(
-      // If we're running 2.12+, compile to 1.8 bytecode. Otherwise, 1.6.
-      javacOptions := {
-        val jvm = (CrossVersion.partialVersion(scalaVersion.value) match {
-          case Some((maj, min)) if maj > 2 || min >= 12 => "1.8"
-          case _                                        => "1.6"
-        })
+  def javacSettings: Seq[Setting[_]] = {
+    // Compile everything to 1.8 until further notice.
+    val jvm = "1.8"
 
-        Seq("-source", jvm, "-target", jvm)
-      }
+    Seq(
+      javacOptions := Seq("-source", jvm, "-target", jvm)
     )
+  }
 
   /** Sane, version dependent scalac settings. */
   def scalacSettings: Seq[Setting[_]] = {
