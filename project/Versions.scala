@@ -1,7 +1,7 @@
 object Versions {
   val boilerplate: String  = "0.6.1"
   val mdoc: String         = "2.1.1"
-  val sbtDoctest: String   = "0.9.5"
+  val sbtDoctest: String   = "0.9.6"
   val sbtGhPages: String   = "0.6.3"
   val sbtHeader: String    = "5.4.0"
   val sbtPgp: String       = "2.0.0"
