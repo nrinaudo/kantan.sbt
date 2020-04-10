@@ -3,7 +3,7 @@ object Versions {
   val mdoc: String         = "2.1.5"
   val sbtDoctest: String   = "0.9.6"
   val sbtGhPages: String   = "0.6.3"
-  val sbtHeader: String    = "5.4.0"
+  val sbtHeader: String    = "5.5.0"
   val sbtPgp: String       = "2.0.1"
   val sbtRelease: String   = "1.0.13"
   val sbtScalafmt: String  = "2.3.2"
