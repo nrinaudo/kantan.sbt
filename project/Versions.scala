@@ -10,7 +10,7 @@ object Versions {
   val sbtSite: String      = "1.4.0"
   val sbtSonatype: String  = "3.9.2"
   val sbtUnidoc: String    = "0.4.3"
-  val scalajs: String      = Option(System.getenv("SCALAJS_VERSION")).filter(_.nonEmpty).getOrElse("1.1.0")
+  val scalajs: String      = "1.1.0"
   val scalajsCross: String = "0.6.1"
   val scalastyle: String   = "1.0.0"
   val scoverage: String    = "1.6.1"
