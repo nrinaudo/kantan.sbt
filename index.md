@@ -12,21 +12,21 @@ kantan.sbt is a collection of [SBT] plugins and settings used by all kantan.proj
 
 kantan.sbt is currently available for SBT 1.0.
 
-The current version is `2.7.1`, which can be added to your project with the following line
+The current version is `2.7.2`, which can be added to your project with the following line
 in your build files (traditionally `project/plugins.sbt`, although that's not a requirement):
 
 ```scala
 // Adds the core kantan.sbt plugins
-addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "2.7.1")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "2.7.2")
 
 // Adds support for sbt-release
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.7.1")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "2.7.2")
 
 // Adds support for scalafmt
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.7.1")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.7.2")
 
 // Adds support for scalastyle
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.7.1")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "2.7.2")
 ```
 
 ## Motivation
