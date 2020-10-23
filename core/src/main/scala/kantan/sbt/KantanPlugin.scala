@@ -89,9 +89,10 @@ object KantanPlugin extends AutoPlugin {
   /** General settings. */
   lazy val generalSettings: Seq[Setting[_]] = {
     Seq(
-      autoAPIMappings        := true,
-      doctestMarkdownEnabled := true,
-      doctestTestFramework   := DoctestTestFramework.ScalaTest,
+      autoAPIMappings         := true,
+      doctestMarkdownEnabled  := true,
+      doctestTestFramework    := DoctestTestFramework.ScalaTest,
+      doctestScalaTestVersion := Some("3.2.2"),
       resolvers ++= Seq(
         Resolver.sonatypeRepo("releases"),
         Resolver.sonatypeRepo("snapshots")
