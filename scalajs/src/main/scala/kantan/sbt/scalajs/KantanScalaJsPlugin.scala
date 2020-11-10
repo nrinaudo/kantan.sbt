@@ -45,7 +45,8 @@ object KantanScalaJsPlugin extends AutoPlugin {
         .crossType(CrossType.Full)
         // Overrides the default sbt-boilerplate source directory: https://github.com/sbt/sbt-boilerplate/issues/21
         .settings(
-          boilerplateSource in Compile := baseDirectory.value.getParentFile / "shared" / "src" / "main" / "boilerplate"
+          boilerplateSource in Compile := baseDirectory.value.getParentFile / "shared" / "src" / "main" / "boilerplate",
+          boilerplateSource in Test    := baseDirectory.value.getParentFile / "shared" / "src" / "test" / "boilerplate"
         )
         .jsSettings(
           name := id + "-js",
