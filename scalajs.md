@@ -8,7 +8,7 @@ sort_order: 7
 You can use kantan.sbt's [scala.js] support by adding the following SBT line:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalajs" % "2.7.4")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalajs" % "2.7.5")
 ```
 
 This lets you declare cross-projects using `kantanCrossProject` rather than `crossProject`.
