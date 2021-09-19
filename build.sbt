@@ -34,7 +34,7 @@ lazy val release = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
-    addSbtPlugin("com.github.gseitz" % "sbt-release" % Versions.sbtRelease)
+    addSbtPlugin("com.github.sbt" % "sbt-release" % Versions.sbtRelease)
   )
   .dependsOn(core)
 
