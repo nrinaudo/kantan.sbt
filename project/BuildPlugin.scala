@@ -15,7 +15,7 @@ object BuildPlugin extends AutoPlugin {
   override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validate",
-      ";clean;scalastyle;test:scalastyle;scalafmtCheck;test:scalafmtCheck;scalafmtSbtCheck;compile;scripted"
+      ";clean;scalastyle;Test / scalastyle;scalafmtCheck;Test / scalafmtCheck;scalafmtSbtCheck;compile;scripted"
     )
 
   lazy val runScripted: ReleaseStep = {
@@ -56,7 +56,7 @@ object BuildPlugin extends AutoPlugin {
   def wartRemoverSettings: Seq[Setting[_]] =
     List(Compile, Test).flatMap { c =>
       inConfig(c)(
-        WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
+        Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
           Warts.allBut(
             Wart.NonUnitStatements,
             Wart.Equals,

@@ -32,8 +32,8 @@ object KantanRelease {
       val extracted = Project.extract(st)
       val ref       = extracted.get(thisProjectRef)
 
-      val stCompile = extracted.runAggregated(checkStyle in Compile in ref, st)
-      extracted.runAggregated(checkStyle in Test in ref, stCompile)
+      val stCompile = extracted.runAggregated(ref / Compile / checkStyle, st)
+      extracted.runAggregated(ref / Test / checkStyle, stCompile)
     }
   )
 
@@ -42,6 +42,6 @@ object KantanRelease {
     val extracted = Project.extract(st)
     val ref       = extracted.get(thisProjectRef)
 
-    extracted.runAggregated(ghpagesPushSite in ref, st)
+    extracted.runAggregated(ref / ghpagesPushSite, st)
   }
 }

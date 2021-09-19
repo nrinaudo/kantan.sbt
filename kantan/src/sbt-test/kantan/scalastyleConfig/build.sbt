@@ -1,6 +1,6 @@
-kantanProject in ThisBuild := "foo"
-startYear                  := Some(2017)
-scalastyleConfig           := file("scalastyle.xml")
+ThisBuild / kantanProject := "foo"
+startYear                 := Some(2017)
+scalastyleConfig          := file("scalastyle.xml")
 
 lazy val check = TaskKey[Unit]("check")
 

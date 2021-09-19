@@ -37,13 +37,13 @@ object StrictPlugin extends AutoPlugin {
     * dodgy things to see what happens.
     */
   def scalacSettings: Seq[Setting[_]] = Seq(
-    scalacOptions in (Compile, compile) += "-Xfatal-warnings"
+    Compile / compile / scalacOptions += "-Xfatal-warnings"
   )
 
   def wartRemoverSettings: Seq[Setting[_]] =
     List(Compile, Test).flatMap { c =>
       inConfig(c)(
-        WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
+        Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
           Warts.allBut(
             Wart.NonUnitStatements,
             Wart.Equals,
