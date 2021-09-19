@@ -95,7 +95,6 @@ object BuildPlugin extends AutoPlugin {
           s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
         )
       ),
-      scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value),
       scalacOptions ++= Seq(
         "-deprecation",
         "-encoding",
@@ -147,4 +146,14 @@ object BuildPlugin extends AutoPlugin {
         java.lang.Runtime.getRuntime().availableProcessors().toString
       )
     )
+}
+
+object SbtBuildPlugin extends AutoPlugin {
+  override def trigger = allRequirements
+
+  override def requires = SbtPlugin
+
+  override lazy val projectSettings = Seq(
+    scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+  )
 }
