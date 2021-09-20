@@ -44,7 +44,7 @@ object KantanPlugin extends AutoPlugin {
     * enable it.
     */
   def setLaws(name: String): Setting[Task[Classpath]] =
-    unmanagedClasspath in Test ++= (fullClasspath in (LocalProject(name), Compile)).value
+    Test / unmanagedClasspath ++= (LocalProject(name) / Compile / fullClasspath).value
 
   object autoImport {
 
@@ -83,7 +83,7 @@ object KantanPlugin extends AutoPlugin {
   override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validate",
-      ";clean;checkStyle;test:checkStyle;coverageOn;test;coverageAggregate;coverageOff;doc"
+      ";clean;checkStyle;test / checkStyle;coverageOn;test;coverageAggregate;coverageOff;doc"
     )
 
   /** General settings. */
@@ -211,7 +211,7 @@ object KantanPlugin extends AutoPlugin {
     val unusedImports = Seq("-Ywarn-unused:imports", "-Ywarn-unused-import")
     Seq(
       scalacOptions := base(scalaVersion.value),
-      scalacOptions in (Compile, console) --= unusedImports
+      Compile / console / scalacOptions --= unusedImports
     )
   }
 

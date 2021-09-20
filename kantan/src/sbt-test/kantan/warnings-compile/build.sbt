@@ -1,2 +1,2 @@
-kantanProject in ThisBuild := "foo"
-startYear                  := Some(2017)
+ThisBuild / kantanProject := "foo"
+startYear                 := Some(2017)

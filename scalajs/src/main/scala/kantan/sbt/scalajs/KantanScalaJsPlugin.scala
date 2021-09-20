@@ -45,8 +45,8 @@ object KantanScalaJsPlugin extends AutoPlugin {
         .crossType(CrossType.Full)
         // Overrides the default sbt-boilerplate source directory: https://github.com/sbt/sbt-boilerplate/issues/21
         .settings(
-          boilerplateSource in Compile := baseDirectory.value.getParentFile / "shared" / "src" / "main" / "boilerplate",
-          boilerplateSource in Test    := baseDirectory.value.getParentFile / "shared" / "src" / "test" / "boilerplate"
+          Compile / boilerplateSource := baseDirectory.value.getParentFile / "shared" / "src" / "main" / "boilerplate",
+          Test / boilerplateSource    := baseDirectory.value.getParentFile / "shared" / "src" / "test" / "boilerplate"
         )
         .jsSettings(
           name := id + "-js",
@@ -55,12 +55,12 @@ object KantanScalaJsPlugin extends AutoPlugin {
           // Disables coverage in JS mode: https://github.com/scoverage/scalac-scoverage-plugin/issues/196
           coverageEnabled := false,
           // Disables parallel execution in JS mode: https://github.com/scala-js/scala-js/issues/1546
-          parallelExecution       := false,
-          testJS in Test          := (test in Test).value,
-          testJVM in Test         := { () },
-          checkStyleJS in Compile := (checkStyle in Compile).value,
-          checkStyleJS in Test    := (checkStyle in Test).value,
-          checkStyleJVM           := { () }
+          parallelExecution      := false,
+          Test / testJS          := (Test / test).value,
+          Test / testJVM         := { () },
+          Compile / checkStyleJS := (Compile / checkStyle).value,
+          Test / checkStyleJS    := (Test / checkStyle).value,
+          checkStyleJVM          := { () }
         )
         .jvmSettings(name := id + "-jvm")
 
@@ -78,11 +78,11 @@ object KantanScalaJsPlugin extends AutoPlugin {
   import autoImport._
 
   override lazy val projectSettings = Seq(
-    testJS in Test           := { () },
-    testJVM in Test          := (test in Test).value,
-    checkStyleJS             := { () },
-    checkStyleJVM in Compile := (checkStyle in Compile).value,
-    checkStyleJVM in Test    := (checkStyle in Test).value
+    Test / testJS           := { () },
+    Test / testJVM          := (Test / test).value,
+    checkStyleJS            := { () },
+    Compile / checkStyleJVM := (Compile / checkStyle).value,
+    Test / checkStyleJVM    := (Test / checkStyle).value
   )
 
   override def globalSettings =

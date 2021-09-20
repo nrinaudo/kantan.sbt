@@ -1,4 +1,4 @@
-kantanProject in ThisBuild := "foo"
+ThisBuild / kantanProject := "foo"
 
 enablePlugins(PublishedPlugin)
 

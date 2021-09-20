@@ -30,8 +30,8 @@ import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._
   *
   * In order for kantan builds to behave properly, the following two lines *must* be present in the `build.sbt` files:
   * {{{
-  * kantanProject in ThisBuild := "foobar"
-  * startYear     in ThisBuild := Some(1978)
+  * ThisBuild / kantanProject := "foobar"
+  * ThisBuild / startYear     := Some(1978)
   * }}}
   */
 object KantanKantanPlugin extends AutoPlugin {

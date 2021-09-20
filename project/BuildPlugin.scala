@@ -15,7 +15,7 @@ object BuildPlugin extends AutoPlugin {
   override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validate",
-      ";clean;scalastyle;test:scalastyle;scalafmtCheck;test:scalafmtCheck;scalafmtSbtCheck;compile;scripted"
+      ";clean;scalastyle;Test / scalastyle;scalafmtCheck;Test / scalafmtCheck;scalafmtSbtCheck;compile;scripted"
     )
 
   lazy val runScripted: ReleaseStep = {
@@ -56,7 +56,7 @@ object BuildPlugin extends AutoPlugin {
   def wartRemoverSettings: Seq[Setting[_]] =
     List(Compile, Test).flatMap { c =>
       inConfig(c)(
-        WartRemover.autoImport.wartremoverErrors in (Compile, compile) ++=
+        Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
           Warts.allBut(
             Wart.NonUnitStatements,
             Wart.Equals,
@@ -77,7 +77,7 @@ object BuildPlugin extends AutoPlugin {
       organizationHomepage := Some(url("https://nrinaudo.github.io")),
       organizationName     := "Nicolas Rinaudo",
       startYear            := Some(2016),
-      scalaVersion         := "2.12.12",
+      scalaVersion         := "2.12.15",
       licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
       publishTo := Some(
@@ -95,7 +95,6 @@ object BuildPlugin extends AutoPlugin {
           s"scm:git:git@github.com:nrinaudo/kantan.sbt.git"
         )
       ),
-      scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value),
       scalacOptions ++= Seq(
         "-deprecation",
         "-encoding",
@@ -147,4 +146,14 @@ object BuildPlugin extends AutoPlugin {
         java.lang.Runtime.getRuntime().availableProcessors().toString
       )
     )
+}
+
+object SbtBuildPlugin extends AutoPlugin {
+  override def trigger = allRequirements
+
+  override def requires = SbtPlugin
+
+  override lazy val projectSettings = Seq(
+    scriptedLaunchOpts ++= Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
+  )
 }

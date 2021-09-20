@@ -36,7 +36,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
 
   override lazy val projectSettings = rawScalafmtSettings(Compile, Test) ++ checkStyleSettings ++ Seq(
     scalafmtResource := None,
-    scalafmtAll      := scalafmtAll.dependsOn(scalafmtSbt in Compile).value,
+    scalafmtAll      := scalafmtAll.dependsOn(Compile / scalafmtSbt).value,
     copyScalafmtConfig := {
       val path = scalafmtConfig.value
 
@@ -47,10 +47,10 @@ object KantanScalafmtPlugin extends AutoPlugin {
   // Makes sure checkStyle depends on the right scalafmt commands depending on the context.
   private def checkStyleSettings: Seq[Setting[_]] =
     Seq(
-      (checkStyle in Compile) := (checkStyle in Compile)
-        .dependsOn(scalafmtCheck in Compile, scalafmtSbtCheck in Compile)
+      (Compile / checkStyle) := (Compile / checkStyle)
+        .dependsOn(Compile / scalafmtCheck, Compile / scalafmtSbtCheck)
         .value,
-      (checkStyle in Test) := (checkStyle in Test).dependsOn(scalafmtCheck in Test).value
+      (Test / checkStyle) := (Test / checkStyle).dependsOn(Test / scalafmtCheck).value
     )
 
   // Makes sure all relevant scalafmt tasks depend on copyScalafmtConfig

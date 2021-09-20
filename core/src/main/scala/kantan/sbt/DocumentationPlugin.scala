@@ -57,19 +57,19 @@ object DocumentationPlugin extends AutoPlugin {
   override def projectSettings: Seq[Setting[_]] = scaladocSettings ++ mdocSettings ++ ghpagesSettings ++ siteSettings
 
   def siteSettings: Seq[Setting[_]] = Seq(
-    includeFilter in SitePlugin.autoImport.makeSite :=
+    SitePlugin.autoImport.makeSite / includeFilter :=
       "*.yml" | "*.md" | "*.html" | "*.css" | "*.png" | "*.jpg" | "*.gif" | "*.js" | "*.eot" | "*.svg" | "*.ttf" |
         "*.woff" | "*.woff2" | "*.otf",
     // Lets sbt-site know about unidoc.
-    siteSubdirName in ScalaUnidoc := "api",
-    addMappingsToSiteDir(mappings in (ScalaUnidoc, packageDoc), siteSubdirName in ScalaUnidoc),
+    ScalaUnidoc / siteSubdirName := "api",
+    addMappingsToSiteDir(ScalaUnidoc / packageDoc / mappings, ScalaUnidoc / siteSubdirName),
     // Configures task dependencies: doc → makeSite → mdoc
     makeSite := makeSite.dependsOn(mdocSite).value,
-    doc      := (doc in Compile).dependsOn(SitePlugin.autoImport.makeSite).value,
+    doc      := (Compile / doc).dependsOn(SitePlugin.autoImport.makeSite).value,
     // Use a "managed" source directory for preprocessing - we want all documentation to be preprocessed, and the only
     // way I found to achieve that is to have all md files to be copied / generated to the same directory, and *then*
     // preprocess that.
-    sourceDirectory in Preprocess := resourceManaged.value / "main" / "site-preprocess"
+    Preprocess / sourceDirectory := resourceManaged.value / "main" / "site-preprocess"
   )
 
   def ghpagesSettings: Seq[Setting[_]] = Seq(
@@ -81,15 +81,15 @@ object DocumentationPlugin extends AutoPlugin {
 
   def mdocSettings: Seq[Setting[_]] = Seq(
     mdocSite := {
-      mdoc.toTask(" ").value
       val out = mdocOut.value
       for {
         (file, name) <- out ** AllPassFilter --- out pair Path.relativeTo(out)
       } yield file -> name
     },
+    mdocSite           := mdocSite.dependsOn(mdoc.toTask(" ")).value,
     mdocExtraArguments += "--no-link-hygiene",
     mdocSiteOut        := "./",
-    mdocIn             := (sourceDirectory in Compile).value / "mdoc",
+    mdocIn             := (Compile / sourceDirectory).value / "mdoc",
     mdocVariables := Map(
       "VERSION" -> version.value
     ),
@@ -99,9 +99,9 @@ object DocumentationPlugin extends AutoPlugin {
   def scaladocSettings: Seq[Setting[_]] =
     Seq(
       docSourceUrl := scmInfo.value.map(i => s"${i.browseUrl}/tree/master€{FILE_PATH}.scala"),
-      scalacOptions in (ScalaUnidoc, unidoc) ++= Seq(
+      ScalaUnidoc / unidoc / scalacOptions ++= Seq(
         "-sourcepath",
-        baseDirectory.in(LocalRootProject).value.getAbsolutePath,
+        (LocalRootProject / baseDirectory).value.getAbsolutePath,
         "-groups"
       ) ++ docSourceUrl.value.map(v => Seq("-doc-source-url", v)).getOrElse(Seq.empty)
     )
