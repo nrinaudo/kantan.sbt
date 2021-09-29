@@ -83,7 +83,7 @@ object KantanPlugin extends AutoPlugin {
   override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validate",
-      ";clean;checkStyle;test / checkStyle;coverageOn;test;coverageAggregate;coverageOff;doc"
+      ";clean;checkStyle;Test / checkStyle;coverageOn;test;coverageAggregate;coverageOff;doc"
     )
 
   /** General settings. */
