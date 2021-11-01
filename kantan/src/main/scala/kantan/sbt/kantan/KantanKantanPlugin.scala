@@ -52,7 +52,7 @@ object KantanKantanPlugin extends AutoPlugin {
     organization         := "com.nrinaudo",
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
     organizationName     := "Nicolas Rinaudo",
-    crossScalaVersions   := Seq("2.12.15", "2.13.6"),
+    crossScalaVersions   := Seq("2.13.7", "2.13.6"),
     scalaVersion         := crossScalaVersions.value.last,
     licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
     scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
