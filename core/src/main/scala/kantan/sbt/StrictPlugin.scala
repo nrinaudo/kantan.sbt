@@ -53,7 +53,8 @@ object StrictPlugin extends AutoPlugin {
             Wart.ImplicitConversion,
             Wart.Any,
             Wart.PublicInference, // Disabled because https://github.com/wartremover/wartremover/issues/337
-            Wart.Recursion
+            Wart.Recursion,
+            Wart.ScalaApp
           )
       )
     }
