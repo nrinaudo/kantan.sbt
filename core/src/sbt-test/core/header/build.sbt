@@ -7,7 +7,7 @@ enablePlugins(AutomateHeaderPlugin)
 lazy val check = TaskKey[Unit]("check")
 
 check := {
-  val actual   = IO.readLines((scalaSource in Compile).value / "Foo.scala")
+  val actual   = IO.readLines((Compile / scalaSource).value / "Foo.scala")
   val expected = IO.readLines(file("expected.txt"))
 
   if(expected != actual)

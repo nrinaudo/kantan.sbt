@@ -10,12 +10,12 @@ check := {
   }
 
   validate(
-    (scalaSource in Compile).value / "Foo.scala",
+    (Compile / scalaSource).value / "Foo.scala",
     file("expected/foo.txt")
   )
 
   validate(
-    (scalaSource in Test).value / "Bar.scala",
+    (Test / scalaSource).value / "Bar.scala",
     file("expected/bar.txt")
   )
 
