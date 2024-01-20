@@ -20,7 +20,7 @@ lazy val core = project
     addSbtPlugin("com.typesafe.sbt"    % "sbt-ghpages"     % Versions.sbtGhPages),
     addSbtPlugin("com.typesafe.sbt"    % "sbt-site"        % Versions.sbtSite),
     addSbtPlugin("de.heikoseeberger"   % "sbt-header"      % Versions.sbtHeader),
-    addSbtPlugin("io.spray"            % "sbt-boilerplate" % Versions.boilerplate),
+    addSbtPlugin("com.github.sbt"      % "sbt-boilerplate" % Versions.boilerplate),
     addSbtPlugin("org.scalameta"       % "sbt-mdoc"        % Versions.mdoc),
     addSbtPlugin("org.scoverage"       %% "sbt-scoverage"  % Versions.scoverage),
     addSbtPlugin("org.wartremover"     % "sbt-wartremover" % Versions.wartRemover)
