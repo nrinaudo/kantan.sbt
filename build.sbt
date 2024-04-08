@@ -18,7 +18,7 @@ lazy val core = project
     addSbtPlugin("com.eed3si9n"        % "sbt-unidoc"      % Versions.sbtUnidoc),
     addSbtPlugin("com.github.tkawachi" % "sbt-doctest"     % Versions.sbtDoctest),
     addSbtPlugin("com.typesafe.sbt"    % "sbt-ghpages"     % Versions.sbtGhPages),
-    addSbtPlugin("com.typesafe.sbt"    % "sbt-site"        % Versions.sbtSite),
+    addSbtPlugin("com.github.sbt"      % "sbt-site"        % Versions.sbtSite),
     addSbtPlugin("de.heikoseeberger"   % "sbt-header"      % Versions.sbtHeader),
     addSbtPlugin("io.spray"            % "sbt-boilerplate" % Versions.boilerplate),
     addSbtPlugin("org.scalameta"       % "sbt-mdoc"        % Versions.mdoc),
