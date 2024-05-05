@@ -13,6 +13,6 @@ object Versions {
   val scalajs: String      = "1.9.0"
   val scalajsCross: String = "1.1.0"
   val scalastyle: String   = "1.0.0"
-  val scoverage: String    = "1.9.3"
+  val scoverage: String    = "2.0.12"
   val wartRemover: String  = "2.4.17"
 }
