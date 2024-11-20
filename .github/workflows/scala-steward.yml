@@ -1,0 +1,25 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 0'
+
+name: Scala Steward
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  scala-steward:
+    runs-on: ubuntu-latest
+    name: Scala Steward
+    steps:
+      - name: Install sbt
+        uses: sbt/setup-sbt@v1.1.4
+      - name: Scala Steward GitHub Action
+        uses: scala-steward-org/scala-steward-action@v2.71.0
+        with:
+          github-token: ${{ secrets.SCALA_STEWARD_REPO_TOKEN }}
+          author-name: Scala Steward
+          author-email: 2750485+joriscode@users.noreply.github.com
+            
