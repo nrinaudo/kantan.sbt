@@ -1,9 +1,9 @@
 name: CI
 on:
   push:
-    branches: [master]
+    branches: [master, develop]
   pull_request:
-    branches: [master]
+    branches: [master, develop]
 
 jobs:
   test:
@@ -16,15 +16,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Setup
-        uses: olafurpg/setup-scala@v13
+        uses: coursier/setup-action@v1
         with:
-          java-version: "adopt@1.${{ matrix.java }}"
+          jvm: "adopt:${{ matrix.java }}"
 
       - name: Cache
-        uses: coursier/cache-action@v5
+        uses: coursier/cache-action@v6
 
       - name: Test
         run: sbt ++${{ matrix.scala }} validate
