@@ -16,7 +16,7 @@
 
 package kantan.sbt.release
 
-import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport.ghpagesPushSite
+// import com.typesafe.sbt.sbtghpages.GhpagesPlugin.autoImport.ghpagesPushSite
 import kantan.sbt.KantanPlugin, KantanPlugin.autoImport._
 import sbt._, Keys._
 import sbtrelease.ReleasePlugin.autoImport._
@@ -37,11 +37,11 @@ object KantanRelease {
     }
   )
 
-  /** Runs `pushSite`. */
-  lazy val runPushSite: ReleaseStep = { st: State =>
-    val extracted = Project.extract(st)
-    val ref       = extracted.get(thisProjectRef)
+  // /** Runs `pushSite`. */
+  // lazy val runPushSite: ReleaseStep = { st: State =>
+  //   val extracted = Project.extract(st)
+  //   val ref       = extracted.get(thisProjectRef)
 
-    extracted.runAggregated(ref / ghpagesPushSite, st)
-  }
+  //   extracted.runAggregated(ref / ghpagesPushSite, st)
+  // }
 }

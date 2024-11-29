@@ -30,7 +30,6 @@ import sbt.plugins.JvmPlugin
   *  - [[PublishedPlugin]]    : configures projects whose artifacts are intended for publication on maven central.
   *  - [[UnpublishedPlugin]]  : configures projects whose artifacts are not meant to be published, such as tests and
   *                             documentation.
-  *  - [[DocumentationPlugin]]: configures projects whose output is a documentation website.
   */
 object KantanPlugin extends AutoPlugin {
 
@@ -75,7 +74,7 @@ object KantanPlugin extends AutoPlugin {
   override lazy val projectSettings = generalSettings ++ scalacSettings ++ javacSettings ++ commonDependencies ++
     inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
 
-  /** By default, `checkStyle` does nothing. Other modules, such as scalafmt and scalastyle, plug in to that. */
+  /** By default, `checkStyle` does nothing. Other modules, such as scalafmt, plug in to that. */
   private def checkStyleSettings: Seq[Setting[_]] = Seq(
     checkStyle := {}
   )
@@ -93,10 +92,8 @@ object KantanPlugin extends AutoPlugin {
       doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
       doctestScalaTestVersion := Some("3.2.2"),
-      resolvers ++= Seq(
-        Resolver.sonatypeRepo("releases"),
-        Resolver.sonatypeRepo("snapshots")
-      )
+      resolvers               ++= Resolver.sonatypeOssRepos("releases"),
+      resolvers               ++= Resolver.sonatypeOssRepos("snapshots")
     )
   }
 

@@ -5,7 +5,7 @@ lazy val root = Project(id = "kantan-sbt", base = file("."))
     publishLocal    := {},
     publishArtifact := false
   )
-  .aggregate(docs, core, kantan, release, scalajs, scalafmt, scalastyle)
+  .aggregate( /*docs,*/ core, kantan, release, scalajs, scalafmt)
 
 lazy val core = project
   .settings(
@@ -15,15 +15,16 @@ lazy val core = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
-    addSbtPlugin("com.eed3si9n"        % "sbt-unidoc"      % Versions.sbtUnidoc),
-    addSbtPlugin("com.github.tkawachi" % "sbt-doctest"     % Versions.sbtDoctest),
-    addSbtPlugin("com.typesafe.sbt"    % "sbt-ghpages"     % Versions.sbtGhPages),
-    addSbtPlugin("com.typesafe.sbt"    % "sbt-site"        % Versions.sbtSite),
+    libraryDependencySchemes += "com.lihaoyi" %% "geny" % VersionScheme.Always,
+    addSbtPlugin("com.github.tkawachi" % "sbt-doctest"     % Versions.sbtDoctest exclude ("com.lihaoyi", "geny")),
     addSbtPlugin("de.heikoseeberger"   % "sbt-header"      % Versions.sbtHeader),
-    addSbtPlugin("io.spray"            % "sbt-boilerplate" % Versions.boilerplate),
-    addSbtPlugin("org.scalameta"       % "sbt-mdoc"        % Versions.mdoc),
-    addSbtPlugin("org.scoverage"       %% "sbt-scoverage"  % Versions.scoverage),
-    addSbtPlugin("org.wartremover"     % "sbt-wartremover" % Versions.wartRemover)
+    addSbtPlugin("com.github.sbt"      % "sbt-boilerplate" % Versions.boilerplate),
+    addSbtPlugin("org.scoverage"       %% "sbt-scoverage"  % Versions.scoverage)
+    // addSbtPlugin("com.eed3si9n"        % "sbt-unidoc"      % Versions.sbtUnidoc),
+    // addSbtPlugin("com.typesafe.sbt"    % "sbt-ghpages"     % Versions.sbtGhPages),
+    // addSbtPlugin("com.typesafe.sbt"    % "sbt-site"        % Versions.sbtSite),
+    // addSbtPlugin("org.scalameta"       % "sbt-mdoc"        % Versions.mdoc),
+    // addSbtPlugin("com.github.sbt"      % "sbt-git"         % "2.1.0")
   )
 
 lazy val release = project
@@ -34,19 +35,8 @@ lazy val release = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
+    libraryDependencySchemes += "com.lihaoyi" %% "geny" % VersionScheme.Always,
     addSbtPlugin("com.github.sbt" % "sbt-release" % Versions.sbtRelease)
-  )
-  .dependsOn(core)
-
-lazy val scalastyle = project
-  .settings(
-    moduleName := "kantan.sbt-scalastyle",
-    name       := "scalastyle",
-    sbtPlugin  := true
-  )
-  .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
-  .settings(
-    addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % Versions.scalastyle)
   )
   .dependsOn(core)
 
@@ -58,6 +48,7 @@ lazy val scalafmt = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
+    libraryDependencySchemes += "com.lihaoyi" %% "geny" % VersionScheme.Always,
     addSbtPlugin("org.scalameta" % "sbt-scalafmt" % Versions.sbtScalafmt)
   )
   .dependsOn(core)
@@ -70,6 +61,7 @@ lazy val scalajs = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
+    libraryDependencySchemes += "com.lihaoyi" %% "geny" % VersionScheme.Always,
     addSbtPlugin("org.scala-js"       % "sbt-scalajs"              % Versions.scalajs),
     addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % Versions.scalajsCross)
   )
@@ -83,10 +75,11 @@ lazy val kantan = project
   )
   .enablePlugins(AutomateHeaderPlugin, SbtPlugin)
   .settings(
-    addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
-    addSbtPlugin("com.jsuereth"   % "sbt-pgp"      % Versions.sbtPgp)
+    libraryDependencySchemes += "com.lihaoyi" %% "geny" % VersionScheme.Always,
+    // addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % Versions.sbtSonatype),
+    addSbtPlugin("com.github.sbt" % "sbt-pgp" % Versions.sbtPgp)
   )
-  .dependsOn(core, release, scalafmt, scalastyle)
+  .dependsOn(core, release, scalafmt)
 
-lazy val docs = project
-  .enablePlugins(DocumentationPlugin)
+// lazy val docs = project
+// .enablePlugins(DocumentationPlugin)

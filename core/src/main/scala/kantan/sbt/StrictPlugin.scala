@@ -17,7 +17,7 @@
 package kantan.sbt
 
 import sbt._, Keys._
-import wartremover.{Wart, WartRemover, Warts}
+// import wartremover.{Wart, WartRemover, Warts}
 
 /** Makes compilation much more strict.
   *
@@ -27,9 +27,9 @@ object StrictPlugin extends AutoPlugin {
 
   override def trigger = noTrigger
 
-  override def requires = KantanPlugin && WartRemover
+  override def requires = KantanPlugin //&& WartRemover
 
-  override lazy val projectSettings = wartRemoverSettings ++ scalacSettings
+  override lazy val projectSettings = /*wartRemoverSettings ++ */ scalacSettings
 
   /** All warnings are fatal in `Compile`.
     *
@@ -40,22 +40,22 @@ object StrictPlugin extends AutoPlugin {
     Compile / compile / scalacOptions += "-Xfatal-warnings"
   )
 
-  def wartRemoverSettings: Seq[Setting[_]] =
-    List(Compile, Test).flatMap { c =>
-      inConfig(c)(
-        Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
-          Warts.allBut(
-            Wart.NonUnitStatements,
-            Wart.Equals,
-            Wart.Overloading,
-            Wart.ImplicitParameter,
-            Wart.Nothing,
-            Wart.ImplicitConversion,
-            Wart.Any,
-            Wart.PublicInference, // Disabled because https://github.com/wartremover/wartremover/issues/337
-            Wart.Recursion,
-            Wart.ScalaApp
-          )
-      )
-    }
+  // def wartRemoverSettings: Seq[Setting[_]] =
+  //   List(Compile, Test).flatMap { c =>
+  //     inConfig(c)(
+  //       Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
+  //         Warts.allBut(
+  //           Wart.NonUnitStatements,
+  //           Wart.Equals,
+  //           Wart.Overloading,
+  //           Wart.ImplicitParameter,
+  //           Wart.Nothing,
+  //           Wart.ImplicitConversion,
+  //           Wart.Any,
+  //           Wart.PublicInference, // Disabled because https://github.com/wartremover/wartremover/issues/337
+  //           Wart.Recursion,
+  //           Wart.ScalaApp
+  //         )
+  //     )
+  //   }
 }

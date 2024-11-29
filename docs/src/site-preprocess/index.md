@@ -24,9 +24,6 @@ addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "@VERSION@")
 
 // Adds support for scalafmt
 addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "@VERSION@")
-
-// Adds support for scalastyle
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "@VERSION@")
 ```
 
 ## Motivation

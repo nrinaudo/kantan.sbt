@@ -28,7 +28,7 @@ object KantanPublishedPlugin extends AutoPlugin {
 
   override lazy val projectSettings = publishTo := Some(
     if(isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
+      Opts.resolver.sonatypeOssSnapshots.head
     else
       Opts.resolver.sonatypeStaging
   )

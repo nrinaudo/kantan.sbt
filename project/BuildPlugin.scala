@@ -3,19 +3,18 @@ import sbt._, Keys._
 import sbt.plugins.{JvmPlugin, SbtPlugin}
 import sbt.ScriptedPlugin.autoImport._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
-import wartremover.{Wart, WartRemover, Warts}
 
 object BuildPlugin extends AutoPlugin {
   override def trigger = allRequirements
 
   override def requires = JvmPlugin && ReleasePlugin
 
-  override lazy val projectSettings = baseSettings ++ wartRemoverSettings ++ releaseSettings
+  override lazy val projectSettings = baseSettings ++ releaseSettings
 
   override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validate",
-      ";clean;scalastyle;Test / scalastyle;scalafmtCheck;Test / scalafmtCheck;scalafmtSbtCheck;compile;scripted"
+      ";clean;scalafmtSbtCheck;scalafmtCheck;Test / scalafmtCheck;compile;scripted"
     )
 
   lazy val runScripted: ReleaseStep = {
@@ -36,7 +35,6 @@ object BuildPlugin extends AutoPlugin {
         checkSnapshotDependencies,
         inquireVersions,
         runClean,
-        releaseStepCommand("scalastyle"),
         releaseStepCommand("scalafmtCheck"),
         releaseStepCommand("scalafmtSbtCheck"),
         runScripted,
@@ -53,36 +51,18 @@ object BuildPlugin extends AutoPlugin {
       )
     )
 
-  def wartRemoverSettings: Seq[Setting[_]] =
-    List(Compile, Test).flatMap { c =>
-      inConfig(c)(
-        Compile / compile / WartRemover.autoImport.wartremoverErrors ++=
-          Warts.allBut(
-            Wart.NonUnitStatements,
-            Wart.Equals,
-            Wart.Overloading,
-            Wart.ImplicitParameter,
-            Wart.Nothing,
-            Wart.ImplicitConversion,
-            Wart.Any,
-            Wart.PublicInference,
-            Wart.Recursion
-          )
-      )
-    }
-
   def baseSettings: Seq[sbt.Def.Setting[_]] =
     Seq(
       organization         := "com.nrinaudo",
       organizationHomepage := Some(url("https://nrinaudo.github.io")),
       organizationName     := "Nicolas Rinaudo",
       startYear            := Some(2016),
-      scalaVersion         := "2.12.15",
+      scalaVersion         := "2.12.20",
       licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
       homepage             := Some(url(s"https://nrinaudo.github.io/kantan.sbt")),
       publishTo := Some(
         if(isSnapshot.value)
-          Opts.resolver.sonatypeSnapshots
+          Opts.resolver.sonatypeOssSnapshots.head
         else
           Opts.resolver.sonatypeStaging
       ),

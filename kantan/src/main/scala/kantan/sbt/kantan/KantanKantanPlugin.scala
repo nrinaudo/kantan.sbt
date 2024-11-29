@@ -17,10 +17,10 @@
 package kantan.sbt.kantan
 
 import com.jsuereth.sbtpgp.PgpKeys.publishSigned
-import com.typesafe.sbt.SbtGit.git
+// import com.typesafe.sbt.SbtGit.git
+// import com.github.sbt.git.SbtGit
 import kantan.sbt.release.KantanRelease
 import kantan.sbt.scalafmt.KantanScalafmtPlugin, KantanScalafmtPlugin.autoImport._
-import kantan.sbt.scalastyle.KantanScalastylePlugin, KantanScalastylePlugin.autoImport._
 import sbt._, Keys._
 import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._
 
@@ -42,20 +42,18 @@ object KantanKantanPlugin extends AutoPlugin {
 
   override def trigger = allRequirements
 
-  override def requires = KantanScalastylePlugin && KantanScalafmtPlugin
+  override def requires = KantanScalafmtPlugin
 
   override lazy val projectSettings = generalSettings ++ remoteSettings
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
   lazy val generalSettings: Seq[Setting[_]] = Seq(
     name                 := s"kantan.${kantanProject.value}",
     organization         := "com.nrinaudo",
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
     organizationName     := "Nicolas Rinaudo",
-    crossScalaVersions   := Seq("2.12.15", "2.13.8"),
+    crossScalaVersions   := Seq("2.12.15", "2.13.15"),
     scalaVersion         := crossScalaVersions.value.last,
     licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
-    scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),
     // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,
     // root projects are unpublished, but if they do not have releaseCrossBuilder set to true, no underlying project
@@ -74,7 +72,7 @@ object KantanKantanPlugin extends AutoPlugin {
       tagRelease,
       publishArtifacts,
       releaseStepCommand("sonatypeReleaseAll"),
-      KantanRelease.runPushSite,
+      // KantanRelease.runPushSite,
       setNextVersion,
       commitNextVersion,
       pushChanges
@@ -86,9 +84,9 @@ object KantanKantanPlugin extends AutoPlugin {
 
   /** Remote identifiers, computed from [[autoImport.kantanProject]]. */
   lazy val remoteSettings: Seq[Setting[_]] = Seq(
-    homepage       := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}")),
-    apiURL         := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}/api/")),
-    git.remoteRepo := s"git@github.com:nrinaudo/kantan.${kantanProject.value}.git",
+    homepage := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}")),
+    apiURL   := Some(url(s"https://nrinaudo.github.io/kantan.${kantanProject.value}/api/")),
+    // git.remoteRepo := s"git@github.com:nrinaudo/kantan.${kantanProject.value}.git",
     scmInfo := Some(
       ScmInfo(
         url(s"https://github.com/nrinaudo/kantan.${kantanProject.value}"),

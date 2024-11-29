@@ -33,4 +33,3 @@ project/plugins/project/
 
 # Auto-generated files
 .scalafmt.conf
-scalastyle-config.xml
