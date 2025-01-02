@@ -201,6 +201,22 @@ object KantanPlugin extends AutoPlugin {
 //          "-Xsource:2.14", // Disabled for the moment, it doesn't work quite right yet
           "-Xlint:inaccessible"
         )
+      case Some((3, _)) =>
+        Seq(
+          "-deprecation", // Emit warning and location for usages of deprecated APIs.
+          "-encoding",
+          "utf-8",                         // Specify character encoding used by source files.
+          "-explain-types",                // Explain type errors in more detail.
+          "-feature",                      // Emit warning and location for usages of features that should be imported explicitly.
+          "-language:existentials",        // Existential types (besides wildcard types) can be written and inferred
+          "-language:experimental.macros", // Allow macro definition (besides implementation and application)
+          "-language:higherKinds",         // Allow higher-kinded types
+          "-language:implicitConversions", // Allow definition of implicit functions called views
+          "-unchecked",                    // Enable additional warnings where generated code depends on assumptions.
+          "-Xlint:private-shadow",         // A private field (or class parameter) shadows a superclass field.
+          "-Xlint:type-parameter-shadow",  // A local type parameter shadows a type already in scope.
+          "-Ysafe-init",                   // Wrap field accessors to throw an exception on uninitialized access..
+        )
       // otherwise fail
       case v => sys.error(s"Unknown Scala version: $v")
     }
