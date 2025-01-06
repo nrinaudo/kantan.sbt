@@ -21,8 +21,10 @@ import sbt._
 import wartremover.WartRemover
 
 object KantanStrictPlugin extends AutoPlugin {
-  override def trigger  = allRequirements
-  override def requires = KantanKantanPlugin && WartRemover
+  override def trigger =
+    allRequirements
+  override def requires: Plugins =
+    KantanKantanPlugin && WartRemover
 
   override lazy val projectSettings = StrictPlugin.projectSettings
 }

@@ -17,8 +17,9 @@
 package kantan.sbt.release
 
 import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport.ghpagesPushSite
-import kantan.sbt.KantanPlugin, KantanPlugin.autoImport._
-import sbt._, Keys._
+import kantan.sbt.KantanPlugin.autoImport._
+import sbt.Keys._
+import sbt._
 import sbtrelease.ReleasePlugin.autoImport._
 
 object KantanRelease {
@@ -27,15 +28,16 @@ object KantanRelease {
   lazy val runCoverageOff: ReleaseStep = releaseStepCommand("coverageOff")
 
   /** Runs checkStyle. */
-  lazy val runCheckStyle: ReleaseStep = ReleaseStep(
-    action = { st: State =>
-      val extracted = Project.extract(st)
-      val ref       = extracted.get(thisProjectRef)
+  lazy val runCheckStyle: ReleaseStep =
+    ReleaseStep(
+      action = { st: State =>
+        val extracted = Project.extract(st)
+        val ref       = extracted.get(thisProjectRef)
 
-      val stCompile = extracted.runAggregated(ref / Compile / checkStyle, st)
-      extracted.runAggregated(ref / Test / checkStyle, stCompile)
-    }
-  )
+        val stCompile = extracted.runAggregated(ref / Compile / checkStyle, st)
+        extracted.runAggregated(ref / Test / checkStyle, stCompile)
+      }
+    )
 
   /** Runs `pushSite`. */
   lazy val runPushSite: ReleaseStep = { st: State =>

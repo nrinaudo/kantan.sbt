@@ -23,7 +23,9 @@ import sbt._
   * This is mostly meant as a "tag" for other plugins to piggyback. See, for example, `KantanKantanPlugin`.
   */
 object PublishedPlugin extends AutoPlugin {
-  override def requires = KantanPlugin
+  override def requires =
+    KantanPlugin
 
-  override def trigger = noTrigger
+  override def trigger =
+    noTrigger
 }

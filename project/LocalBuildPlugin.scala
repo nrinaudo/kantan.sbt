@@ -5,10 +5,13 @@ import sbt.ScriptedPlugin.autoImport._
 import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._, ReleaseKeys._
 import wartremover.{Wart, WartRemover, Warts}
 import scalafix.sbt.ScalafixPlugin.autoImport.scalafixSemanticdb
-object BuildPlugin extends AutoPlugin {
-  override def trigger = allRequirements
 
-  override def requires = JvmPlugin && ReleasePlugin
+object LocalBuildPlugin extends AutoPlugin {
+  override def trigger =
+    allRequirements
+
+  override def requires =
+    JvmPlugin && ReleasePlugin
 
   override lazy val projectSettings = baseSettings ++ wartRemoverSettings ++ releaseSettings
 
@@ -31,8 +34,7 @@ object BuildPlugin extends AutoPlugin {
       action = { st: State =>
         if(!st.get(skipTests).getOrElse(false)) {
           scriptedStep(st)
-        }
-        else st
+        } else st
       }
     )
   }
@@ -166,10 +168,12 @@ object BuildPlugin extends AutoPlugin {
     )
 }
 
-object SbtBuildPlugin extends AutoPlugin {
-  override def trigger = allRequirements
+object SbtLocalBuildPlugin extends AutoPlugin {
+  override def trigger =
+    allRequirements
 
-  override def requires = SbtPlugin
+  override def requires =
+    SbtPlugin
 
   override lazy val projectSettings = Seq(
     scriptedLaunchOpts ++= Seq("-Xmx1024M", s"-Dplugin.version=${version.value}"),

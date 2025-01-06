@@ -16,10 +16,12 @@
 
 package kantan.sbt
 
+import sbt._
+import sbt.io.Using
+
 import java.io._
 import java.net.URL
 import java.security.MessageDigest
-import sbt._, io.Using
 
 object Resources {
 
@@ -34,8 +36,7 @@ object Resources {
       if(count >= 0) {
         digest.update(buffer, 0, count)
         loop()
-      }
-      else digest.digest()
+      } else digest.digest()
     }
 
     try loop()
@@ -50,5 +51,6 @@ object Resources {
       }
     }
 
-  def copyIfNeeded(res: String, to: File): Unit = copyIfNeeded(getClass.getResource(res), to)
+  def copyIfNeeded(res: String, to: File): Unit =
+    copyIfNeeded(getClass.getResource(res), to)
 }

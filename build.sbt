@@ -26,7 +26,7 @@ lazy val core = project
     addSbtPlugin(
       ("org.scalameta" % "sbt-mdoc" % Versions.mdoc)
         .excludeAll(ExclusionRule("com.github.plokhotnyuk.jsoniter-scala"))
-    ),
+    )
   )
 
 lazy val release = project
@@ -96,4 +96,4 @@ lazy val kantan = project
   .dependsOn(core, release, scalafix, scalafmt)
 
 lazy val docs = project
-  .enablePlugins(DocumentationPlugin)
+  .enablePlugins(LocalDocumentationPlugin)

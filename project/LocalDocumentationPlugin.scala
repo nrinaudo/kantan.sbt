@@ -8,10 +8,12 @@ import com.typesafe.sbt.site.util.SiteHelpers._
 import sbt._, Keys._
 import sbt.plugins.JvmPlugin
 
-object DocumentationPlugin extends AutoPlugin {
-  override def trigger = noTrigger
+object LocalDocumentationPlugin extends AutoPlugin {
+  override def trigger =
+    noTrigger
 
-  override def requires = JvmPlugin && PreprocessPlugin && GhpagesPlugin
+  override def requires =
+    JvmPlugin && PreprocessPlugin && GhpagesPlugin
 
   override lazy val projectSettings = Seq(
     GhpagesPlugin.autoImport.ghpagesNoJekyll := false,
