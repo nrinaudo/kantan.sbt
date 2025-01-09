@@ -1,3 +1,0 @@
-object BadlyFormed {
-  println("foobar")
-}

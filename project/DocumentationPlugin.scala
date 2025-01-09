@@ -1,5 +1,5 @@
-import com.typesafe.sbt.SbtGit.git
-import com.typesafe.sbt.sbtghpages.GhpagesPlugin, GhpagesPlugin.autoImport._
+import com.github.sbt.git.SbtGit.git
+import com.github.sbt.sbtghpages.GhpagesPlugin, GhpagesPlugin.autoImport._
 import com.typesafe.sbt.site.SitePlugin, SitePlugin.autoImport.makeSite
 import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin

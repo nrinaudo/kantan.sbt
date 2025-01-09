@@ -75,7 +75,7 @@ object KantanPlugin extends AutoPlugin {
   override lazy val projectSettings = generalSettings ++ scalacSettings ++ javacSettings ++ commonDependencies ++
     inConfig(Compile)(checkStyleSettings) ++ inConfig(Test)(checkStyleSettings)
 
-  /** By default, `checkStyle` does nothing. Other modules, such as scalafmt and scalastyle, plug in to that. */
+  /** By default, `checkStyle` does nothing. Other modules, such as scalafix and scalafmt, plug in to that. */
   private def checkStyleSettings: Seq[Setting[_]] = Seq(
     checkStyle := {}
   )
@@ -83,22 +83,26 @@ object KantanPlugin extends AutoPlugin {
   override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validate",
-      ";clean;checkStyle;Test / checkStyle;coverageOn;test;coverageAggregate;coverageOff;doc"
+      "; clean"
+        + "; checkStyle"
+        + "; Test / checkStyle"
+        + "; coverageOn"
+        + "; test"
+        + "; coverageAggregate"
+        + "; coverageOff"
+        + "; doc"
     )
 
   /** General settings. */
-  lazy val generalSettings: Seq[Setting[_]] = {
+  lazy val generalSettings: Seq[Setting[_]] =
     Seq(
       autoAPIMappings         := true,
       doctestMarkdownEnabled  := true,
       doctestTestFramework    := DoctestTestFramework.ScalaTest,
       doctestScalaTestVersion := Some("3.2.2"),
-      resolvers ++= Seq(
-        Resolver.sonatypeRepo("releases"),
-        Resolver.sonatypeRepo("snapshots")
-      )
+      resolvers              ++= Resolver.sonatypeOssRepos("releases"),
+      resolvers              ++= Resolver.sonatypeOssRepos("snapshots")
     )
-  }
 
   def javacSettings: Seq[Setting[_]] = {
     // Compile everything to 1.8 until further notice.

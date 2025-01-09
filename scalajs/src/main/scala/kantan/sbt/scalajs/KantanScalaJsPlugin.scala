@@ -39,6 +39,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
     lazy val checkStyleJS  = taskKey[Unit]("run style checks for JS projects only")
     lazy val checkStyleJVM = taskKey[Unit]("run style checks for JVM projects only")
 
+    // format: off
     def kantanCrossProject(id: String): CrossProject =
       CrossProject(id = id, file(id))(JSPlatform, JVMPlatform)
         .withoutSuffixFor(JVMPlatform)
@@ -63,6 +64,7 @@ object KantanScalaJsPlugin extends AutoPlugin {
           checkStyleJVM          := { () }
         )
         .jvmSettings(name := id + "-jvm")
+        // format: on
 
     /** Adds a `.laws` method for scala.js projects. */
     implicit class KantanJsOperations(val proj: CrossProject) extends AnyVal {
@@ -76,22 +78,33 @@ object KantanScalaJsPlugin extends AutoPlugin {
   }
 
   import autoImport._
-
-  override lazy val projectSettings = Seq(
+  // format: off
+  override lazy val projectSettings: Seq[Setting[Task[Unit]]] = Seq(
     Test / testJS           := { () },
     Test / testJVM          := (Test / test).value,
     checkStyleJS            := { () },
     Compile / checkStyleJVM := (Compile / checkStyle).value,
     Test / checkStyleJVM    := (Test / checkStyle).value
   )
+  // format: on
 
-  override def globalSettings =
+  override def globalSettings: Seq[Setting[_]] =
     addCommandAlias(
       "validateJVM",
-      ";clean;checkStyleJVM;test:checkStyleJVM;coverageOn;testJVM;coverageAggregate;coverageOff;doc"
+      "; clean"
+        + "; checkStyleJVM"
+        + "; Test/checkStyleJVM"
+        + "; coverageOn"
+        + "; testJVM"
+        + "; coverageAggregate"
+        + "; coverageOff"
+        + "; doc"
     ) ++ addCommandAlias(
       "validateJS",
-      ";clean;checkStyleJS;test:checkStyleJS;testJS"
+      "; clean"
+        + "; checkStyleJS"
+        + "; Test/checkStyleJS"
+        + "; testJS"
     )
 
 }

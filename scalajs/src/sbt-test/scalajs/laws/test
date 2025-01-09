@@ -1,5 +1,5 @@
 # Both JS and JVM tests must compile, with:
 # core::test depends on laws depends on core
 
-> coreJS/test:compile
-> core/test:compile
+> coreJS/Test/compile
+> core/Test/compile

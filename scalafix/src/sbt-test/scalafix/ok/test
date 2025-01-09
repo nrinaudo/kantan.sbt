@@ -1,0 +1,5 @@
+# Makes sure that, when all files respect rules, no scalafix* command
+# fails the build.
+
+> scalafix --check
+> Test/scalafix --check

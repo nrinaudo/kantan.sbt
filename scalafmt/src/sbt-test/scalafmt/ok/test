@@ -4,5 +4,5 @@
 > scalafmtCheck
 > scalafmtSbtCheck
 > checkStyle
-> test:scalafmtCheck
-> test:checkStyle
+> Test/scalafmtCheck
+> Test/checkStyle

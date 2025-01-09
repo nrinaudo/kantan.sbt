@@ -16,11 +16,11 @@
 
 package kantan.sbt.kantan
 
+import com.github.sbt.git.SbtGit.git
 import com.jsuereth.sbtpgp.PgpKeys.publishSigned
-import com.typesafe.sbt.SbtGit.git
 import kantan.sbt.release.KantanRelease
+import kantan.sbt.scalafix.KantanScalafixPlugin, KantanScalafixPlugin.autoImport._
 import kantan.sbt.scalafmt.KantanScalafmtPlugin, KantanScalafmtPlugin.autoImport._
-import kantan.sbt.scalastyle.KantanScalastylePlugin, KantanScalastylePlugin.autoImport._
 import sbt._, Keys._
 import sbtrelease.ReleasePlugin.autoImport._, ReleaseTransformations._
 
@@ -42,20 +42,20 @@ object KantanKantanPlugin extends AutoPlugin {
 
   override def trigger = allRequirements
 
-  override def requires = KantanScalastylePlugin && KantanScalafmtPlugin
+  override def requires = KantanScalafixPlugin && KantanScalafmtPlugin
 
   override lazy val projectSettings = generalSettings ++ remoteSettings
 
-  @SuppressWarnings(Array("org.wartremover.warts.TraversableOps"))
+  @SuppressWarnings(Array("org.wartremover.warts.IterableOps"))
   lazy val generalSettings: Seq[Setting[_]] = Seq(
     name                 := s"kantan.${kantanProject.value}",
     organization         := "com.nrinaudo",
     organizationHomepage := Some(url("https://nrinaudo.github.io")),
     organizationName     := "Nicolas Rinaudo",
-    crossScalaVersions   := Seq("2.12.15", "2.13.8"),
+    crossScalaVersions   := Seq("2.12.20", "2.13.15"),
     scalaVersion         := crossScalaVersions.value.last,
     licenses             := Seq("Apache-2.0" -> url("https://www.apache.org/licenses/LICENSE-2.0.html")),
-    scalastyleResource   := Some("/kantan/sbt/scalastyle-config.xml"),
+    scalafixResource     := Some("/kantan/sbt/scalafix.conf"),
     scalafmtResource     := Some("/kantan/sbt/scalafmt.conf"),
     // This must be enabled for all modules, to make sure that aggregation picks up on multi-release. Typically,
     // root projects are unpublished, but if they do not have releaseCrossBuilder set to true, no underlying project
@@ -80,7 +80,8 @@ object KantanKantanPlugin extends AutoPlugin {
       pushChanges
     ),
     developers := List(
-      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo"))
+      Developer("nrinaudo", "Nicolas Rinaudo", "nicolas@nrinaudo.com", url("https://twitter.com/nicolasrinaudo")),
+      Developer("joriscode", "Joris", "2750485+joriscode@users.noreply.github.com", url("https://github.com/joriscode"))
     )
   )
 

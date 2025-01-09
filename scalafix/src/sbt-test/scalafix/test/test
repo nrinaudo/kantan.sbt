@@ -1,0 +1,6 @@
+# Makes sure that, when test sources are ill formatted:
+# - Test/scalafix --check
+# - no other scalafix* does
+
+> scalafix --check
+-> Test/scalafix --check

@@ -1,0 +1,4 @@
+# Makes sure that, all scalafix* commands catch ill formatted files
+
+-> scalafix --check
+-> Test/scalafix --check

@@ -17,7 +17,7 @@
 package kantan.sbt.scalafmt
 
 import kantan.sbt.KantanPlugin, KantanPlugin.autoImport._
-import kantan.sbt.Resources._
+import kantan.sbt.Resources
 import org.scalafmt.sbt.ScalafmtPlugin, ScalafmtPlugin.autoImport._
 import sbt._
 
@@ -40,7 +40,7 @@ object KantanScalafmtPlugin extends AutoPlugin {
     copyScalafmtConfig := {
       val path = scalafmtConfig.value
 
-      scalafmtResource.value.foreach(r => copyIfNeeded(r, path))
+      scalafmtResource.value.foreach(Resources.copyIfNeeded(_, path))
     }
   )
 
@@ -58,10 +58,10 @@ object KantanScalafmtPlugin extends AutoPlugin {
     configs.flatMap { config =>
       inConfig(config)(
         Seq(
-          scalafmtCheck    := scalafmtCheck.dependsOn(copyScalafmtConfig).value,
           scalafmt         := scalafmt.dependsOn(copyScalafmtConfig).value,
-          scalafmtSbtCheck := scalafmtSbtCheck.dependsOn(copyScalafmtConfig).value,
-          scalafmtSbt      := scalafmtSbt.dependsOn(copyScalafmtConfig).value
+          scalafmtCheck    := scalafmtCheck.dependsOn(copyScalafmtConfig).value,
+          scalafmtSbt      := scalafmtSbt.dependsOn(copyScalafmtConfig).value,
+          scalafmtSbtCheck := scalafmtSbtCheck.dependsOn(copyScalafmtConfig).value
         )
       )
     }

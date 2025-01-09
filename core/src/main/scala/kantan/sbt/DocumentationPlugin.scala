@@ -16,7 +16,7 @@
 
 package kantan.sbt
 
-import com.typesafe.sbt.sbtghpages.GhpagesPlugin, GhpagesPlugin.autoImport._
+import com.github.sbt.sbtghpages.GhpagesPlugin, GhpagesPlugin.autoImport._
 import com.typesafe.sbt.site.SitePlugin, SitePlugin.autoImport.makeSite
 import com.typesafe.sbt.site.SitePlugin.autoImport.siteSubdirName
 import com.typesafe.sbt.site.preprocess.PreprocessPlugin
