@@ -1,0 +1,2 @@
+import scala.collection.immutable
+object Versions { immutable.Seq.empty[Int] }

@@ -1,5 +1,5 @@
 # Makes sure that ill-formatted files in src/main fail the release
 
-> test:checkStyle
+> Test/checkStyle
 -> checkStyle
 -> release

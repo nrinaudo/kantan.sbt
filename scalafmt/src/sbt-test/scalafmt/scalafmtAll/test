@@ -3,9 +3,10 @@
 # Test files, SBT files and main files all have errors.
 -> scalafmtSbtCheck
 -> scalafmtCheck
--> test:scalafmtcheck
+-> scalafmtCheckAll
+-> Test/scalafmtCheck
 -> checkStyle
--> test:checkStyle
+-> Test/checkStyle
 
 # Formatting them yields the expected result.
 > scalafmtAll

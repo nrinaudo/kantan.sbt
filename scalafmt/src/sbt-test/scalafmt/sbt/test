@@ -3,7 +3,7 @@
 # - not other scalafmt* does
 
 > scalafmtCheck
-> test:scalafmtCheck
-> test:checkStyle
+> Test/scalafmtCheck
+> Test/checkStyle
 -> checkStyle
 -> scalafmtSbtCheck

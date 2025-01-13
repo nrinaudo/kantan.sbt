@@ -1,0 +1,5 @@
+# Makes sure that, when .scalafix.conf is missing
+# scalafix check commands fail
+
+-> scalafix --check
+-> scalafixAll --check

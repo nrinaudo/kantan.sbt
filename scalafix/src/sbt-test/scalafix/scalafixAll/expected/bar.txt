@@ -1,0 +1,2 @@
+import scala.collection.immutable
+object Bar { immutable.Seq.empty[Int] }

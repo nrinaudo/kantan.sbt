@@ -16,9 +16,11 @@
 
 package kantan.sbt.scalafmt
 
-import kantan.sbt.KantanPlugin, KantanPlugin.autoImport._
-import kantan.sbt.Resources._
-import org.scalafmt.sbt.ScalafmtPlugin, ScalafmtPlugin.autoImport._
+import kantan.sbt.KantanPlugin
+import kantan.sbt.KantanPlugin.autoImport._
+import kantan.sbt.Resources
+import org.scalafmt.sbt.ScalafmtPlugin
+import org.scalafmt.sbt.ScalafmtPlugin.autoImport._
 import sbt._
 
 /** Provides support for shared scalafmt configuration files. */
@@ -30,19 +32,22 @@ object KantanScalafmtPlugin extends AutoPlugin {
 
   import autoImport._
 
-  override def trigger = allRequirements
+  override def trigger =
+    allRequirements
 
-  override def requires = KantanPlugin && ScalafmtPlugin
+  override def requires: Plugins =
+    KantanPlugin && ScalafmtPlugin
 
-  override lazy val projectSettings = rawScalafmtSettings(Compile, Test) ++ checkStyleSettings ++ Seq(
-    scalafmtResource := None,
-    scalafmtAll      := scalafmtAll.dependsOn(Compile / scalafmtSbt).value,
-    copyScalafmtConfig := {
-      val path = scalafmtConfig.value
+  override lazy val projectSettings: Seq[Setting[_]] =
+    rawScalafmtSettings(Compile, Test) ++ checkStyleSettings ++ Seq(
+      scalafmtResource := None,
+      scalafmtAll      := scalafmtAll.dependsOn(Compile / scalafmtSbt).value,
+      copyScalafmtConfig := {
+        val path = scalafmtConfig.value
 
-      scalafmtResource.value.foreach(r => copyIfNeeded(r, path))
-    }
-  )
+        scalafmtResource.value.foreach(Resources.copyIfNeeded(_, path))
+      }
+    )
 
   // Makes sure checkStyle depends on the right scalafmt commands depending on the context.
   private def checkStyleSettings: Seq[Setting[_]] =
@@ -58,10 +63,10 @@ object KantanScalafmtPlugin extends AutoPlugin {
     configs.flatMap { config =>
       inConfig(config)(
         Seq(
-          scalafmtCheck    := scalafmtCheck.dependsOn(copyScalafmtConfig).value,
           scalafmt         := scalafmt.dependsOn(copyScalafmtConfig).value,
-          scalafmtSbtCheck := scalafmtSbtCheck.dependsOn(copyScalafmtConfig).value,
-          scalafmtSbt      := scalafmtSbt.dependsOn(copyScalafmtConfig).value
+          scalafmtCheck    := scalafmtCheck.dependsOn(copyScalafmtConfig).value,
+          scalafmtSbt      := scalafmtSbt.dependsOn(copyScalafmtConfig).value,
+          scalafmtSbtCheck := scalafmtSbtCheck.dependsOn(copyScalafmtConfig).value
         )
       )
     }

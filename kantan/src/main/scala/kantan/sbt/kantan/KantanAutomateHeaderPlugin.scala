@@ -16,12 +16,15 @@
 
 package kantan.sbt.kantan
 
-import de.heikoseeberger.sbtheader.{AutomateHeaderPlugin, HeaderPlugin}
+import de.heikoseeberger.sbtheader.AutomateHeaderPlugin
+import de.heikoseeberger.sbtheader.HeaderPlugin
 import sbt._
 
 object KantanAutomateHeaderPlugin extends AutoPlugin {
-  override def trigger  = allRequirements
-  override def requires = KantanKantanPlugin && HeaderPlugin
+  override def trigger =
+    allRequirements
+  override def requires: Plugins =
+    KantanKantanPlugin && HeaderPlugin
 
   val autoImport = AutomateHeaderPlugin.autoImport
 

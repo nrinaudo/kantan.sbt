@@ -16,8 +16,11 @@
 
 package kantan.sbt
 
-import sbt._, Keys._
-import wartremover.{Wart, WartRemover, Warts}
+import sbt.Keys._
+import sbt._
+import wartremover.Wart
+import wartremover.WartRemover
+import wartremover.Warts
 
 /** Makes compilation much more strict.
   *
@@ -25,20 +28,21 @@ import wartremover.{Wart, WartRemover, Warts}
   */
 object StrictPlugin extends AutoPlugin {
 
-  override def trigger = noTrigger
+  override def trigger =
+    noTrigger
 
-  override def requires = KantanPlugin && WartRemover
+  override def requires: Plugins =
+    KantanPlugin && WartRemover
 
-  override lazy val projectSettings = wartRemoverSettings ++ scalacSettings
+  override lazy val projectSettings: Seq[Setting[_]] = wartRemoverSettings ++ scalacSettings
 
   /** All warnings are fatal in `Compile`.
     *
     * I'd love to make warnings fatal in `Test` as well, but the problem is that some tests actually need to do some
     * dodgy things to see what happens.
     */
-  def scalacSettings: Seq[Setting[_]] = Seq(
-    Compile / compile / scalacOptions += "-Xfatal-warnings"
-  )
+  def scalacSettings: Seq[Setting[_]] =
+    Seq(Compile / compile / scalacOptions += "-Xfatal-warnings")
 
   def wartRemoverSettings: Seq[Setting[_]] =
     List(Compile, Test).flatMap { c =>

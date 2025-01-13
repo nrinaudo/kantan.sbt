@@ -22,11 +22,11 @@ addSbtPlugin("com.nrinaudo" % "kantan.sbt" % "@VERSION@")
 // Adds support for sbt-release
 addSbtPlugin("com.nrinaudo" % "kantan.sbt-release" % "@VERSION@")
 
+// Adds support for scalafix
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafix" % "@VERSION@")
+
 // Adds support for scalafmt
 addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "@VERSION@")
-
-// Adds support for scalastyle
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalastyle" % "@VERSION@")
 ```
 
 ## Motivation

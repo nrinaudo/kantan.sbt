@@ -18,34 +18,39 @@ package kantan.sbt.release
 
 import kantan.sbt.KantanPlugin
 import sbt._
-import sbtrelease.ReleasePlugin, ReleasePlugin.autoImport._, ReleaseTransformations._
+import sbtrelease.ReleasePlugin
+import sbtrelease.ReleasePlugin.autoImport.ReleaseTransformations._
+import sbtrelease.ReleasePlugin.autoImport._
 
 /** Slightly improves the default release process.
   *
   * This will:
-  *  - force a clean compile without scoverage code instrumentation (I've mistakenly published instrumented bytecode
-  *    before).
-  *  - run `checkStyle` before running tests.
+  *   - force a clean compile without scoverage code instrumentation (I've mistakenly published instrumented bytecode
+  *     before).
+  *   - run `checkStyle` before running tests.
   */
 object KantanReleasePlugin extends AutoPlugin {
-  override def trigger = allRequirements
+  override def trigger =
+    allRequirements
 
-  override def requires = KantanPlugin && ReleasePlugin
+  override def requires: Plugins =
+    KantanPlugin && ReleasePlugin
 
-  override lazy val projectSettings = releaseProcess := Seq[ReleaseStep](
-    checkSnapshotDependencies,
-    inquireVersions,
-    runClean,
-    KantanRelease.runCoverageOff,
-    KantanRelease.runCheckStyle,
-    runTest,
-    setReleaseVersion,
-    commitReleaseVersion,
-    tagRelease,
-    publishArtifacts,
-    setNextVersion,
-    commitNextVersion,
-    pushChanges
-  )
+  override lazy val projectSettings: Seq[Setting[_]] =
+    releaseProcess := Seq[ReleaseStep](
+      checkSnapshotDependencies,
+      inquireVersions,
+      runClean,
+      KantanRelease.runCoverageOff,
+      KantanRelease.runCheckStyle,
+      runTest,
+      setReleaseVersion,
+      commitReleaseVersion,
+      tagRelease,
+      publishArtifacts,
+      setNextVersion,
+      commitNextVersion,
+      pushChanges
+    )
 
 }

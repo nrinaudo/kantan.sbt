@@ -1,2 +1,2 @@
 # Warnings should not be fatal in tests
-> test:compile
+> Test/compile

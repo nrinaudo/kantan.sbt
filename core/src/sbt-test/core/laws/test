@@ -1,4 +1,4 @@
 # This should compile, with:
 # core::test depends on laws depends on core
 
-> core/test:compile
+> core/Test/compile

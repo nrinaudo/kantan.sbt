@@ -16,8 +16,11 @@
 
 package kantan.sbt
 
-import sbt.{file, AutoPlugin, Resolver}
+import sbt.AutoPlugin
+import sbt.Def
 import sbt.Keys._
+import sbt.Resolver
+import sbt.file
 
 /** Configures projects whose artifacts are not meant for publication to maven central.
   *
@@ -25,19 +28,22 @@ import sbt.Keys._
   */
 object UnpublishedPlugin extends AutoPlugin {
 
-  override def projectSettings = Seq(
-    // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
-    makePom         := file(""),
-    deliver         := file(""),
-    deliverLocal    := file(""),
-    publish         := {},
-    publishLocal    := {},
-    publishM2       := {},
-    publishArtifact := false,
-    publishTo       := Some(Resolver.file("devnull", file("/dev/null")))
-  )
+  override def projectSettings: Seq[Def.Setting[_]] =
+    Seq(
+      // List of settings grabbed from https://github.com/scala/scala-parallel-collections/pull/14.
+      makePom         := file(""),
+      deliver         := file(""),
+      deliverLocal    := file(""),
+      publish         := {},
+      publishLocal    := {},
+      publishM2       := {},
+      publishArtifact := false,
+      publishTo       := Some(Resolver.file("devnull", file("/dev/null")))
+    )
 
-  override def requires = KantanPlugin
+  override def requires =
+    KantanPlugin
 
-  override def trigger = noTrigger
+  override def trigger =
+    noTrigger
 }

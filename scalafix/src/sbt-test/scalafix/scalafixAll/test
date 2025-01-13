@@ -1,0 +1,8 @@
+# Makes sure that scalafixAll does format all sources.
+
+# Test files, SBT files and main files all have errors.
+-> scalafix --check
+-> Test/scalafix --check
+
+# Formatting them yields the expected result.
+> scalafixAll

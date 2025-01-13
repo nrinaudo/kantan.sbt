@@ -18,18 +18,25 @@ package kantan.sbt.kantan
 
 import kantan.sbt.PublishedPlugin
 import kantan.sbt.release.KantanReleasePlugin
-import sbt._, Keys._
+import sbt.Keys._
+import sbt._
 
 /** Configures publication for kantan projects. */
+@SuppressWarnings(Array("org.wartremover.warts.IterableOps"))
 object KantanPublishedPlugin extends AutoPlugin {
-  override def trigger = allRequirements
+  override def trigger =
+    allRequirements
 
-  override def requires = KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
+  override def requires: Plugins =
+    KantanKantanPlugin && PublishedPlugin && KantanReleasePlugin
 
-  override lazy val projectSettings = publishTo := Some(
-    if(isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
-    else
-      Opts.resolver.sonatypeStaging
+  override lazy val projectSettings: Seq[Setting[_]] = Seq(
+    publishTo := Some(
+      if(isSnapshot.value)
+        Opts.resolver.sonatypeOssSnapshots.head
+      else
+        Opts.resolver.sonatypeStaging
+    ),
+    versionScheme := Some("early-semver")
   )
 }

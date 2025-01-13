@@ -19,7 +19,8 @@ package kantan.sbt
 import de.heikoseeberger.sbtheader.FileType
 import de.heikoseeberger.sbtheader.HeaderPlugin
 import de.heikoseeberger.sbtheader.HeaderPlugin.autoImport._
-import sbt._, Keys._
+import sbt.Keys._
+import sbt._
 import spray.boilerplate.BoilerplatePlugin
 
 /** Add support for headers in sbt-boilerplate.
@@ -28,17 +29,19 @@ import spray.boilerplate.BoilerplatePlugin
   */
 object KantanBoilerplatePlugin extends AutoPlugin {
 
-  override def trigger = allRequirements
+  override def trigger =
+    allRequirements
 
-  override def requires = HeaderPlugin && BoilerplatePlugin
+  override def requires: Plugins =
+    HeaderPlugin && BoilerplatePlugin
 
-  override lazy val projectSettings = addBoilerplate(Compile, Test)
+  override lazy val projectSettings: Seq[Setting[_]] = addBoilerplate(Compile, Test)
 
   private def addBoilerplate(confs: Configuration*): List[Setting[_]] =
     confs.foldLeft(List.empty[Setting[_]]) { (acc, conf) =>
       acc ++ Seq(
         conf / headerSources ++= (((conf / sourceDirectory).value / "boilerplate") ** "*.template").get,
-        headerMappings       += (FileType("template") -> HeaderCommentStyle.cStyleBlockComment)
+        headerMappings        += (FileType("template") -> HeaderCommentStyle.cStyleBlockComment)
       )
     }
 }
