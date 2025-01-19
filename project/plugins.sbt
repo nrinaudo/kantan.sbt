@@ -11,6 +11,6 @@ addSbtPlugin("org.wartremover"   % "sbt-wartremover" % "3.2.5")
 addSbtPlugin("org.xerial.sbt"    % "sbt-sonatype"    % "3.12.2")
 
 addSbtPlugin(
-  ("org.scalameta" % "sbt-scalafmt" % "2.5.2")
+  ("org.scalameta" % "sbt-scalafmt" % "2.5.4")
     .excludeAll(ExclusionRule("com.github.plokhotnyuk.jsoniter-scala"))
 )
