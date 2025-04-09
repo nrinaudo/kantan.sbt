@@ -227,8 +227,15 @@ object KantanPlugin extends AutoPlugin {
   /** Includes common dependencies. */
   lazy val commonDependencies: Seq[Setting[_]] =
     Seq(
-      libraryDependencies ++= Seq(
-        "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
-      )
+      libraryDependencies ++= {
+        scalaBinaryVersion.value match {
+          case "3" =>
+            Nil
+          case _ =>
+            Seq(
+              "org.scala-lang" % "scala-reflect" % scalaVersion.value % "provided"
+            )
+        }
+      }
     )
 }
