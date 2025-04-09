@@ -210,8 +210,8 @@ object KantanPlugin extends AutoPlugin {
 //          "-Xsource:2.14", // Disabled for the moment, it doesn't work quite right yet
             "-Xlint:inaccessible"
           )
-        // otherwise fail
-        case v => sys.error(s"Unknown Scala version: $v")
+        case _ =>
+          Nil
       }
 
     // Sane defaults for warnings / errors:
