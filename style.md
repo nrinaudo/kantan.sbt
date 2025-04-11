@@ -18,7 +18,7 @@ Note that `checkStyle` and `Test/checkStyle` will be executed whenever you run
 You can use kantan.sbt's [scalafmt] support by adding the following SBT line:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafix" % "2.9.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafix" % "2.10.0")
 ```
 
 In addition to all the standard [scalafix] tasks, this adds `scalafixAll`, used to run [scalafix]
@@ -33,7 +33,7 @@ a single configuration accross multiple projects.
 You can use kantan.sbt's [scalafmt] support by adding the following SBT line:
 
 ```scala
-addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.9.0")
+addSbtPlugin("com.nrinaudo" % "kantan.sbt-scalafmt" % "2.10.0")
 ```
 
 In addition to all the standard [scalafmt] tasks, this adds `scalafmtAll`, used to run [scalafmt]
