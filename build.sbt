@@ -19,7 +19,7 @@ lazy val core = project
     addSbtPlugin("com.github.sbt"        % "sbt-ghpages"     % Versions.sbtGhPages),
     addSbtPlugin("com.github.sbt"        % "sbt-site"        % Versions.sbtSite),
     addSbtPlugin("com.github.sbt"        % "sbt-unidoc"      % Versions.sbtUnidoc),
-    addSbtPlugin("de.heikoseeberger"     % "sbt-header"      % Versions.sbtHeader),
+    addSbtPlugin("com.github.sbt"        % "sbt-header"      % Versions.sbtHeader),
     addSbtPlugin("io.github.sbt-doctest" % "sbt-doctest"     % Versions.sbtDoctest),
     addSbtPlugin("org.scoverage"        %% "sbt-scoverage"   % Versions.scoverage),
     addSbtPlugin("org.wartremover"       % "sbt-wartremover" % Versions.wartRemover),
