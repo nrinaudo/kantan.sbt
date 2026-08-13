@@ -12,7 +12,7 @@ object Versions {
   val sbtSonatype: String  = "3.12.2"
   val sbtUnidoc: String    = "0.5.0"
   val scalajs: String      = "1.18.1"
-  val scalajsCross: String = "1.3.2"
+  val scalajsCross: String = "1.4.0"
   val scoverage: String    = "2.2.2"
   val wartRemover: String  = "3.2.5"
 }
